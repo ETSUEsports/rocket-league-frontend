@@ -1,21 +1,24 @@
-
 <script setup lang="ts">
-import '../assets/main.css'
-import Welcome from '../components/Welcome.vue'
+import "../assets/main.css";
 </script>
 
 <template>
   <header>
     <picture class="logo">
-      <source srcset="@/assets/E_LOGO_WHITE.png" media="(prefers-color-scheme: dark)" width="125" height="125">
-      <img src="@/assets/E_LOGO_BLACK.png" width="125" height="125">
+      <source
+        srcset="@/assets/E_LOGO_WHITE.png"
+        media="(prefers-color-scheme: dark)"
+        width="125"
+        height="125"
+      />
+      <img src="@/assets/E_LOGO_BLACK.png" width="125" height="125" />
     </picture>
     <div class="wrapper">
       <Welcome msg="Welcome to ETSU Esports Rocket League Overlay System" />
     </div>
   </header>
 </template>
- 
+
 <style scoped>
 header {
   display: flex;
