@@ -35,6 +35,8 @@ const overlay: ThemeDefinition = {
     warning: '#FB8C00',
     navy: '#041E42',
     gold: '#FFC72C',
+    blue: '#1873FF',
+    orange: '#F48D2E',
   }
 }
 

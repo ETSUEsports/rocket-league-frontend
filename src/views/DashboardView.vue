@@ -5,12 +5,7 @@ import LandingPage from "../components/LandingPage.vue";
 <template>
   <header>
     <picture class="logo">
-      <source
-        srcset="@/assets/E_LOGO_WHITE.png"
-        media="(prefers-color-scheme: dark)"
-        width="125"
-        height="125"
-      />
+      <source srcset="@/assets/E_LOGO_WHITE.png" media="(prefers-color-scheme: dark)" width="125" height="125" />
       <img src="@/assets/E_LOGO_BLACK.png" width="125" height="125" />
     </picture>
     <div class="wrapper">
