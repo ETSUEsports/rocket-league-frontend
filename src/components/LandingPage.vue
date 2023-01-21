@@ -1,14 +1,13 @@
 <script setup lang="ts">
 defineProps<{
-  msg: string
-}>()
+  msg: string;
+}>();
 </script>
 
 <template>
   <div class="greetings">
     <h1 class="accent">{{ msg }}</h1>
-    <h3>
-    </h3>
+    <h3></h3>
   </div>
 </template>
 

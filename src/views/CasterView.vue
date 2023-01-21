@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import "../assets/main.css";
+import LandingPage from "../components/LandingPage.vue";
 </script>
 
 <template>
@@ -14,7 +15,7 @@ import "../assets/main.css";
       <img src="@/assets/E_LOGO_BLACK.png" width="125" height="125" />
     </picture>
     <div class="wrapper">
-      <Welcome msg="Caster View Coming Soon" />
+      <LandingPage msg="Caster View Coming Soon" />
     </div>
   </header>
 </template>
