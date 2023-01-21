@@ -11,7 +11,7 @@ import Welcome from '../components/Welcome.vue'
       <img src="@/assets/E_LOGO_BLACK.png" width="125" height="125">
     </picture>
     <div class="wrapper">
-      <Welcome msg="Welcome to ETSU Esports Rocket League Overlay System" />
+      <Welcome msg="Dashboard Coming Soon" />
     </div>
   </header>
 </template>
