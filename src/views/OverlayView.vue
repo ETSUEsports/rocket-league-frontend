@@ -3,17 +3,17 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import { useTheme } from 'vuetify'
+import { defineComponent } from "vue";
+import { useTheme } from "vuetify";
 
 export default defineComponent({
-  name: 'Overlay',
+  name: "OverlayView",
   setup() {
-    const theme = useTheme()
+    const theme = useTheme();
     return {
       theme,
-      toggleTheme: () => theme.global.name.value = 'overlay'
-    }
+      toggleTheme: () => (theme.global.name.value = "overlay"),
+    };
   },
   mounted() {
     this.toggleTheme();
@@ -21,10 +21,8 @@ export default defineComponent({
   data() {
     return {
       //
-    }
+    };
   },
-})
+});
 </script>
-<style scoped>
-
-</style>
+<style scoped></style>
