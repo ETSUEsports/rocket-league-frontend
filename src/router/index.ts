@@ -3,6 +3,7 @@ import HomeView from "../views/HomeView.vue";
 import DashboardView from "../views/DashboardView.vue";
 import CasterView from "../views/CasterView.vue";
 import OverlayView from "../views/OverlayView.vue";
+import OverlayTest from "../views/OverlayTest.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -29,6 +30,11 @@ const router = createRouter({
       path: "/overlay",
       name: "overlay",
       component: OverlayView,
+    },
+    {
+      path: "/overlaytest",
+      name: "overlay",
+      component: OverlayTest,
     },
   ],
 });

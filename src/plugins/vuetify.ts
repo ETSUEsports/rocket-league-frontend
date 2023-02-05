@@ -23,7 +23,7 @@ const darkTheme: ThemeDefinition = {
 const overlay: ThemeDefinition = {
   dark: false,
   colors: {
-    background: '#FFFFFF',
+    background: '#575A5E',
     surface: '#FFFFFF',
     primary: '#6200EE',
     'primary-darken-1': '#3700B3',
