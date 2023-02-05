@@ -1,30 +1,18 @@
-<script setup lang="ts">
-import LandingPage from "../components/LandingPage.vue";
-</script>
-
 <template>
-  <v-theme-provider theme="dark">
-    <header>
-      <picture class="logo">
-        <source srcset="@/assets/E_LOGO_WHITE.png" media="(prefers-color-scheme: dark)" width="125" height="125" />
-        <img src="@/assets/E_LOGO_BLACK.png" width="125" height="125" />
-      </picture>
-      <div class="wrapper">
-        <LandingPage msg="Coming Soon" />
-      </div>
-    </header>
-  </v-theme-provider>
+  <div class="home">
+    <img alt="Vue logo" src="../assets/logo.png">
+    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  </div>
 </template>
 
-<style scoped>
-header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
+<script>
+// @ is an alias to /src
+import HelloWorld from '@/components/HelloWorld.vue'
 
-.logo {
-  padding-right: 15px;
+export default {
+  name: 'HomeView',
+  components: {
+    HelloWorld
+  }
 }
-</style>
+</script>
