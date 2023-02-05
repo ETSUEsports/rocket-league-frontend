@@ -2,8 +2,6 @@
 
 export default {
   props:['team', 'reverse', 'best_of', 'players'],
-  data(){
-  },
   computed: {
     bestOf() {
       switch(this.best_of){

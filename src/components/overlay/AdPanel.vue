@@ -14,7 +14,6 @@ export default {
 
 <style lang="scss" scoped>
 .container{
-  margin-bottom: 40px;
   margin-left: 50px;
   width: 400px;
   height: 85px;

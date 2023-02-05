@@ -1,12 +1,19 @@
 <script>
 import AdPanel from '@/components/overlay/AdPanel.vue'
-import BoostGauge from '@/components/overlay/BoostGauge.vue'
 import GameClock from '@/components/overlay/GameClock.vue'
 import PlayerHighlight from '@/components/overlay/PlayerHighlight.vue'
 import PlayerList from '@/components/overlay/PlayerList.vue'
 import SplashTransition from '@/components/overlay/SplashTransition.vue'
 import TeamInfo from '@/components/overlay/TeamInfo.vue'
 export default {
+  mounted(){
+    const vm = this;
+    setInterval(function(){ 
+      vm.players.forEach(function(player){
+        player.boost = Math.floor(Math.random() * 101);
+      });
+    }, 500);
+  },
   data(){
     return{
       time: "4:33",
@@ -28,6 +35,7 @@ export default {
           [
             {
             name:"ETSU",
+            team: "left",
             boost: 100,
             highlight:false,
             goals: 1,
@@ -37,6 +45,7 @@ export default {
           },
           {
             name:"ETSU_TWO",
+            team: "left",
             boost: 50,
             highlight:false,
             goals: 1,
@@ -46,6 +55,7 @@ export default {
           },
           {
             name:"ETSU-THREE",
+            team: "left",
             boost: 0,
             highlight:true,
             goals: 1,
@@ -58,7 +68,6 @@ export default {
   },
   components: {
     AdPanel,
-    BoostGauge,
     GameClock,
     PlayerHighlight,
     PlayerList,
@@ -84,8 +93,7 @@ export default {
     <div class="footer">
         <AdPanel/>
         <div class="player">
-            <PlayerHighlight/>
-            <BoostGauge/>
+            <PlayerHighlight :player=players[0] />
         </div>
     </div>
   </div>
@@ -112,6 +120,7 @@ export default {
     width: 100vw;
     bottom: 0;
     .player{
+      margin-bottom: 40px;
       display: flex;
       justify-content: space-between;
       flex-direction: row;

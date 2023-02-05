@@ -50,6 +50,10 @@ export default {
     width: 100%;
     height: 10px;
     background-color: aqua;
+    -webkit-transition: width 0.5s ease-in-out;
+    -moz-transition: width 0.5s ease-in-out;
+    -o-transition: width 0.5s ease-in-out;
+    transition: width 0.5s ease-in-out;
   }
 }
 </style>
