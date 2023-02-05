@@ -93,7 +93,6 @@ export default {
 }
 
 .footer{
-    background-color: aqua;
     display: flex;
     justify-content: space-between;
     flex-direction: row;

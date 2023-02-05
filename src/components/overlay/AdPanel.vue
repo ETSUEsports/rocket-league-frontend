@@ -5,5 +5,24 @@ export default {
 </script>
 
 <template>
-  <h1>AD</h1>
+  <div class="container">
+    <div class="top">
+
+    </div>
+  </div>
 </template>
+
+<style lang="scss" scoped>
+.container{
+  margin-bottom: 40px;
+  margin-left: 50px;
+  width: 400px;
+  height: 85px;
+  background-image: url('@/assets/TN_AdPlace.png');
+  background-size: cover;
+}
+.top{
+  width: 300px;
+
+}
+</style>
