@@ -5,5 +5,5 @@ export default {
 </script>
 
 <template>
-  <h1>Boost</h1>
+  <h1>AD</h1>
 </template>
