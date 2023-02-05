@@ -10,8 +10,8 @@ export default {
   data(){
     return{
       time: "4:33",
-      game_num: "1",
-      best_of: "3",
+      game_num: 1,
+      best_of: 5,
       players:  
           [
             {
@@ -62,9 +62,9 @@ export default {
     <div class="header">
         <PlayerList :players=players />
         <div class="scoreboard">
-          <TeamInfo :reverse=true image="https://i.ryois.me/etsu_left.png" :players=players />
+          <TeamInfo :reverse=true image="https://i.ryois.me/etsu_left.png" :best_of=best_of :players=players />
           <GameClock :time=time :game_num=game_num :best_of=best_of />
-          <TeamInfo :reverse=false image="https://i.ryois.me/etsu_right.png" :players=players />
+          <TeamInfo :reverse=false image="https://i.ryois.me/etsu_right.png" :best_of=best_of :players=players />
         </div>
         <PlayerList :players=players />
     </div>

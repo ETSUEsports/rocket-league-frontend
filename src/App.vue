@@ -12,6 +12,10 @@
   font-variant-numeric: tabular-nums;
 }
 
+h1{
+  font-weight: normal;
+}
+
 html,
 body {
   background-position: center;

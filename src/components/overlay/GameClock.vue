@@ -19,7 +19,7 @@ export default {
     display: flex;
     flex-direction: column;
     text-align: center;
-    font-size: 35px;
+    font-size: 40px;
     height: 110px;
     width: 220px;
     h1{
