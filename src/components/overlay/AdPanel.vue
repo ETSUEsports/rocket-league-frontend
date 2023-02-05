@@ -7,7 +7,7 @@ export default {
 <template>
   <div class="container">
     <div class="top">
-
+      <img src="@/assets/ads/esports_socials.png" />
     </div>
   </div>
 </template>
@@ -15,13 +15,15 @@ export default {
 <style lang="scss" scoped>
 .container{
   margin-left: 50px;
-  width: 400px;
-  height: 85px;
+  width: 548px;
+  height: 115px;
   background-image: url('@/assets/TN_AdPlace.png');
   background-size: cover;
 }
 .top{
+  position: relative;
+  margin-left: 130px;
+  margin-top: 20px;
   width: 300px;
-
 }
 </style>

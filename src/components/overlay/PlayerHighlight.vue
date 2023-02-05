@@ -53,7 +53,7 @@ export default {
 .top {
   height: 85+40px;
   width: 550px;
-  margin-right: 30px;
+  margin-right: 30+40px;
   background-color: var(--etsu-primary-trans);
   font-family: Fyrste;
   color: #ffffff;
@@ -75,9 +75,10 @@ export default {
     }
     .stat{
       margin-right: 10px;
+      font-size: 1.3em;
     }
     .label{
-      font-size: 0.8em;
+      font-size: 0.6em;
     }
   }
   .colorbar{

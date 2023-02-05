@@ -76,6 +76,7 @@ export default {
 
   .players{
     font-size: 16px;
+    font-weight: bold;
     font-family: Arial, Helvetica, sans-serif;
     margin: 3px;
     margin-left: 10px;

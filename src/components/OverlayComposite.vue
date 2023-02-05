@@ -1,9 +1,10 @@
 <script>
+import GameConnector from '@/components/connectors/GameWebSocket.vue'
 import AdPanel from '@/components/overlay/AdPanel.vue'
 import GameClock from '@/components/overlay/GameClock.vue'
 import PlayerHighlight from '@/components/overlay/PlayerHighlight.vue'
 import PlayerList from '@/components/overlay/PlayerList.vue'
-import SplashTransition from '@/components/overlay/SplashTransition.vue'
+// import SplashTransition from '@/components/overlay/SplashTransition.vue'
 import TeamInfo from '@/components/overlay/TeamInfo.vue'
 export default {
   mounted(){
@@ -71,15 +72,16 @@ export default {
     GameClock,
     PlayerHighlight,
     PlayerList,
-    SplashTransition,
+    // SplashTransition,
     TeamInfo
-  }
+  },
+  mixins: [GameConnector],
 }
 </script>
 
 <template>
   <div class="overlay">
-    <SplashTransition/>
+    <!-- <SplashTransition/> -->
     <div class="header">
         <PlayerList :players=players :reverse=true />
         <div class="scoreboard">
@@ -105,6 +107,7 @@ export default {
   justify-content: space-between;
   flex-direction: row;
   width: 100vw;
+  margin-top: 10px;
   .scoreboard{
     display: flex;
     justify-content: space-around;

@@ -9,11 +9,12 @@
   --rl-primary-blue: #1873FF;
   --rl-primary-orange: #F48D2E;
   --etsu-primary-trans: #213043cc;
+  --etsu-primary-bg: #213043;
   --etsu-secondary-trans: #21304380;
   font-variant-numeric: tabular-nums;
 }
 
-h1{
+h1,h2,h3,h4,h5,h6,p{
   font-weight: normal;
 }
 
