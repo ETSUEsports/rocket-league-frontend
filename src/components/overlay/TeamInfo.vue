@@ -96,6 +96,9 @@ export default {
     margin-left: 4px;
     margin-right: 4px;
   }
+  .won{
+    background-color: rgba(255,255,255);
+  }
 }
 
 </style>

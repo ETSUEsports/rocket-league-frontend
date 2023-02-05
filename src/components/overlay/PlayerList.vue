@@ -62,7 +62,9 @@ export default {
     display: flex;
     justify-content: space-between;
   }
-
+  .boost_bar{
+    background-color: var(--etsu-secondary-trans);
+  }
   .boost_bar_fill {
     width: 100%;
     height: 10px;

@@ -1,14 +1,24 @@
 <script>
-import GameConnector from '@/components/connectors/GameWebSocket.vue'
+import { GameConnector } from '@/components/connectors/GameWebSocket.js'
+import { gameStateStore } from '@/store/gameStateStore'
 import AdPanel from '@/components/overlay/AdPanel.vue'
 import GameClock from '@/components/overlay/GameClock.vue'
 import PlayerHighlight from '@/components/overlay/PlayerHighlight.vue'
 import PlayerList from '@/components/overlay/PlayerList.vue'
 // import SplashTransition from '@/components/overlay/SplashTransition.vue'
 import TeamInfo from '@/components/overlay/TeamInfo.vue'
+
+
 export default {
+  setup() {
+    const gameState = gameStateStore();
+    return {
+      gameState,
+    }
+  },
   mounted(){
     const vm = this;
+    GameConnector();
     setInterval(function(){ 
       vm.players.forEach(function(player){
         player.boost = Math.floor(Math.random() * 101);
@@ -75,7 +85,6 @@ export default {
     // SplashTransition,
     TeamInfo
   },
-  mixins: [GameConnector],
 }
 </script>
 
@@ -86,7 +95,7 @@ export default {
         <PlayerList :players=players :reverse=true />
         <div class="scoreboard">
           <TeamInfo :team=team_left :reverse=true :best_of=best_of :players=players />
-          <GameClock :time=time :game_num=game_num :best_of=best_of />
+          <GameClock :time=gameState.scoreboardClock :game_num=game_num :best_of=best_of />
           <TeamInfo :team=team_right :reverse=false :best_of=best_of :players=players />
         </div>
         <PlayerList :players=players :reverse=false />
