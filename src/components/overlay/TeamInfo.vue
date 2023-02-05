@@ -1,16 +1,10 @@
 <script>
 
 export default {
-  props:['reverse', 'image', 'best_of'],
+  props:['team', 'reverse', 'best_of', 'players'],
   data(){
-    return{
-      name: "ETSU",
-      score: "0",
-      players: ['1','2','3']
-    }
   },
   computed: {
-    // a computed getter
     bestOf() {
       switch(this.best_of){
         case 3:
@@ -22,7 +16,6 @@ export default {
         default:
           return 3;
       }
-        
     }
   }
 }
@@ -32,19 +25,19 @@ export default {
 <template>
   <div class="container" :style="`flex-direction: ${reverse?'row':'row-reverse'};`">
     <div class="top" :style="`clip-path: ${reverse?'polygon(0% 0, 100% 0, 100% 100%, 6% 100%)':'polygon(0% 0, 100% 0, 94% 100%, 0% 100%)'};`">
-      <div class="info" :style="`flex-direction: ${reverse?'row':'row-reverse'}; background: url(${image}), rgba(33,48,67,0.5); background-repeat: no-repeat; background-position: ${reverse?'left':'right'}; justify-content: ${!reverse?'start':'end'};`">
+      <div class="info" :style="`flex-direction: ${reverse?'row':'row-reverse'}; background: url(${team.image}), var(--etsu-secondary-trans); background-repeat: no-repeat; background-position: ${reverse?'left':'right'}; justify-content: ${!reverse?'start':'end'};`">
         <div class="pair">
-        <h1 class="name" :style="`text-align: ${reverse?'right':'left'};`">{{ name }}</h1>
+        <h1 class="name" :style="`text-align: ${reverse?'right':'left'};`">{{ team.name }}</h1>
         <div class="wins">
           <div v-for="index in bestOf" :key="index">
             <div class="win"></div>
           </div>
         </div>
         </div>
-        <h1 :style="`background-color: ${reverse?'var(--rl-primary-blue)':'var(--rl-primary-orange)'};`" class="score">{{ score }}</h1>
+        <h1 :style="`background-color: ${reverse?'var(--rl-primary-blue)':'var(--rl-primary-orange)'};`" class="score">{{ team.score }}</h1>
       </div>
       <div :style="`background-color: ${reverse?'var(--rl-primary-blue)':'var(--rl-primary-orange)'}; text-align: ${reverse?'right':'left'};`">
-        <h1 class="players">{{ players.toString() }}</h1>
+        <h1 class="players">{{ players.map(function(player){return player.name;}).join(", ") }}</h1>
       </div>
     </div>
   </div>
@@ -93,6 +86,8 @@ export default {
   .wins{
     display: flex;
     flex-direction: row;
+    margin-left: 10px;
+    margin-right: 10px;
   }
   .win{
     width: 25px;

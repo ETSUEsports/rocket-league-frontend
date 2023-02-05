@@ -1,37 +1,55 @@
 <script>
 
 export default {
-  props:['players']
+  props: ['players', 'reverse']
 }
 </script>
 
 <template>
   <div class="container">
-    <div v-for="player in players" :key="player.name"><p>{{player.name}}</p><div class="boost"></div></div>
+    <div v-for="player in players" :key="player.name">
+      <div class="player_boost_bar">
+        <h3 :style="`text-align: ${reverse?'left':'right'};`">{{ player.name }}</h3>
+        <div class="boost_number">
+          <h4 :style="`text-align: ${reverse?'left':'right'};`" class="boost_tag text-center">{{ player.boost }}</h4>
+        </div>
+        <div class="boost_bar">
+          <div :style="`width: ${player.boost}%; float: ${reverse?'left':'right'};`" class="boost_bar_fill"></div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <style lang="scss" scoped>
-  .container{
-    color: white;
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    background-color: var(--etsu-primary-trans);
-    font-size: 35px;
-    width: 220px;
+.container {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  background-color: var(--etsu-secondary-trans);
+  font-size: 35px;
+  width: 330px;
 
-    p{
-      text-transform: lowercase;
-      text-align: left;
-      margin-top: auto;
-      margin-bottom: 4px;
-      font-family: Fyrste;
-      font-size: 20px;
-    }
-    .boost{
-      width: 100%;
-      height: 10px;
-      background-color: aqua;
-    }
+  h3 {
+    text-transform: lowercase;
+    text-align: left;
+    margin-top: auto;
+    margin-bottom: 4px;
+    font-family: Fyrste;
+    font-size: 30px;
   }
+  h4 {
+    text-transform: lowercase;
+    text-align: left;
+    margin-top: auto;
+    margin-bottom: 4px;
+    font-family: Fyrste;
+    font-size: 25px;
+  }
+  .boost_bar_fill {
+    width: 100%;
+    height: 10px;
+    background-color: aqua;
+  }
+}
 </style>

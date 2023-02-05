@@ -12,6 +12,18 @@ export default {
       time: "4:33",
       game_num: 1,
       best_of: 5,
+      team_left: {
+        name: "ETSU",
+        image: "https://i.ryois.me/etsu_left.png",
+        score: 1,
+        series_score: 2,
+      },
+      team_right: {
+        name: "ETSU",
+        image: "https://i.ryois.me/etsu_right.png",
+        score: 1,
+        series_score: 2,
+      },
       players:  
           [
             {
@@ -25,7 +37,7 @@ export default {
           },
           {
             name:"ETSU_TWO",
-            boost: 100,
+            boost: 50,
             highlight:false,
             goals: 1,
             shots: 2,
@@ -34,7 +46,7 @@ export default {
           },
           {
             name:"ETSU-THREE",
-            boost: 100,
+            boost: 0,
             highlight:true,
             goals: 1,
             shots: 2,
@@ -60,13 +72,13 @@ export default {
   <div class="overlay">
     <SplashTransition/>
     <div class="header">
-        <PlayerList :players=players />
+        <PlayerList :players=players :reverse=true />
         <div class="scoreboard">
-          <TeamInfo :reverse=true image="https://i.ryois.me/etsu_left.png" :best_of=best_of :players=players />
+          <TeamInfo :team=team_left :reverse=true :best_of=best_of :players=players />
           <GameClock :time=time :game_num=game_num :best_of=best_of />
-          <TeamInfo :reverse=false image="https://i.ryois.me/etsu_right.png" :best_of=best_of :players=players />
+          <TeamInfo :team=team_right :reverse=false :best_of=best_of :players=players />
         </div>
-        <PlayerList :players=players />
+        <PlayerList :players=players :reverse=false />
     </div>
 
     <div class="footer">

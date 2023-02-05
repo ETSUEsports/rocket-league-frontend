@@ -14,7 +14,7 @@ export default {
 
 <style lang="scss" scoped>
   .container{
-    background-color: var(--etsu-primary-trans);
+    background-color: var(--etsu-secondary-trans);
     color: white;
     display: flex;
     flex-direction: column;

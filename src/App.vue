@@ -9,6 +9,7 @@
   --rl-primary-blue: #1873FF;
   --rl-primary-orange: #F48D2E;
   --etsu-primary-trans: #213043cc;
+  --etsu-secondary-trans: #21304380;
   font-variant-numeric: tabular-nums;
 }
 
