@@ -5,11 +5,27 @@ export default {
   components: {
     apexchart: VueApexCharts,
   },
+  watch: {
+    player(player) {
+      switch (player.team) {
+        case 0:
+          this.chartOptions = { fill: { colors: ["#1873FF"] } };
+          break;
+        case 1:
+          this.chartOptions = { fill: { colors: ["#F48D2E"] } };
+          break;
+        default:
+          this.chartOptions = { fill: { colors: ["#F48D2E"] } };
+          break;
+      }
+    }
+  },
   props: ['player'],
   data() {
     return {
       chartOptions: {
         chart: {
+          id: 'gauge',
           height: 250,
           type: 'radialBar'
         },
@@ -46,6 +62,7 @@ export default {
           }
         },
         fill: {
+          colors: ["#F48D2E"],
           type: 'solid',
         },
         labels: [''],
@@ -58,7 +75,8 @@ export default {
 <template>
   <div class="container">
     <div class="top">
-      <apexchart class="gauge" type="radialBar" height="300" :options="chartOptions" :series="[player.boost]"></apexchart>
+      <apexchart class="gauge" type="radialBar" height="300" :options="chartOptions" :series="[player.boost]">
+      </apexchart>
     </div>
   </div>
 </template>
@@ -72,7 +90,8 @@ export default {
   display: inline-block;
   margin-right: 30px;
 }
-.gauge{
+
+.gauge {
   position: relative;
   bottom: 10px;
 }

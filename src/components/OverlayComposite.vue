@@ -14,19 +14,14 @@ export default {
     const gameState = gameStateStore();
     return {
       gameState,
+      getPlayers: gameState.getPlayers
     }
   },
-  mounted(){
-    const vm = this;
+  mounted() {
     GameConnector();
-    setInterval(function(){ 
-      vm.players.forEach(function(player){
-        player.boost = Math.floor(Math.random() * 101);
-      });
-    }, 500);
   },
-  data(){
-    return{
+  data() {
+    return {
       time: "4:33",
       game_num: 1,
       best_of: 5,
@@ -42,36 +37,36 @@ export default {
         score: 1,
         series_score: 2,
       },
-      players:  
-          [
-            {
-            name:"ETSU",
+      players:
+        [
+          {
+            name: "ETSU",
             team: "left",
             boost: 100,
-            highlight:false,
+            highlight: false,
             goals: 1,
             shots: 2,
-            saves: 3, 
+            saves: 3,
             assists: 4,
           },
           {
-            name:"ETSU_TWO",
+            name: "ETSU_TWO",
             team: "left",
             boost: 50,
-            highlight:false,
+            highlight: false,
             goals: 1,
             shots: 2,
-            saves: 3, 
+            saves: 3,
             assists: 4,
           },
           {
-            name:"ETSU-THREE",
+            name: "ETSU-THREE",
             team: "left",
             boost: 0,
-            highlight:true,
+            highlight: true,
             goals: 1,
             shots: 2,
-            saves: 3, 
+            saves: 3,
             assists: 4,
           }
         ]
@@ -92,50 +87,62 @@ export default {
   <div class="overlay">
     <!-- <SplashTransition/> -->
     <div class="header">
-        <PlayerList :players=players :reverse=true />
-        <div class="scoreboard">
-          <TeamInfo :team=team_left :reverse=true :best_of=best_of :players=players />
-          <GameClock :time=gameState.scoreboardClock :game_num=game_num :best_of=best_of />
-          <TeamInfo :team=team_right :reverse=false :best_of=best_of :players=players />
-        </div>
-        <PlayerList :players=players :reverse=false />
+      <PlayerList :players="getPlayers('left')" :reverse=true :highlight="gameState.getHighlightedPlayer" />
+      <div class="scoreboard">
+        <TeamInfo :team=team_left :reverse=true :best_of=best_of :players="getPlayers('left')" />
+        <GameClock :time=gameState.scoreboardClock :game_num=game_num :best_of=best_of />
+        <TeamInfo :team=team_right :reverse=false :best_of=best_of :players="getPlayers('right')" />
+      </div>
+      <PlayerList :players="getPlayers('right')" :reverse=false :highlight="gameState.getHighlightedPlayer" />
     </div>
 
     <div class="footer">
-        <AdPanel/>
-        <div class="player">
-            <PlayerHighlight :player=players[0] />
-        </div>
+      <AdPanel class="ads" />
+      <div class="player">
+        <PlayerHighlight :player="gameState.getHighlightedPlayer" />
+      </div>
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.header{
+html,
+body,
+#app {
+  overflow: hidden;
+}
+
+.header {
   display: flex;
   justify-content: space-between;
   flex-direction: row;
   width: 100vw;
   margin-top: 10px;
-  .scoreboard{
+
+  .scoreboard {
     display: flex;
     justify-content: space-around;
     flex-direction: row;
   }
 }
 
-.footer{
+.footer {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  position: absolute;
+  width: 100vw;
+  bottom: 0;
+  height: 165px;
+  .ads {
+    margin-bottom: 40px;
+  }
+
+  .player {
+    margin-bottom: 40px;
     display: flex;
     justify-content: space-between;
     flex-direction: row;
-    position: absolute;
-    width: 100vw;
-    bottom: 0;
-    .player{
-      margin-bottom: 40px;
-      display: flex;
-      justify-content: space-between;
-      flex-direction: row;
-    }
+  }
 }
 </style>

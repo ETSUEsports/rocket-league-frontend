@@ -35,7 +35,7 @@ export default {
         <h1 :style="`background-color: ${reverse?'var(--rl-primary-blue)':'var(--rl-primary-orange)'};`" class="score">{{ team.score }}</h1>
       </div>
       <div :style="`background-color: ${reverse?'var(--rl-primary-blue)':'var(--rl-primary-orange)'}; text-align: ${reverse?'right':'left'};`">
-        <h1 class="players">{{ players.map(function(player){return player.name;}).join(", ") }}</h1>
+        <h1 class="players">{{ Object.values(players).map(player => player.name).join(", ") }}</h1>
       </div>
     </div>
   </div>
@@ -81,6 +81,7 @@ export default {
     margin: 3px;
     margin-left: 10px;
     margin-right: 10px;
+    text-transform: none;
   }
   .wins{
     display: flex;

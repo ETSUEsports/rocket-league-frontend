@@ -1,13 +1,23 @@
 <script>
 
 export default {
-  props: ['players', 'reverse']
+  props: ['players', 'reverse', 'highlight'],
+  methods: {
+    playerFocused(player){
+      if(this.highlight == null) return false;
+      if(this.highlight.id == player.id){
+        return true;
+      } else{
+        return false;
+      }
+    }
+  }
 }
 </script>
 
 <template>
   <div class="container">
-    <div v-for="(player, index) in players" :key="player.name" class="playerlist_item" :style="`margin-left: ${reverse ? '0' : 'auto'}; margin-right: ${reverse ? 'auto' : '0'}; width: ${330-index*10}px; clip-path: ${reverse ? 'polygon(0 0, 98% 0, 100% 100%, 0% 100%)' : 'polygon(2% 0, 100% 0, 100% 100%, 0% 100%)'};`">
+    <div v-for="(player, index) in players" :key="player.name" class="playerlist_item" :style="`margin-left: ${reverse ? '0' : 'auto'}; margin-right: ${reverse ? 'auto' : '0'}; width: ${330 - index * 10}px; clip-path: ${reverse ? 'polygon(0 0, 98% 0, 100% 100%, 0% 100%)' : 'polygon(2% 0, 100% 0, 100% 100%, 0% 100%)'}; background-color: ${playerFocused(player) ? reverse ? 'var(--rl-primary-blue)' : 'var(--rl-primary-orange)' : 'none'};`">
       <div class="player_boost_bar" :style="`flex-direction: ${reverse ? 'row' : 'row-reverse'};`">
         <h3>{{ player.name }}</h3>
         <h4 class="boost_tag">{{ player.boost }}</h4>
@@ -32,8 +42,9 @@ export default {
   .playerlist_item {
     display: flex;
     flex-direction: column;
+    width: 100%;
     background-color: var(--etsu-secondary-trans);
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     h3 {
       text-transform: lowercase;
       text-align: left;
@@ -62,9 +73,11 @@ export default {
     display: flex;
     justify-content: space-between;
   }
-  .boost_bar{
+
+  .boost_bar {
     background-color: var(--etsu-secondary-trans);
   }
+
   .boost_bar_fill {
     width: 100%;
     height: 10px;

@@ -19,6 +19,7 @@ export default {
   height: 115px;
   background-image: url('@/assets/TN_AdPlace.png');
   background-size: cover;
+  bottom: 0px;
 }
 .top{
   position: relative;

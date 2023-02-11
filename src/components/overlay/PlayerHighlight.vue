@@ -21,9 +21,9 @@ export default {
 </script>
 
 <template>
-  <div class="container">
+  <div class="container" v-if="player">
     <div class="top">
-      <div class="colorbar">
+      <div class="colorbar" :style="`background-color: ${player.team ? 'var(--rl-primary-orange)' : 'var(--rl-primary-blue)'}`">
         <div class="name">{{player.name}}</div>
       </div>
       <div class="stats">
