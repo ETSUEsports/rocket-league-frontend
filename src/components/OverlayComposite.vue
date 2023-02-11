@@ -12,8 +12,18 @@ import TeamInfo from '@/components/overlay/TeamInfo.vue'
 export default {
   setup() {
     const gameState = gameStateStore();
+    const team = (side)=>{
+      return {
+        name: "ETSU",
+        image: `https://i.ryois.me/etsu_${side}.png`,
+        score: gameState.getTeam(side).score,
+        series_score: 2,
+      }
+    };
     return {
       gameState,
+      team,
+      getTeam: gameState.getTeam,
       getPlayers: gameState.getPlayers
     }
   },
@@ -22,54 +32,8 @@ export default {
   },
   data() {
     return {
-      time: "4:33",
       game_num: 1,
       best_of: 5,
-      team_left: {
-        name: "ETSU",
-        image: "https://i.ryois.me/etsu_left.png",
-        score: 1,
-        series_score: 2,
-      },
-      team_right: {
-        name: "ETSU",
-        image: "https://i.ryois.me/etsu_right.png",
-        score: 1,
-        series_score: 2,
-      },
-      players:
-        [
-          {
-            name: "ETSU",
-            team: "left",
-            boost: 100,
-            highlight: false,
-            goals: 1,
-            shots: 2,
-            saves: 3,
-            assists: 4,
-          },
-          {
-            name: "ETSU_TWO",
-            team: "left",
-            boost: 50,
-            highlight: false,
-            goals: 1,
-            shots: 2,
-            saves: 3,
-            assists: 4,
-          },
-          {
-            name: "ETSU-THREE",
-            team: "left",
-            boost: 0,
-            highlight: true,
-            goals: 1,
-            shots: 2,
-            saves: 3,
-            assists: 4,
-          }
-        ]
     }
   },
   components: {
@@ -89,9 +53,9 @@ export default {
     <div class="header">
       <PlayerList :players="getPlayers('left')" :reverse=true :highlight="gameState.getHighlightedPlayer" />
       <div class="scoreboard">
-        <TeamInfo :team=team_left :reverse=true :best_of=best_of :players="getPlayers('left')" />
+        <TeamInfo :team="team('left')" :reverse=true :best_of=best_of :players="getPlayers('left')" />
         <GameClock :time=gameState.scoreboardClock :game_num=game_num :best_of=best_of />
-        <TeamInfo :team=team_right :reverse=false :best_of=best_of :players="getPlayers('right')" />
+        <TeamInfo :team="team('right')" :reverse=false :best_of=best_of :players="getPlayers('right')" />
       </div>
       <PlayerList :players="getPlayers('right')" :reverse=false :highlight="gameState.getHighlightedPlayer" />
     </div>
@@ -134,6 +98,7 @@ body,
   width: 100vw;
   bottom: 0;
   height: 165px;
+
   .ads {
     margin-bottom: 40px;
   }

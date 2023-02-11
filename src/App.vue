@@ -8,6 +8,8 @@
   --etsu-primary-gold: #FFC72C;
   --rl-primary-blue: #1873FF;
   --rl-primary-orange: #F48D2E;
+  --rl-secondary-blue: #3886FF;
+  --rl-secondary-orange: #FFAB5E;
   --etsu-primary-trans: #213043cc;
   --etsu-primary-bg: #213043;
   --etsu-secondary-trans: #21304380;
