@@ -1,5 +1,6 @@
 <script setup>
 import { GameConnector } from '@/components/connectors/GameWebSocket.js';
+import { detectOBS } from '@/components/connectors/OBS.js';
 import { gameStateStore } from '@/store/gameStateStore';
 import AdPanel from '@/components/overlay/AdPanel.vue';
 import GameClock from '@/components/overlay/GameClock.vue';
@@ -22,6 +23,7 @@ let game_num = ref(1);
 let best_of = ref(5);
 onMounted(() => {
   GameConnector();
+  detectOBS();
 })
 </script>
 

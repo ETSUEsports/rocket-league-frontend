@@ -5,6 +5,8 @@ import router from './router';
 import { createPinia } from 'pinia';
 import VueApexCharts from "vue3-apexcharts";
 import en from './locales/en.js';
+import Toast from "vue-toastification";
+import "vue-toastification/dist/index.css";
 
 const messages = {
     en: en
@@ -20,4 +22,5 @@ createApp(App)
     .use(createPinia())
     .use(router)
     .use(VueApexCharts)
+    .use(Toast)
     .mount('#app');

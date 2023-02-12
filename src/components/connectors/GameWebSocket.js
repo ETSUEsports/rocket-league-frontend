@@ -1,6 +1,7 @@
 import { gameStateStore } from '@/store/gameStateStore';
 import DecodeWSCode from '@/utils/DecodeWSCode';
-
+import { useToast } from "vue-toastification";
+const toast = useToast();
 export function GameConnector() {
    const gameState = gameStateStore();
    const ws = new WebSocket("ws://localhost:49122");
@@ -32,9 +33,11 @@ export function GameConnector() {
          }
       }
       ws.onopen = function () {
+         toast.success("Connected to Game WebSocket", { timeout: 2000 });
          console.log(`[Game WS]: Connected`);
       };
       ws.onerror = function () {
+         toast.error("Error connecting to Game WebSocket", { timeout: 2000 });
          console.log(`[Game WS]: Error`);
       };
       ws.onclose = function (event) {
