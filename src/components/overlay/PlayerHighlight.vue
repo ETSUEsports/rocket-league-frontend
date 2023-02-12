@@ -1,23 +1,7 @@
-<script>
-import BoostGauge from '@/components/overlay/BoostGauge.vue'
-
-export default {
-  props: ['player'],
-  components: {
-    BoostGauge
-  },
-  filters: {
-    pluralize: function (count, sing, plur) {
-      if (count == 1) {
-        return count + ` ${sing}`;
-      } else if (count > 1) {
-        return count + ` ${plur}`;
-      } else {
-        return "Please pass valid count of data";
-      }
-    },
-  },
-}
+<script setup>
+import { defineProps } from 'vue';
+import BoostGauge from '@/components/overlay/BoostGauge.vue';
+defineProps(['player']);
 </script>
 
 <template>
@@ -28,20 +12,24 @@ export default {
       </div>
       <div class="stats">
         <div class="stat">
+          <div class="value">{{player.score}}</div>
+          <div class="label">{{ $t('message.score') }}</div>
+        </div>
+        <div class="stat">
           <div class="value">{{player.goals}}</div>
-          <div class="label">Goals</div>
+          <div class="label">{{ $tc('message.goal', player.goals) }}</div>
         </div>
         <div class="stat">
           <div class="value">{{player.shots}}</div>
-          <div class="label">Shots</div>
-        </div>
-        <div class="stat">
-          <div class="value">{{player.saves}}</div>
-          <div class="label">Saves</div>
+          <div class="label">{{ $tc('message.shot', player.shots) }}</div>
         </div>
         <div class="stat">
           <div class="value">{{player.assists}}</div>
-          <div class="label">Assists</div>
+          <div class="label">{{ $tc('message.assist', player.assists) }}</div>
+        </div>
+        <div class="stat">
+          <div class="value">{{player.saves}}</div>
+          <div class="label">{{ $tc('message.save', player.saves) }}</div>
         </div>
       </div>
       <BoostGauge class="gauge" :player=player />
@@ -76,9 +64,10 @@ export default {
     .stat{
       margin-right: 10px;
       font-size: 1.3em;
+      width: 60px;
     }
     .label{
-      font-size: 0.6em;
+      font-size: 0.4em;
     }
   }
   .colorbar{

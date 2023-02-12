@@ -1,4 +1,4 @@
-import { defineStore, acceptHMRUpdate } from 'pinia'
+import { defineStore, acceptHMRUpdate } from 'pinia';
 
 export const gameStateStore = defineStore({
     id: 'gameState',
@@ -12,7 +12,7 @@ export const gameStateStore = defineStore({
         hasTarget: false,
         target: "",
         teams: [{"color_primary": "1873FF", "color_secondary": "E5E5E5", "name": "Team 1", "score": 0}, { "color_primary": "C26418", "color_secondary": "E5E5E5", "name": "Team 2", "score": 0 }],
-        players: {"Player_1": { "assists": 0, "boost": 33, "demos": 0, "goals": 0, "id": "Player_1", "name": "Player 1", "primaryID": "0", "saves": 0, "score": 0, "shortcut": 1, "shots": 0, "speed": 0, "team": 0}, "Player_2": { "assists": 0, "boost": 33, "demos": 0, "goals": 0, "id": "Player_2", "name": "Player 2", "primaryID": "0", "saves": 0, "score": 0, "shortcut": 2, "shots": 0, "speed": 0, "team": 0}, "Player_3": { "assists": 0, "boost": 33, "demos": 0, "goals": 0, "id": "Player_3", "name": "Player 3", "primaryID": "0", "saves": 0, "score": 0, "shortcut": 3, "shots": 0, "speed": 0, "team": 0}, "Player_4": { "assists": 0, "boost": 33, "demos": 0, "goals": 0, "id": "Player_4", "name": "Player 4", "primaryID": "0", "saves": 0, "score": 0, "shortcut": 4, "shots": 0, "speed": 0, "team": 1}, "Player_5": { "assists": 0, "boost": 33, "demos": 0, "goals": 0, "id": "Player_5", "name": "Player 5", "primaryID": "0", "saves": 0, "score": 0, "shortcut": 5, "shots": 0, "speed": 0, "team": 1}, "Player_6": { "assists": 0, "boost": 33, "demos": 0, "goals": 0, "id": "Player_6", "name": "Player 6", "primaryID": "0", "saves": 0, "score": 0, "shortcut": 6, "shots": 0, "speed": 0, "team": 1}},
+        players: {},
     }),
     getters: {
         scoreboardClock: (state) => {
@@ -70,11 +70,14 @@ export const gameStateStore = defineStore({
                 this.hasTarget = false;
             }
         },
+        resetState() {
+            this.$reset();
+        }
     },
 })
 
 if (import.meta.hot) {
-    import.meta.hot.accept(acceptHMRUpdate(gameStateStore, import.meta.hot))
+    import.meta.hot.accept(acceptHMRUpdate(gameStateStore, import.meta.hot));
 }
 
 function filterByTeam(obj, side) {

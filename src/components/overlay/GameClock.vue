@@ -1,14 +1,12 @@
-<script>
-
-export default {
-  props: ['time','game_num','best_of']
-}
+<script setup>
+import { defineProps } from 'vue';
+defineProps(['time', 'game_num', 'best_of']);
 </script>
 
 <template>
   <div class="container">
     <h1>{{ time }}</h1>
-    <p><b>Game</b> {{ game_num }} - <b>Best of</b> {{ best_of }}</p>
+    <p>{{ $t('message.game', { game: game_num }) }} - {{ $t('message.best_of', { bestOf: best_of }) }}</p>
   </div>
 </template>
 

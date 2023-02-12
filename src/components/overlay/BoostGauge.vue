@@ -1,10 +1,5 @@
 <script>
-import VueApexCharts from 'vue3-apexcharts'
-
 export default {
-  components: {
-    apexchart: VueApexCharts,
-  },
   watch: {
     player(player) {
       switch (player.team) {
@@ -20,7 +15,6 @@ export default {
       }
     }
   },
-  props: ['player'],
   data() {
     return {
       chartOptions: {
@@ -72,11 +66,17 @@ export default {
 }
 </script>
 
+
+<script setup>
+import VueApexCharts from 'vue3-apexcharts';
+import { defineProps } from 'vue';
+const props = defineProps(['player']);
+</script>
+
 <template>
   <div class="container">
     <div class="top">
-      <apexchart class="gauge" type="radialBar" height="300" :options="chartOptions" :series="[player.boost]">
-      </apexchart>
+      <VueApexCharts class="gauge" type="radialBar" height="300" :options="chartOptions" :series="[props.player.boost]" />
     </div>
   </div>
 </template>

@@ -1,48 +1,48 @@
-<script>
-export default {
-  props: ['players', 'reverse', 'highlight'],
-  methods: {
-    playerFocused(player) {
-      if (this.highlight == null) return false;
-      if (this.highlight.id == player.id) {
-        return true;
-      } else {
-        return false;
-      }
-    },
-    boostBarFillColor(player) {
-      if (this.playerFocused(player)) {
-        switch (this.reverse) {
-          case true:
-            return "var(--rl-secondary-blue)";
-          default:
-            return "var(--rl-secondary-orange)";
-        }
-      } else {
-        switch (this.reverse) {
-          case true:
-            return "var(--rl-primary-blue)";
-          default:
-            return "var(--rl-primary-orange)";
-        }
-      }
-    },
-    playerItemColor(player) {
-      if (this.playerFocused(player)) {
-        switch (this.reverse) {
-          case true:
-            return "var(--rl-primary-blue)";
-          default:
-            return "var(--rl-primary-orange)";
-        }
-      } else {
-        switch (this.reverse) {
-          case true:
-            return "var(--etsu-primary-trans)";
-          default:
-            return "var(--etsu-primary-trans)";
-        }
-      }
+<script setup>
+import { defineProps } from 'vue';
+const props = defineProps(['players', 'reverse', 'highlight']);
+
+function playerFocused(player) {
+  if (props.highlight == null) return false;
+  if (props.highlight.id == player.id) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function boostBarFillColor(player) {
+  if (playerFocused(player)) {
+    switch (props.reverse) {
+      case true:
+        return "var(--rl-secondary-blue)";
+      default:
+        return "var(--rl-secondary-orange)";
+    }
+  } else {
+    switch (props.reverse) {
+      case true:
+        return "var(--rl-primary-blue)";
+      default:
+        return "var(--rl-primary-orange)";
+    }
+  }
+}
+
+function playerItemColor(player) {
+  if (playerFocused(player)) {
+    switch (props.reverse) {
+      case true:
+        return "var(--rl-primary-blue)";
+      default:
+        return "var(--rl-primary-orange)";
+    }
+  } else {
+    switch (props.reverse) {
+      case true:
+        return "var(--etsu-primary-trans)";
+      default:
+        return "var(--etsu-primary-trans)";
     }
   }
 }
@@ -64,6 +64,7 @@ export default {
     </div>
   </div>
 </template>
+
 <style lang="scss" scoped>
 .container {
   color: white;

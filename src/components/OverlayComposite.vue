@@ -1,56 +1,34 @@
-<script>
-import { GameConnector } from '@/components/connectors/GameWebSocket.js'
-import { gameStateStore } from '@/store/gameStateStore'
-import AdPanel from '@/components/overlay/AdPanel.vue'
-import GameClock from '@/components/overlay/GameClock.vue'
-import PlayerHighlight from '@/components/overlay/PlayerHighlight.vue'
-import PlayerList from '@/components/overlay/PlayerList.vue'
-// import SplashTransition from '@/components/overlay/SplashTransition.vue'
-import TeamInfo from '@/components/overlay/TeamInfo.vue'
-
-
-export default {
-  setup() {
-    const gameState = gameStateStore();
-    const team = (side)=>{
-      return {
-        name: "ETSU",
-        image: `https://i.ryois.me/etsu_${side}.png`,
-        score: gameState.getTeam(side).score,
-        series_score: 2,
-      }
-    };
-    return {
-      gameState,
-      team,
-      getTeam: gameState.getTeam,
-      getPlayers: gameState.getPlayers
-    }
-  },
-  mounted() {
-    GameConnector();
-  },
-  data() {
-    return {
-      game_num: 1,
-      best_of: 5,
-    }
-  },
-  components: {
-    AdPanel,
-    GameClock,
-    PlayerHighlight,
-    PlayerList,
-    // SplashTransition,
-    TeamInfo
-  },
-}
+<script setup>
+import { GameConnector } from '@/components/connectors/GameWebSocket.js';
+import { gameStateStore } from '@/store/gameStateStore';
+import AdPanel from '@/components/overlay/AdPanel.vue';
+import GameClock from '@/components/overlay/GameClock.vue';
+import PlayerHighlight from '@/components/overlay/PlayerHighlight.vue';
+import PlayerList from '@/components/overlay/PlayerList.vue';
+// import SplashTransition from '@/components/overlay/SplashTransition.vue';
+import TeamInfo from '@/components/overlay/TeamInfo.vue';
+import { onMounted, ref } from 'vue';
+const gameState = gameStateStore();
+const getPlayers = gameState.getPlayers;
+const team = (side) => {
+  return {
+    name: "ETSU",
+    image: `https://i.ryois.me/etsu_${side}.png`,
+    score: gameState.getTeam(side).score,
+    series_score: 2,
+  }
+};
+let game_num = ref(1);
+let best_of = ref(5);
+onMounted(() => {
+  GameConnector();
+})
 </script>
 
 <template>
   <div class="overlay">
     <!-- <SplashTransition/> -->
-    <div class="header">
+    <div class="header" v-if="!gameState.isReplay">
       <PlayerList :players="getPlayers('left')" :reverse=true :highlight="gameState.getHighlightedPlayer" />
       <div class="scoreboard">
         <TeamInfo :team="team('left')" :reverse=true :best_of=best_of :players="getPlayers('left')" />
@@ -60,7 +38,7 @@ export default {
       <PlayerList :players="getPlayers('right')" :reverse=false :highlight="gameState.getHighlightedPlayer" />
     </div>
 
-    <div class="footer">
+    <div class="footer" v-if="!gameState.isReplay">
       <AdPanel class="ads" />
       <div class="player">
         <PlayerHighlight :player="gameState.getHighlightedPlayer" />
