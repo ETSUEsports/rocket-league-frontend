@@ -10,30 +10,18 @@ import PlayerHighlight from '@/components/overlay/PlayerHighlight.vue';
 import PlayerList from '@/components/overlay/PlayerList.vue';
 // import SplashTransition from '@/components/overlay/SplashTransition.vue';
 import TeamInfo from '@/components/overlay/TeamInfo.vue';
-import { onMounted, ref } from 'vue';
+import { onMounted } from 'vue';
 const gameState = gameStateStore();
 const overlayData = overlayDataStore();
 const getPlayers = gameState.getPlayers;
 const team = (side) => {
-  switch (side) {
-    case "left":
-      return {
-        name: overlayData.getLeftTeam.name,
-        image: overlayData.getLeftTeam.image,
-        score: gameState.getTeam(side).score,
-        series_score: overlayData.getLeftTeam.score,
-      }
-    case "right":
-      return {
-        name: overlayData.getRightTeam.name,
-        image: overlayData.getRightTeam.image,
-        score: gameState.getTeam(side).score,
-        series_score: overlayData.getRightTeam.score,
-      }
+  return {
+    name: overlayData.getTeam(side).name,
+    image: overlayData.getTeam(side).image,
+    score: gameState.getTeam(side).score,
+    series_score: overlayData.getTeam(side).score,
   }
 };
-let game_num = ref(1);
-let best_of = ref(5);
 onMounted(() => {
   GameConnector();
   ControlConnector();
@@ -47,9 +35,9 @@ onMounted(() => {
     <div class="header" v-if="!gameState.isReplay && !gameState.hasWinner">
       <PlayerList :players="getPlayers('left')" :reverse=true :highlight="gameState.getHighlightedPlayer" />
       <div class="scoreboard">
-        <TeamInfo :team="team('left')" :reverse=true :best_of=best_of :players="getPlayers('left')" />
-        <GameClock :time=gameState.scoreboardClock :game_num=game_num :best_of=best_of />
-        <TeamInfo :team="team('right')" :reverse=false :best_of=best_of :players="getPlayers('right')" />
+        <TeamInfo :team="team('left')" :reverse=true :best_of=overlayData.getSeries.bestOf :players="getPlayers('left')" />
+        <GameClock :time=gameState.scoreboardClock :game_num=overlayData.getSeries.gameNumber :best_of=overlayData.getSeries.bestOf />
+        <TeamInfo :team="team('right')" :reverse=false :best_of=overlayData.getSeries.bestOf :players="getPlayers('right')" />
       </div>
       <PlayerList :players="getPlayers('right')" :reverse=false :highlight="gameState.getHighlightedPlayer" />
     </div>
