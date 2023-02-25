@@ -4,7 +4,7 @@ import { useToast } from "vue-toastification";
 const toast = useToast();
 export function GameConnector() {
    const gameState = gameStateStore();
-   const ws = new WebSocket("ws://localhost:49122");
+   const ws = new WebSocket("ws://10.88.20.200:49122");
    function connect() {
       ws.onmessage = (event) => {
          let data = JSON.parse(event.data);

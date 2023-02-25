@@ -1,7 +1,9 @@
 <script setup>
 import { GameConnector } from '@/components/connectors/GameWebSocket.js';
+import { ControlConnector } from '@/components/connectors/ControlWebSocket.js';
 import { detectOBS } from '@/components/connectors/OBS.js';
 import { gameStateStore } from '@/store/gameStateStore';
+import { overlayDataStore } from '@/store/overlayDataStore';
 import AdPanel from '@/components/overlay/AdPanel.vue';
 import GameClock from '@/components/overlay/GameClock.vue';
 import PlayerHighlight from '@/components/overlay/PlayerHighlight.vue';
@@ -10,19 +12,31 @@ import PlayerList from '@/components/overlay/PlayerList.vue';
 import TeamInfo from '@/components/overlay/TeamInfo.vue';
 import { onMounted, ref } from 'vue';
 const gameState = gameStateStore();
+const overlayData = overlayDataStore();
 const getPlayers = gameState.getPlayers;
 const team = (side) => {
-  return {
-    name: "ETSU",
-    image: `https://i.ryois.me/etsu_${side}.png`,
-    score: gameState.getTeam(side).score,
-    series_score: 2,
+  switch (side) {
+    case "left":
+      return {
+        name: overlayData.getLeftTeam.name,
+        image: overlayData.getLeftTeam.image,
+        score: gameState.getTeam(side).score,
+        series_score: overlayData.getLeftTeam.score,
+      }
+    case "right":
+      return {
+        name: overlayData.getRightTeam.name,
+        image: overlayData.getRightTeam.image,
+        score: gameState.getTeam(side).score,
+        series_score: overlayData.getRightTeam.score,
+      }
   }
 };
 let game_num = ref(1);
 let best_of = ref(5);
 onMounted(() => {
   GameConnector();
+  ControlConnector();
   detectOBS();
 })
 </script>
@@ -30,7 +44,7 @@ onMounted(() => {
 <template>
   <div class="overlay">
     <!-- <SplashTransition/> -->
-    <div class="header" v-if="!gameState.isReplay">
+    <div class="header" v-if="!gameState.isReplay && !gameState.hasWinner">
       <PlayerList :players="getPlayers('left')" :reverse=true :highlight="gameState.getHighlightedPlayer" />
       <div class="scoreboard">
         <TeamInfo :team="team('left')" :reverse=true :best_of=best_of :players="getPlayers('left')" />
