@@ -1,3 +1,15 @@
+<script setup>
+import { GameConnector } from '@/components/connectors/GameWebSocket.js';
+import { ControlConnector } from '@/components/connectors/ControlWebSocket.js';
+import { detectOBS } from '@/components/connectors/OBS.js';
+import { onMounted } from 'vue';
+onMounted(() => {
+  GameConnector();
+  ControlConnector();
+  detectOBS();
+})
+</script>
+
 <template>
   <router-view />
 </template>

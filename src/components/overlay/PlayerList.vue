@@ -73,6 +73,7 @@ function playerItemColor(player) {
   text-align: center;
   font-size: 35px;
   width: 330px;
+  text-overflow: ellipsis;
 
   .playerlist_item {
     display: flex;

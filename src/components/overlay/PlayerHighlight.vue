@@ -44,6 +44,7 @@ defineProps(['player']);
   margin-right: 30+40px;
   background-color: var(--etsu-primary-trans);
   font-family: Fyrste;
+  text-overflow: ellipsis;
   color: #ffffff;
   display: flex;
   text-transform: lowercase;

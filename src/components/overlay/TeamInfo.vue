@@ -51,6 +51,7 @@ const bestOf = computed(() => {
   display: flex;
   text-transform: lowercase;
   flex-direction: column;
+  text-overflow: ellipsis;
 
   h1 {
     font-size: 2.8em;

@@ -2,6 +2,7 @@ import { defineStore, acceptHMRUpdate } from 'pinia';
 
 export const gameStateStore = defineStore({
     id: 'gameState',
+    persist: true,
     state: () => ({
         clock: 300,
         winner: "",
@@ -13,7 +14,8 @@ export const gameStateStore = defineStore({
         target: "",
         teams: [{ "color_primary": "1873FF", "color_secondary": "E5E5E5", "name": "Team 1", "score": 0 }, { "color_primary": "C26418", "color_secondary": "E5E5E5", "name": "Team 2", "score": 0 }],
         players: {},
-        replayStats: { "assister": { "id": "", "name": "Player 2" }, "ball_last_touch": { "player": "", "speed": 0 }, "goalspeed": 0, "goaltime": 0, "impact_location": { "X": 0, "Y": 0 }, "scorer": { "id": "", "name": "Player 1", "teamnum": 0 }}
+        replayStats: { "assister": { "id": "", "name": "Player 2" }, "ball_last_touch": { "player": "", "speed": 0 }, "goalspeed": 0, "goaltime": 0, "impact_location": { "X": 0, "Y": 0 }, "scorer": { "id": "", "name": "Player 1", "teamnum": 0 } },
+        postGameStats: {}
     }),
     getters: {
         scoreboardClock: (state) => {
@@ -58,6 +60,24 @@ export const gameStateStore = defineStore({
         },
         getReplayStats: (state) => {
             return state.replayStats;
+        },
+        getPostPlayers: (state) => {
+            return (side) => {
+                switch (side) {
+                    case 'left':
+                        return filterByTeam(state.postGameStats, 0);
+                    case 'right':
+                        return filterByTeam(state.postGameStats, 1);
+                    default:
+                        return 'Specify side';
+                }
+            }
+        },
+        getPostTeamTotal: (state) => {
+            return (side, stat) => {
+                const formatSide = side === 'left' ? 0 : 1;
+                return getTeamTotal(formatSide, stat, state.postGameStats);
+            }
         }
     },
     actions: {
@@ -81,8 +101,13 @@ export const gameStateStore = defineStore({
         updateReplayStats(data) {
             this.replayStats = data;
         },
+        updatePostGameStats(data) {
+            this.postGameStats = data;
+        },
         resetState() {
+            const temp = this.postGameStats;
             this.$reset();
+            this.postGameStats = temp;
         }
     },
 })
@@ -99,4 +124,14 @@ function filterByTeam(obj, side) {
         }
     });
     return filtered;
+}
+function getTeamTotal(team, key, players) {
+    let total = 0;
+    for (const playerId in players) {
+        const player = players[playerId];
+        if (player.team === team) {
+            total += player[key];
+        }
+    }
+    return total;
 }
