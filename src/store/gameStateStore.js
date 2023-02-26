@@ -11,15 +11,16 @@ export const gameStateStore = defineStore({
         isReplay: false,
         hasTarget: false,
         target: "",
-        teams: [{"color_primary": "1873FF", "color_secondary": "E5E5E5", "name": "Team 1", "score": 0}, { "color_primary": "C26418", "color_secondary": "E5E5E5", "name": "Team 2", "score": 0 }],
+        teams: [{ "color_primary": "1873FF", "color_secondary": "E5E5E5", "name": "Team 1", "score": 0 }, { "color_primary": "C26418", "color_secondary": "E5E5E5", "name": "Team 2", "score": 0 }],
         players: {},
+        replayStats: { "assister": { "id": "", "name": "Player 2" }, "ball_last_touch": { "player": "", "speed": 0 }, "goalspeed": 0, "goaltime": 0, "impact_location": { "X": 0, "Y": 0 }, "scorer": { "id": "", "name": "Player 1", "teamnum": 0 }}
     }),
     getters: {
         scoreboardClock: (state) => {
             const d = Number(state.clock);
             const m = Math.floor(d % 3600 / 60);
             const s = Math.floor(d % 3600 % 60);
-            return `${state.isOT ? '+':''}${m}:${('0' + s).slice(-2)}`;
+            return `${state.isOT ? '+' : ''}${m}:${('0' + s).slice(-2)}`;
         },
         getTeam: (state) => {
             return (side) => {
@@ -27,6 +28,10 @@ export const gameStateStore = defineStore({
                     case 'left':
                         return state.teams[0];
                     case 'right':
+                        return state.teams[1];
+                    case 0:
+                        return state.teams[0];
+                    case 1:
                         return state.teams[1];
                     default:
                         return 'Specify side';
@@ -46,10 +51,13 @@ export const gameStateStore = defineStore({
             }
         },
         getHighlightedPlayer: (state) => {
-            if(state.hasTarget){
+            if (state.hasTarget) {
                 return state.players[state.target];
             }
             return null;
+        },
+        getReplayStats: (state) => {
+            return state.replayStats;
         }
     },
     actions: {
@@ -62,13 +70,16 @@ export const gameStateStore = defineStore({
             this.isOT = data.game.isOT;
             this.isReplay = data.game.isReplay;
             this.hasWinner = data.game.hasWinner;
-            if(data.game.hasTarget) {
+            if (data.game.hasTarget) {
                 this.target = data.game.target;
                 this.hasTarget = true;
-            } else{
+            } else {
                 this.target = "";
                 this.hasTarget = false;
             }
+        },
+        updateReplayStats(data) {
+            this.replayStats = data;
         },
         resetState() {
             this.$reset();

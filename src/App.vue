@@ -28,6 +28,6 @@ body, #app {
 }
 @font-face {
     font-family: Fyrste;
-    src: url("./assets/fyrste.ttf") format("truetype");
+    src: url("@/assets/fonts/fyrste.ttf") format("truetype");
 }
 </style>

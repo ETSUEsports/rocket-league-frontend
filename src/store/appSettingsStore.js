@@ -4,10 +4,10 @@ export const appSettingsStore = defineStore({
     id: 'appSettings',
     persist: true,
     state: () => ({
-        gameWSIP: "10.",
-        gameWSPort: "",
-        controlWSIP: "",
-        controlWSPort: ""
+        gameWSIP: "10.88.20.200",
+        gameWSPort: "49122",
+        controlWSIP: "localhost",
+        controlWSPort: "3000"
     }),
     getters: {
         getGameWSIP: (state) => {
@@ -21,6 +21,12 @@ export const appSettingsStore = defineStore({
         },
         getControlWSPort: (state) => {
             return state.controlWSPort;
+        },
+        getGameWSConn: (state) => {
+            return `ws://${state.gameWSIP}:${state.gameWSPort}/`;
+        },
+        getControlWSConn: (state) => {
+            return `ws://${state.controlWSIP}:${state.controlWSPort}/`;
         }
     },
     actions: {

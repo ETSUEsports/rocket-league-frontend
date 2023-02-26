@@ -1,10 +1,10 @@
 import { overlayDataStore } from '@/store/overlayDataStore';
+import { appSettingsStore } from '@/store/appSettingsStore';
 import DecodeWSCode from '@/utils/DecodeWSCode';
-import { useToast } from "vue-toastification";
-const toast = useToast();
 export function ControlConnector() {
    const overlayData = overlayDataStore();
-   const ws = new WebSocket("ws://localhost:3000");
+   const appSettings = appSettingsStore();
+   const ws = new WebSocket(appSettings.getControlWSConn);
    function connect() {
       ws.onmessage = (event) => {
          let data = JSON.parse(event.data);
@@ -46,11 +46,9 @@ export function ControlConnector() {
          }
       }
       ws.onopen = function () {
-         toast.success("Connected to Control WebSocket", { timeout: 2000 });
          console.log(`[Control WS]: Connected`);
       };
       ws.onerror = function () {
-         toast.error("Error connecting to Control WebSocket", { timeout: 2000 });
          console.log(`[Control WS]: Error`);
       };
       ws.onclose = function (event) {

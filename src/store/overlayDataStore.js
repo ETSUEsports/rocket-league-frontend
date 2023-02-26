@@ -16,6 +16,10 @@ export const overlayDataStore = defineStore({
                         return state.leftTeam;
                     case 'right':
                         return state.rightTeam;
+                    case 0:
+                        return state.leftTeam;
+                    case 1:
+                        return state.rightTeam;
                     default:
                         return 'Specify side';
                 }

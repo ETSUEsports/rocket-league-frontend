@@ -1,10 +1,10 @@
 import { gameStateStore } from '@/store/gameStateStore';
+import { appSettingsStore } from '@/store/appSettingsStore';
 import DecodeWSCode from '@/utils/DecodeWSCode';
-import { useToast } from "vue-toastification";
-const toast = useToast();
 export function GameConnector() {
    const gameState = gameStateStore();
-   const ws = new WebSocket("ws://10.88.20.200:49122");
+   const appSettings = appSettingsStore();
+   const ws = new WebSocket(appSettings.getGameWSConn);
    function connect() {
       ws.onmessage = (event) => {
          let data = JSON.parse(event.data);
@@ -17,6 +17,10 @@ export function GameConnector() {
                break;
             case 'game:update_state':
                gameState.updateState(data.data);
+               break;
+            case 'game:goal_scored':
+               gameState.updateReplayStats(data.data);
+               console.log(data.data);
                break;
             case 'game:statfeed_event':
                console.log(data.data);
@@ -33,11 +37,9 @@ export function GameConnector() {
          }
       }
       ws.onopen = function () {
-         toast.success("Connected to Game WebSocket", { timeout: 2000 });
          console.log(`[Game WS]: Connected`);
       };
       ws.onerror = function () {
-         toast.error("Error connecting to Game WebSocket", { timeout: 2000 });
          console.log(`[Game WS]: Error`);
       };
       ws.onclose = function (event) {

@@ -1,6 +1,7 @@
-import HomeView from '../views/HomeView.vue'
-import OverlayView from '../views/OverlayView.vue'
-
+import HomeView from '../views/HomeView.vue';
+import OverlayView from '../views/OverlayView.vue';
+import PostGameStats from '../views/PostGameStats.vue';
+import DashboardView from '../views/DashboardView.vue';
 const routes = [
     {
         path: '/',
@@ -11,6 +12,16 @@ const routes = [
         path: '/overlay',
         name: 'overlay',
         component: OverlayView
+    },
+    {
+        path: '/post-game-stats',
+        name: 'post-game-stats',
+        component: PostGameStats
+    },
+    {
+        path: '/dashboard',
+        name: 'dashboard',
+        component: DashboardView
     }
 ]
 
