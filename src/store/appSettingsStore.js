@@ -7,7 +7,8 @@ export const appSettingsStore = defineStore({
         gameWSIP: "10.88.20.200",
         gameWSPort: "49122",
         controlWSIP: "localhost",
-        controlWSPort: "3000"
+        controlWSPort: "3000",
+        controlHTTPSecure: false
     }),
     getters: {
         getGameWSIP: (state) => {
@@ -27,6 +28,13 @@ export const appSettingsStore = defineStore({
         },
         getControlWSConn: (state) => {
             return `ws://${state.controlWSIP}:${state.controlWSPort}/`;
+        },
+        getControlHTTPConn: (state) => {
+            if (state.controlHTTPSecure) {
+                return `https://${state.controlWSIP}:${state.controlWSPort}/api/v1`;
+            } else {
+                return `http://${state.controlWSIP}:${state.controlWSPort}/api/v1`;
+            }
         }
     },
     actions: {

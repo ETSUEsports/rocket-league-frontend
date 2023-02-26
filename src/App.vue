@@ -24,7 +24,10 @@ onMounted(() => {
   --rl-secondary-orange: #FFAB5E;
   --etsu-primary-trans: #213043cc;
   --etsu-primary-bg: #213043;
+  --etsu-secondary-bg: #283340  ;
   --etsu-secondary-trans: #21304380;
+  --db-primary-bg: #000000;
+  --db-secondary-bg: #12151A;
   font-variant-numeric: tabular-nums;
 }
 

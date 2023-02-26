@@ -6,7 +6,7 @@ export const overlayDataStore = defineStore({
     state: () => ({
         leftTeam: { name: "Left Team", score: 0, image: "" },
         rightTeam: { name: "Right Team", score: 0, image: "" },
-        series: { gameNumber: 1, bestOf: 5 }
+        series: { gameNumber: 1, bestOf: 5, name: "Series Name" }
     }),
     getters: {
         getTeam: (state) => {

@@ -46,11 +46,6 @@ const team = (side) => {
 </template>
 
 <style lang="scss" scoped>
-html,
-body,
-#app {
-  overflow: hidden;
-}
 
 .header {
   display: flex;

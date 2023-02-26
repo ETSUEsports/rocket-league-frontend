@@ -3,5 +3,5 @@
 </template>
 
 <script setup>
-import DashboardComposite from '@/components/DashboardComposite.vue';
+import DashboardComposite from '@/components/DashboardComposite.vue'
 </script>
