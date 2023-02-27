@@ -6,7 +6,8 @@ export const overlayDataStore = defineStore({
     state: () => ({
         leftTeam: { name: "Left Team", score: 0, image: "" },
         rightTeam: { name: "Right Team", score: 0, image: "" },
-        series: { gameNumber: 1, bestOf: 5, name: "Series Name" }
+        series: { gameNumber: 1, bestOf: 5, name: "Series Name" },
+        replay: { showTransition: false, color: "blue" }
     }),
     getters: {
         getTeam: (state) => {
@@ -27,6 +28,9 @@ export const overlayDataStore = defineStore({
         },
         getSeries: (state) => {
             return state.series;
+        },
+        getReplay: (state) => {
+            return state.replay;
         }
     },
     actions: {
@@ -38,6 +42,10 @@ export const overlayDataStore = defineStore({
         },
         updateSeries(series) {
             this.series = series;
+        },
+        updateReplay(transition, side) {
+            this.replay.showTransition = transition;
+            this.replay.color = side === 0 ? "blue" : "orange";
         },
         resetState() {
             this.$reset();

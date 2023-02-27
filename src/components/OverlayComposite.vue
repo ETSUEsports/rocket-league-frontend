@@ -6,7 +6,7 @@ import GameClock from '@/components/overlay/GameClock.vue';
 import PlayerHighlight from '@/components/overlay/PlayerHighlight.vue';
 import PlayerList from '@/components/overlay/PlayerList.vue';
 import ReplayComposite from '@/components/replay/ReplayComposite.vue';
-// import SplashTransition from '@/components/overlay/SplashTransition.vue';
+import SplashTransition from '@/components/overlay/SplashTransition.vue';
 import TeamInfo from '@/components/overlay/TeamInfo.vue';
 import AppSettings from './modal/AppSettings.vue';
 import { ref, onMounted, onBeforeUnmount } from 'vue'
@@ -45,7 +45,7 @@ let showSettings = ref(false);
 
 <template>
   <div class="overlay">
-    <!-- <SplashTransition/> -->
+    <SplashTransition/>
     <transition name="modal">
       <AppSettings v-if="showSettings" @close="showSettings = false" />
     </transition>
@@ -53,14 +53,12 @@ let showSettings = ref(false);
     <div class="header" v-if="!gameState.isReplay && !gameState.hasWinner">
       <PlayerList :players="getPlayers('left')" :reverse=true :highlight="gameState.getHighlightedPlayer" />
       <div class="scoreboard">
-        <div class="mainsb">
           <TeamInfo :team="team('left')" :reverse=true :best_of=overlayData.getSeries.bestOf
           :players="getPlayers('left')" />
         <GameClock :time=gameState.scoreboardClock :game_num=overlayData.getSeries.gameNumber
           :best_of=overlayData.getSeries.bestOf />
         <TeamInfo :team="team('right')" :reverse=false :best_of=overlayData.getSeries.bestOf
           :players="getPlayers('right')" />
-        </div>
       </div>
       <PlayerList :players="getPlayers('right')" :reverse=false :highlight="gameState.getHighlightedPlayer" />
     </div>
@@ -85,12 +83,7 @@ let showSettings = ref(false);
   .scoreboard {
     display: flex;
     justify-content: space-around;
-    flex-direction: column;
-    .mainsb{
-      display: flex;
-      justify-content: space-between;
-      flex-direction: row;
-    }
+    flex-direction: row;
   }
 }
 
@@ -101,14 +94,16 @@ let showSettings = ref(false);
   position: absolute;
   width: 100vw;
   bottom: 0;
-  height: 100px;
+  height: 203px;
 
   .ads {
-    margin-bottom: 20px;
+    position: relative;
+    bottom: -100px;
   }
 
   .player {
-    margin-bottom: 40px;
+    position: relative;
+    bottom: -10px;
     display: flex;
     justify-content: space-between;
     flex-direction: row;

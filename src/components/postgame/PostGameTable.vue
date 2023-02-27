@@ -36,6 +36,9 @@ const stats = ['score', 'goals', 'assists', 'shots', 'saves', 'demos', 'touches'
 </template>
 
 <style lang="scss" scoped>
+*{
+  font-weight: normal;
+}
 .table{
   display: flex;
   justify-content: center;

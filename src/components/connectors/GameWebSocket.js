@@ -2,10 +2,12 @@ import { gameStateStore } from '@/store/gameStateStore';
 import { appSettingsStore } from '@/store/appSettingsStore';
 import DecodeWSCode from '@/utils/DecodeWSCode';
 import Router from '@/router';
+import { overlayDataStore } from '@/store/overlayDataStore';
 
 export function GameConnector() {
    const gameState = gameStateStore();
    const appSettings = appSettingsStore();
+   const overlayData = overlayDataStore();
    const ws = new WebSocket(appSettings.getGameWSConn);
    function connect() {
       ws.onmessage = (event) => {
@@ -23,6 +25,10 @@ export function GameConnector() {
                break;
             case 'game:goal_scored':
                gameState.updateReplayStats(data.data);
+               console.log(data.data.scorer.teamnum);
+               setTimeout(() => {
+                  overlayData.updateReplay(true, data.data.scorer.teamnum);
+                }, 2500);
                console.log(data.data);
                break;
             case 'game:statfeed_event':

@@ -38,6 +38,9 @@ defineProps(['player']);
 </template>
 
 <style lang="scss" scoped>
+.container {
+  position: relative;
+}
 .top {
   height: 85+40px;
   width: 550px;
@@ -81,7 +84,7 @@ defineProps(['player']);
     display: flex;
     margin-bottom: 0px;
     position: absolute;
-    bottom: 10px;
+    bottom: 50px;
     right: -10px;
   }
 }

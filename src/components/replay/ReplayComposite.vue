@@ -31,6 +31,9 @@ const overlayData = overlayDataStore();
   width: 100vw;
   height: 100vh;
   background-image: url('@/assets/replay_border.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
   z-index: 100;
   .replay_info{
     font-family: 'Fyrste';
