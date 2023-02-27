@@ -38,13 +38,16 @@ export function ControlConnector() {
       }
       ws.onopen = function () {
          console.log(`[Control WS]: Connected`);
+         appSettings.updateControlWSStatus('connected');
       };
       ws.onerror = function () {
          console.log(`[Control WS]: Error`);
+         appSettings.updateControlWSStatus('error');
       };
       ws.onclose = function (event) {
          const reason = DecodeWSCode(event);
          console.log(`[Control WS]: Disconnected - ${reason}`);
+         appSettings.updateControlWSStatus('disconnected');
       };
    }
    connect()

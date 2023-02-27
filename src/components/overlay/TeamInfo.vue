@@ -26,7 +26,7 @@ const bestOf = computed(() => {
           <h1 class="name" :style="`text-align: ${reverse ? 'right' : 'left'};`">{{ team.name }}</h1>
           <div class="wins">
             <div v-for="index in bestOf" :key="index">
-              <div class="win"></div>
+              <div class="win" :class="{ 'won': index <= team.series_score }"></div>
             </div>
           </div>
         </div>

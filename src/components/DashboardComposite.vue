@@ -98,7 +98,21 @@ const swapTeams = () => {
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   <div class="dashboard">
     <div class="container">
-      <h1>{{ $t('dashboard.title') }}</h1>
+      <div class="toprow">
+        <div class="left">
+          <h1>{{ $t('dashboard.title') }}</h1>
+        </div>
+        <div class="right">
+          <div class="status-light">
+            <div class="status-light__status" :class="appSettings.getGameWSStatus"></div>
+            <div class="status-light__content">Game WebSocket</div>
+          </div>
+          <div class="status-light">
+            <div class="status-light__status" :class="appSettings.getControlWSStatus"></div>
+            <div class="status-light__content">Control WebSocket</div>
+          </div>
+        </div>
+      </div>
       <div class="outline">
         <div class="scorebug_container">
           <div class="scorebug sb_name">
@@ -412,5 +426,52 @@ label {
 .button:hover {
   opacity: 0.8;
   outline: 2px solid var(--etsu-primary-gold);
+}
+
+.status-light {
+  align-items: center;
+  display: flex;
+  padding: 0.5rem;
+}
+
+.status-light__status {
+  &.connected {
+    background-color: #16a34a;
+  }
+  &.error {
+    background-color: #f59e0b;
+  }
+  &.disconnected {
+    background-color: #dc2626;
+  }
+  background-color: #6b7280;
+  border-radius: 9999px;
+  height: 0.5rem;
+  width: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+.status-light__content {
+  flex: 1;
+}
+
+.toprow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 4px;
+  .left {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .right {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+  }
 }
 </style>

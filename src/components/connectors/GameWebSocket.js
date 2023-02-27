@@ -53,13 +53,16 @@ export function GameConnector() {
       }
       ws.onopen = function () {
          console.log(`[Game WS]: Connected`);
+         appSettings.updateGameWSStatus('connected');
       };
       ws.onerror = function () {
          console.log(`[Game WS]: Error`);
+         appSettings.updateGameWSStatus('error');
       };
       ws.onclose = function (event) {
          const reason = DecodeWSCode(event);
          console.log(`[Game WS]: Disconnected - ${reason}`);
+         appSettings.updateGameWSStatus('disconnected');
       };
    }
    connect()

@@ -4,11 +4,13 @@ export const appSettingsStore = defineStore({
     id: 'appSettings',
     persist: true,
     state: () => ({
-        gameWSIP: "10.88.20.200",
+        gameWSIP: "localhost",
         gameWSPort: "49122",
+        gameWSStatus: "disconnected",
         controlWSIP: "localhost",
         controlWSPort: "3000",
-        controlHTTPSecure: false
+        controlHTTPSecure: false,
+        controlWSStatus: "disconnected"
     }),
     getters: {
         getGameWSIP: (state) => {
@@ -35,6 +37,12 @@ export const appSettingsStore = defineStore({
             } else {
                 return `http://${state.controlWSIP}:${state.controlWSPort}/api/v1`;
             }
+        },
+        getGameWSStatus: (state) => {
+            return state.gameWSStatus;
+        },
+        getControlWSStatus: (state) => {
+            return state.controlWSStatus;
         }
     },
     actions: {
@@ -49,6 +57,15 @@ export const appSettingsStore = defineStore({
         },
         updateControlWSPort(port) {
             this.controlWSPort = port;
+        },
+        updateControlHTTPSecure(secure) {
+            this.controlHTTPSecure = secure;
+        },
+        updateGameWSStatus(status) {
+            this.gameWSStatus = status;
+        },
+        updateControlWSStatus(status) {
+            this.controlWSStatus = status;
         },
         resetState() {
             this.$reset();

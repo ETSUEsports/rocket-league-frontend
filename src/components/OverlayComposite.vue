@@ -8,6 +8,9 @@ import PlayerList from '@/components/overlay/PlayerList.vue';
 import ReplayComposite from '@/components/replay/ReplayComposite.vue';
 // import SplashTransition from '@/components/overlay/SplashTransition.vue';
 import TeamInfo from '@/components/overlay/TeamInfo.vue';
+import AppSettings from './modal/AppSettings.vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue'
+
 const gameState = gameStateStore();
 const overlayData = overlayDataStore();
 const getPlayers = gameState.getPlayers;
@@ -20,18 +23,42 @@ const team = (side) => {
   }
 };
 
+onMounted(() => {
+  window.addEventListener('keydown', onKeyPress);
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('keydown', onKeyPress);
+})
+
+function onKeyPress(e) {
+  if (e.key == 's') {
+    showSettings.value = true;
+  }
+  if (e.key == 'Escape') {
+    showSettings.value = false;
+  }
+}
+
+let showSettings = ref(false);
 </script>
 
 <template>
   <div class="overlay">
     <!-- <SplashTransition/> -->
-    <ReplayComposite v-if="gameState.isReplay && !gameState.hasWinner"/>
+    <transition name="modal">
+      <AppSettings v-if="showSettings" @close="showSettings = false" />
+    </transition>
+    <ReplayComposite v-if="gameState.isReplay && !gameState.hasWinner" />
     <div class="header" v-if="!gameState.isReplay && !gameState.hasWinner">
       <PlayerList :players="getPlayers('left')" :reverse=true :highlight="gameState.getHighlightedPlayer" />
       <div class="scoreboard">
-        <TeamInfo :team="team('left')" :reverse=true :best_of=overlayData.getSeries.bestOf :players="getPlayers('left')" />
-        <GameClock :time=gameState.scoreboardClock :game_num=overlayData.getSeries.gameNumber :best_of=overlayData.getSeries.bestOf />
-        <TeamInfo :team="team('right')" :reverse=false :best_of=overlayData.getSeries.bestOf :players="getPlayers('right')" />
+        <TeamInfo :team="team('left')" :reverse=true :best_of=overlayData.getSeries.bestOf
+          :players="getPlayers('left')" />
+        <GameClock :time=gameState.scoreboardClock :game_num=overlayData.getSeries.gameNumber
+          :best_of=overlayData.getSeries.bestOf />
+        <TeamInfo :team="team('right')" :reverse=false :best_of=overlayData.getSeries.bestOf
+          :players="getPlayers('right')" />
       </div>
       <PlayerList :players="getPlayers('right')" :reverse=false :highlight="gameState.getHighlightedPlayer" />
     </div>
@@ -46,7 +73,6 @@ const team = (side) => {
 </template>
 
 <style lang="scss" scoped>
-
 .header {
   display: flex;
   justify-content: space-between;
