@@ -2,9 +2,9 @@
 import axios from 'axios';
 import { overlayDataStore } from '@/store/overlayDataStore';
 import { appSettingsStore } from '@/store/appSettingsStore';
+
 const appSettings = appSettingsStore();
 const overlayData = overlayDataStore();
-
 const add = (type) => {
   switch (type) {
     case 'game':
@@ -157,7 +157,7 @@ const swapTeams = () => {
           </span>
         </div>
         <div class="teams_container">
-          <div class="team team_left">
+          <div class="team team_left outline orange">
             <h2>{{ $t('dashboard.left_team') }}</h2>
             <div class="inputgroup">
               <label for="left_team_name">{{ $t('dashboard.team_name') }}</label>
@@ -176,7 +176,7 @@ const swapTeams = () => {
               <input v-model="overlayData.leftTeam.image" type="text" id="left_team_logo" name="left_team_logo" />
             </div>
           </div>
-          <div class="team team_right">
+          <div class="team team_right outline blue">
             <h2>{{ $t('dashboard.right_team') }}</h2>
             <div class="inputgroup">
               <label for="right_team_name">{{ $t('dashboard.team_name') }}</label>
@@ -225,6 +225,12 @@ p {
 
   .outline {
     border: 1px solid var(--etsu-primary-gold);
+    &.orange {
+      border: 1px solid var(--rl-primary-orange);
+    }
+    &.blue {
+      border: 1px solid var(--rl-primary-blue);
+    }
     border-radius: 4px;
     padding: 4px;
     margin: 10px;
@@ -251,6 +257,7 @@ p {
     flex-direction: column;
     width: 100%;
     margin: 4px;
+    border-radius: 4px;
     background-color: var(--db-secondary-bg);
 
     input:focus {
@@ -287,6 +294,7 @@ p {
     justify-content: space-between;
     flex-direction: column;
     margin: 4px;
+    border-radius: 4px;
     background-color: var(--db-secondary-bg);
 
     h2 {
@@ -474,4 +482,5 @@ label {
     justify-content: flex-end;
   }
 }
+
 </style>

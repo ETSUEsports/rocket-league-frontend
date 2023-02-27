@@ -53,12 +53,14 @@ let showSettings = ref(false);
     <div class="header" v-if="!gameState.isReplay && !gameState.hasWinner">
       <PlayerList :players="getPlayers('left')" :reverse=true :highlight="gameState.getHighlightedPlayer" />
       <div class="scoreboard">
-        <TeamInfo :team="team('left')" :reverse=true :best_of=overlayData.getSeries.bestOf
+        <div class="mainsb">
+          <TeamInfo :team="team('left')" :reverse=true :best_of=overlayData.getSeries.bestOf
           :players="getPlayers('left')" />
         <GameClock :time=gameState.scoreboardClock :game_num=overlayData.getSeries.gameNumber
           :best_of=overlayData.getSeries.bestOf />
         <TeamInfo :team="team('right')" :reverse=false :best_of=overlayData.getSeries.bestOf
           :players="getPlayers('right')" />
+        </div>
       </div>
       <PlayerList :players="getPlayers('right')" :reverse=false :highlight="gameState.getHighlightedPlayer" />
     </div>
@@ -83,7 +85,12 @@ let showSettings = ref(false);
   .scoreboard {
     display: flex;
     justify-content: space-around;
-    flex-direction: row;
+    flex-direction: column;
+    .mainsb{
+      display: flex;
+      justify-content: space-between;
+      flex-direction: row;
+    }
   }
 }
 
@@ -94,10 +101,10 @@ let showSettings = ref(false);
   position: absolute;
   width: 100vw;
   bottom: 0;
-  height: 165px;
+  height: 100px;
 
   .ads {
-    margin-bottom: 40px;
+    margin-bottom: 20px;
   }
 
   .player {

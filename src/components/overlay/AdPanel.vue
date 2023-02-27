@@ -20,8 +20,8 @@ const ads = ref(['https://i.ryois.me/esports_socials.png', 'https://i.ryois.me/e
 <style lang="scss" scoped>
 .container {
   margin-left: 50px;
-  width: 548px;
-  height: 115px;
+  width: 400px;
+  height: 82px;
   background-image: url('@/assets/TN_AdPlace.png');
   background-size: cover;
   bottom: 0px;
@@ -36,8 +36,8 @@ const ads = ref(['https://i.ryois.me/esports_socials.png', 'https://i.ryois.me/e
 
 .top {
   position: relative;
-  margin-left: 130px;
-  margin-top: 20px;
-  width: 300px;
+  margin-left: 75px;
+  margin-top: 10px;
+  width: 250px;
 }
 </style>
