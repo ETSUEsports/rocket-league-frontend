@@ -1,7 +1,7 @@
 <script setup>
 import { defineProps } from 'vue';
 import BoostGauge from '@/components/overlay/BoostGauge.vue';
-defineProps(['player']);
+defineProps(['player', 'team']);
 </script>
 
 <template>
@@ -32,7 +32,7 @@ defineProps(['player']);
           <div class="label">{{ $tc('message.save', player.saves) }}</div>
         </div>
       </div>
-      <BoostGauge class="gauge" :player=player />
+      <BoostGauge class="gauge" :player=player :team=team />
     </div>
   </div>
 </template>

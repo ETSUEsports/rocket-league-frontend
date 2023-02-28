@@ -70,13 +70,14 @@ export default {
 <script setup>
 import VueApexCharts from 'vue3-apexcharts';
 import { defineProps } from 'vue';
-const props = defineProps(['player']);
+const props = defineProps(['player', 'team']);
 </script>
 
 <template>
   <div class="container">
     <div class="top">
       <VueApexCharts class="gauge" type="radialBar" height="300" :options="chartOptions" :series="[props.player.boost]" />
+      <img :src="team.image" class="team" />
     </div>
   </div>
 </template>
@@ -94,5 +95,14 @@ const props = defineProps(['player']);
 .gauge {
   position: relative;
   bottom: 10px;
+}
+
+.team {
+  position: relative;
+  bottom: 100px;
+  left: 95px;
+  height: 60px;
+  width: 60px;
+  z-index: 2;
 }
 </style>

@@ -21,7 +21,7 @@ const bestOf = computed(() => {
     <div class="top"
       :style="`clip-path: ${reverse ? 'polygon(0% 0, 100% 0, 100% 100%, 6% 100%)' : 'polygon(0% 0, 100% 0, 94% 100%, 0% 100%)'};`">
       <div class="info"
-        :style="`flex-direction: ${reverse ? 'row' : 'row-reverse'}; background: url(${team.image}), var(--etsu-secondary-trans); background-repeat: no-repeat; background-position: ${reverse ? 'left' : 'right'}; justify-content: ${!reverse ? 'start' : 'end'};`">
+        :style="`flex-direction: ${reverse ? 'row' : 'row-reverse'}; background-image: url('${team.image}'); background-color: var(--etsu-secondary-trans); background-size: contain; background-repeat: no-repeat; background-position: ${reverse ? 'left' : 'right'} 15px bottom 0px; justify-content: ${!reverse ? 'start' : 'end'};`">
         <div class="pair">
           <h1 class="name" :style="`text-align: ${reverse ? 'right' : 'left'};`">{{ team.name }}</h1>
           <div class="wins">

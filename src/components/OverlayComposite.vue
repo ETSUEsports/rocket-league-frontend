@@ -70,7 +70,7 @@ let showSettings = ref(false);
     <div class="footer" v-if="!gameState.isReplay">
       <AdPanel class="ads" />
       <div class="player">
-        <PlayerHighlight :player="gameState.getHighlightedPlayer" />
+        <PlayerHighlight v-if="gameState.getHighlightedPlayer" :player="gameState.getHighlightedPlayer" :team="overlayData.getTeam(gameState.getHighlightedPlayer.team)" />
       </div>
     </div>
   </div>
