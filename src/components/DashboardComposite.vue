@@ -2,6 +2,8 @@
 import axios from 'axios';
 import { overlayDataStore } from '@/store/overlayDataStore';
 import { appSettingsStore } from '@/store/appSettingsStore';
+import { ref } from 'vue'
+import AppSettings from './modal/AppSettings.vue';
 
 const appSettings = appSettingsStore();
 const overlayData = overlayDataStore();
@@ -91,16 +93,26 @@ const swapTeams = () => {
   axios.post(`${appSettings.getControlHTTPConn}/teams/swap`);
 };
 
+const openSettings = () => {
+  showSettings.value = true;
+};
+
+let showSettings = ref(false);
+
 </script>
 
 <template>
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   <div class="dashboard">
+    <transition name="modal">
+      <AppSettings v-if="showSettings" @close="showSettings = false" />
+    </transition>
     <div class="container">
       <div class="toprow">
         <div class="left">
           <h1>{{ $t('dashboard.title') }}</h1>
+          <button class="button default settings" @click="openSettings()">{{ $t('dashboard.settings') }}</button>
         </div>
         <div class="right">
           <div class="status-light">
@@ -157,7 +169,7 @@ const swapTeams = () => {
           </span>
         </div>
         <div class="teams_container">
-          <div class="team team_left outline orange">
+          <div class="team team_left outline blue">
             <h2>{{ $t('dashboard.left_team') }}</h2>
             <div class="inputgroup">
               <label for="left_team_name">{{ $t('dashboard.team_name') }}</label>
@@ -176,7 +188,7 @@ const swapTeams = () => {
               <input v-model="overlayData.leftTeam.image" type="text" id="left_team_logo" name="left_team_logo" />
             </div>
           </div>
-          <div class="team team_right outline blue">
+          <div class="team team_right outline orange">
             <h2>{{ $t('dashboard.right_team') }}</h2>
             <div class="inputgroup">
               <label for="right_team_name">{{ $t('dashboard.team_name') }}</label>
@@ -301,7 +313,9 @@ p {
       font-size: 2em;
     }
   }
-
+  .settings{
+    margin-left: 20px;
+  }
   .teams_container {
     display: flex;
     justify-content: space-between;

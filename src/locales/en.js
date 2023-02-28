@@ -26,6 +26,7 @@ const message = {
         updateTeams: 'Update Teams',
         resetTeams: 'Reset Teams',
         swapTeams: 'Swap Teams',
+        settings: 'Settings',
     }
 }
 export default message;

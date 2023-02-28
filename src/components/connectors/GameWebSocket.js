@@ -26,9 +26,11 @@ export function GameConnector() {
             case 'game:goal_scored':
                gameState.updateReplayStats(data.data);
                console.log(data.data.scorer.teamnum);
-               setTimeout(() => {
-                  overlayData.updateReplay(true, data.data.scorer.teamnum);
-                }, 2500);
+               if(!gameState.hasWinner){
+                  setTimeout(() => {
+                     overlayData.updateReplay(true, data.data.scorer.teamnum);
+                   }, 2500);
+               }
                console.log(data.data);
                break;
             case 'game:statfeed_event':

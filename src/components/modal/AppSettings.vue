@@ -1,9 +1,37 @@
 <script setup>
 import { appSettingsStore } from '@/store/appSettingsStore';
+import { gameStateStore } from '@/store/gameStateStore';
+import { overlayDataStore } from '@/store/overlayDataStore';
+import { onMounted, onBeforeUnmount, defineEmits } from 'vue'
+const emit = defineEmits(['close'])
+
+const overlayData = overlayDataStore();
+const gameState = gameStateStore();
 const appSettings = appSettingsStore();
 function reloadPage() {
   window.location.reload();
 }
+function resetStates() {
+  appSettings.resetState();
+  overlayData.resetState();
+  gameState.resetState();
+}
+
+onMounted(() => {
+  window.addEventListener('keydown', onKeyPress);
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('keydown', onKeyPress);
+})
+
+function onKeyPress(e) {
+  if (e.key == 'Escape') {
+    emit('close');
+  }
+}
+
+
 </script>
 
 <template>
@@ -32,6 +60,10 @@ function reloadPage() {
             <div class="inputgroup">
               <label for="overlayWSPort">Control WebSocket Port</label>
               <input v-model="appSettings.controlWSPort" type="text" id="controlWSPort" name="controlWSPort" />
+            </div>
+            <div class="inputgroup">
+              <label for="resetStates">Reset All States</label>
+              <button class="button danger" @click="resetStates()">Reset</button>
             </div>
           </slot>
         </div>

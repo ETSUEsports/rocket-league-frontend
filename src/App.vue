@@ -11,7 +11,11 @@ onMounted(() => {
 </script>
 
 <template>
-  <router-view />
+  <router-view v-slot="{ Component, route }">
+    <transition name="fade">
+      <component :is="Component" :key="route.path" />
+    </transition>
+  </router-view>
 </template>
 
 <style>
@@ -24,25 +28,43 @@ onMounted(() => {
   --rl-secondary-orange: #FFAB5E;
   --etsu-primary-trans: #213043cc;
   --etsu-primary-bg: #213043;
-  --etsu-secondary-bg: #283340  ;
+  --etsu-secondary-bg: #283340;
   --etsu-secondary-trans: #21304380;
   --db-primary-bg: #000000;
   --db-secondary-bg: #12151A;
   font-variant-numeric: tabular-nums;
 }
 
-h1,h2,h3,h4,h5,h6,p{
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
   font-weight: normal;
 }
 
 html,
-body, #app {
+body,
+#app {
   height: 100vh;
   overflow: hidden;
   margin: 0px auto;
 }
+
 @font-face {
-    font-family: Fyrste;
-    src: url("@/assets/fonts/fyrste.ttf") format("truetype");
+  font-family: Fyrste;
+  src: url("@/assets/fonts/fyrste.ttf") format("truetype");
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
