@@ -16,7 +16,7 @@ const routes = [
     {
         path: '/post-game-stats',
         name: 'post-game-stats',
-        meta: { transition: 'slide-left' },
+        meta: { transition: 'fade' },
         component: PostGameStats
     },
     {

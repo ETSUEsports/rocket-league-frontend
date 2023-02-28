@@ -26,7 +26,7 @@ export function ControlConnector() {
             case 'team:swap':
                console.log(`[Control WS]: Team swap`);
                overlayData.updateLeftTeam(data.teams.leftTeam);
-               overlayData.updateRightTeam(data.teams.rightTeam); 
+               overlayData.updateRightTeam(data.teams.rightTeam);
                break;
             case 'series:update':
                console.log(`[Control WS]: Series update`);
@@ -43,11 +43,19 @@ export function ControlConnector() {
       ws.onerror = function () {
          console.log(`[Control WS]: Error`);
          appSettings.updateControlWSStatus('error');
+         console.log('[Control WS] Reconnect will be attempted in 1 second.');
+         setTimeout(function () {
+            connect();
+         }, 1000);
       };
       ws.onclose = function (event) {
          const reason = DecodeWSCode(event);
          console.log(`[Control WS]: Disconnected - ${reason}`);
          appSettings.updateControlWSStatus('disconnected');
+         console.log('[Control WS] Reconnect will be attempted in 1 second.');
+         setTimeout(function () {
+            connect();
+         }, 1000);
       };
    }
    connect()

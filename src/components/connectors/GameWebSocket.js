@@ -66,11 +66,19 @@ export function GameConnector() {
       ws.onerror = function () {
          console.log(`[Game WS]: Error`);
          appSettings.updateGameWSStatus('error');
+         console.log('[Game WS] Reconnect will be attempted in 1 second.');
+         setTimeout(function () {
+            connect();
+         }, 1000);
       };
       ws.onclose = function (event) {
          const reason = DecodeWSCode(event);
          console.log(`[Game WS]: Disconnected - ${reason}`);
          appSettings.updateGameWSStatus('disconnected');
+         console.log('[Game WS] Reconnect will be attempted in 1 second.');
+         setTimeout(function () {
+            connect();
+         }, 1000);
       };
    }
    connect()
