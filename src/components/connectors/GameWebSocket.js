@@ -42,7 +42,7 @@ export function GameConnector() {
             case 'game:podium_start':
                setTimeout(function () {
                   Router.push({ name: 'post-game-stats' })
-               }, 5000);
+               }, 4800);
 
                console.log(`[Game WS]: Podium Started`);
                gameState.updatePostGameStats(data.data.players);

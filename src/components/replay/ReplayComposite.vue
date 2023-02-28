@@ -6,25 +6,47 @@ const overlayData = overlayDataStore();
 </script>
 
 <template>
-    <div class="replay" v-if="gameState.isReplay">
-      <div class="replay_info">
-        <div class="replay_item">
-          <div class="replay_value">{{ overlayData.getTeam(gameState.getReplayStats.scorer.teamnum).name }} Goal</div>
+  <div v-if="gameState.isReplay">
+    <div class="replay_border">
+    </div>
+    <div class="replay_background">
+      <div class="replay_content">
+        <div class="replay_col replay_left">
+          <div class="replay_item ri_left">
+            <div class="replay_label"><img class="replay_icon"
+                :src="overlayData.getTeam(gameState.getReplayStats.scorer.teamnum).image" /></div>
+            <div class="replay_value">{{ overlayData.getTeam(gameState.getReplayStats.scorer.teamnum).name }} Goal</div>
+          </div>
         </div>
-        <div class="replay_item">
-          <div class="replay_label"><img class="replay_icon" src="@/assets/icons/GOAL_ICON.png"></div>
-          <div class="replay_value">{{ gameState.getReplayStats.scorer.name || "" }}</div>
+        <div class="replay_col replay_middle">
+          <div class="replay_item ri_middle">
+            <div class="replay_label"><img class="replay_icon" src="@/assets/icons/GOAL_ICON.png"></div>
+            <div class="replay_value">{{ gameState.getReplayStats.scorer.name || "" }}</div>
+          </div>
+          <div class="replay_item ri_middle" v-if="gameState.getReplayStats.assister.name">
+            <div class="replay_label"><img class="replay_icon" src="@/assets/icons/ASST_ICON.png"></div>
+            <div class="replay_value">{{ gameState.getReplayStats.assister.name || "" }}</div>
+          </div>
         </div>
-        <div class="replay_item" v-if="gameState.getReplayStats.assister.name">
-          <div class="replay_label"><img class="replay_icon" src="@/assets/icons/ASST_ICON.png"></div>
-          <div class="replay_value">{{ gameState.getReplayStats.assister.name || "" }}</div>
+        <div class="replay_col replay_right">
+          <div class="replay_item ri_right">
+            <div class="replay_label"><img class="replay_icon" src="@/assets/icons/SHOT_ICON.png"></div>
+            <div class="replay_value">{{ Math.round(gameState.getReplayStats.goalspeed) || "" }}MPH</div>
+          </div>
+          <div class="replay_item ri_right">
+            <div class="replay_label"><img class="replay_icon" src="@/assets/icons/TIME_ICON.png"></div>
+            <div class="replay_value">{{ new Date(gameState.getReplayStats.goaltime * 1000).toISOString().substring(14,
+              19)
+              || "" }} </div>
+          </div>
         </div>
       </div>
     </div>
+  </div>
 </template>
 
 <style lang="scss" scoped>
-.replay{
+.replay_border {
   position: absolute;
   top: 0;
   left: 0;
@@ -35,38 +57,95 @@ const overlayData = overlayDataStore();
   background-size: cover;
   background-position: center;
   z-index: 100;
-  .replay_info{
-    font-family: 'Fyrste';
-    text-transform: lowercase;
+}
+
+.replay_background {
+  position: absolute;
+  bottom: 38px;
+  left: 0;
+  width: 100vw;
+  height: 60px;
+  background-color: var(--etsu-primary-bg);
+
+  .replay_content {
     position: relative;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
+    align-items: center;
     flex-direction: row;
     top: 100%;
     color: #ffffff;
     transform: translateY(-163%);
-    background-color: var(--etsu-primary-bg);
-    width: 700px;
-    height: 60px;
+    font-family: 'Fyrste';
+    text-transform: lowercase;
+    width: 90%;
     margin: 0 auto;
-    .replay_item{
+    top: 90px;
+
+    .replay_col {
       display: flex;
       flex-direction: row;
       align-items: center;
-      width: 50%;
-      .replay_value{
+      width: 33vw;
+
+      .replay_item {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: 100%;
+
+        &.ri_left {
+          justify-content: flex-start;
+          margin-right: auto;
+        }
+
+        &.ri_middle {
+          justify-content: center;
+          align-items: center;
+        }
+
+        &.ri_right {
+          justify-content: flex-end;
+          margin-left: auto;
+        }
+
+        .replay_value {
+          font-size: 40px;
+          text-transform: lowercase;
+          margin-left: 5px;
+        }
+      }
+
+      &.replay_left {
+        justify-content: flex-start;
+        margin-right: auto;
+      }
+
+      &.replay_middle {
+        justify-content: center;
+        align-items: center;
+      }
+
+      &.replay_right {
+        justify-content: flex-end;
+        margin-left: auto;
+      }
+
+      .replay_value {
         font-size: 40px;
         text-transform: lowercase;
         margin-left: 5px;
       }
     }
-    .replay_label{
-      .replay_icon{
+
+    .replay_label {
+      .replay_icon {
         width: 50px;
         height: 50px;
         margin-right: 5px;
       }
     }
   }
+
 }
 </style>
