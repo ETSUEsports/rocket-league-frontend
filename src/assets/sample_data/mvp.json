@@ -1,0 +1,15 @@
+{
+    "event_name": "MVP",
+    "main_target": {
+        "id": "Stinger_1",
+        "name": "Stinger",
+        "team_num": 0
+    },
+    "match_guid": "42E1AEEC11EDBA057A791BB210B8E4A9",
+    "secondary_target": {
+        "id": "",
+        "name": "",
+        "team_num": -1
+    },
+    "type": "MVP"
+}

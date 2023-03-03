@@ -8,6 +8,7 @@ export function GameConnector() {
    const gameState = gameStateStore();
    const appSettings = appSettingsStore();
    const overlayData = overlayDataStore();
+   let savedStatsFlag = false;
    const ws = new WebSocket(appSettings.getGameWSConn);
    function connect() {
       ws.onmessage = (event) => {
@@ -21,13 +22,18 @@ export function GameConnector() {
                break;
             case 'game:update_state':
                gameState.updateState(data.data);
+               if(data.data.game.hasWinner && Object.keys(data.data.players).length % 2 == 0 && !savedStatsFlag) {
+                  console.log(`[Game WS]: Saving post game stats`);
+                  savedStatsFlag = true;
+                  gameState.updatePostGameStats(data.data.players);
+               }
                break;
             case 'game:goal_scored':
                gameState.updateReplayStats(data.data);
-               if(!gameState.hasWinner){
+               if (!gameState.hasWinner) {
                   setTimeout(() => {
                      overlayData.updateReplay(true, data.data.scorer.teamnum);
-                   }, 2500);
+                  }, 2500);
                }
                break;
             case 'game:statfeed_event':
@@ -38,25 +44,33 @@ export function GameConnector() {
                console.log(`[Game WS]: Ball Hit`);
                break;
             case 'game:podium_start':
-               gameState.updatePostGameStats(data.data.players);
-               setTimeout(function () {
-                  Router.push({ name: 'post-game-stats' })
-               }, 4800);
+               console.log(data);
+               if (Router.name != 'dashboard') {
+                  setTimeout(function () {
+                     Router.push({ name: 'post-game-stats' })
+                  }, 4800);
+               }
                console.log(`[Game WS]: Podium Started`);
                break;
             case 'game:match_created':
-               Router.push({ name: 'overlay' })
+               savedStatsFlag = false;
+               if (Router.name != 'dashboard') {
+                  Router.push({ name: 'overlay' })
+               }
                console.log(`[Game WS]: Match created`);
                break;
             case 'game:match_ended':
+               console.log(data);
+               savedStatsFlag = false;
                console.log(`[Game WS]: Match ended`);
                break;
             case 'game:match_destroyed':
+               savedStatsFlag = false;
                console.log(`[Game WS]: Match destroyed`);
                gameState.resetState();
                break;
             default:
-               console.log(`[Game WS]: Unknown event ${data.event}`);
+               console.warn(`[Game WS]: Unknown event ${data.event}`);
          }
       }
       ws.onopen = function () {

@@ -1,3 +1,4 @@
+import DecodeStatfeed from '@/utils/DecodeStatfeed';
 import { defineStore, acceptHMRUpdate } from 'pinia';
 export const gameStateStore = defineStore({
     id: 'gameState',
@@ -15,6 +16,7 @@ export const gameStateStore = defineStore({
         players: {},
         replayStats: { "assister": { "id": "", "name": "Player 2" }, "ball_last_touch": { "player": "", "speed": 0 }, "goalspeed": 0, "goaltime": 0, "impact_location": { "X": 0, "Y": 0 }, "scorer": { "id": "", "name": "Player 1", "teamnum": 0 } },
         postGameStats: {},
+        postGameMVP: { "id": "", "name": "Player 1", "team": 0 },
         statfeedEvents: [],
     }),
     getters: {
@@ -108,45 +110,16 @@ export const gameStateStore = defineStore({
             this.postGameStats = data;
         },
         addStatfeedEvent(event) {
-            let item = { type: "EVENT_TYPE", primary_player: { id: "PRIMARY_ID", name: "PRIMARY_NAME", team: -1 }, secondary_player: { id: "SECONDARY_ID", name: "SECONDARY_NAME", team: -1 } };
-            switch (event.event_name) {
-                case 'Shot':
-                    item.type = "SHOT";
-                    item.primary_player.id = event.main_target.id;
-                    item.primary_player.name = event.main_target.name;
-                    item.primary_player.team = event.main_target.team_num;
-                    this.statfeedEvents.push(item);
-                    setTimeout(() => {
-                        this.removeStatfeedEvent(item)
-                    }, 7000)
-                    break;
-                case 'Save':
-                    item.type = "SAVE";
-                    item.primary_player.id = event.main_target.id;
-                    item.primary_player.name = event.main_target.name;
-                    item.primary_player.team = event.main_target.team_num;
-                    this.statfeedEvents.push(item);
-                    setTimeout(() => {
-                        this.removeStatfeedEvent(item)
-                    }, 7000)
-                    break;
-                case 'Demolish':
-                    item.type = "SAVE";
-                    item.primary_player.id = event.main_target.id;
-                    item.primary_player.name = event.main_target.name;
-                    item.primary_player.team = event.main_target.team_num;
-                    item.secondary_player.id = event.secondary_target.id;
-                    item.secondary_player.name = event.secondary_target.name;
-                    item.secondary_player.team = event.secondary_target.team_num;
-                    this.statfeedEvents.push(item);
-                    setTimeout(() => {
-                        this.removeStatfeedEvent(item)
-                    }, 7000)
-                    break;
-                default:
-                    console.warn("Unknown event type: " + event.event_name);
-                    break;
-            }
+            const item = DecodeStatfeed(event);
+            if (typeof item === 'undefined') return;
+            if (item.type === 'MVP') this.setPostGameMVP(item.primary_player);
+            this.statfeedEvents.push(item);
+            setTimeout(() => {
+                this.removeStatfeedEvent(item)
+            }, 7000)
+        },
+        setPostGameMVP(player) {
+            this.postGameMVP = player;
         },
         removeStatfeedEvent(event) {
             const index = this.statfeedEvents.indexOf(event);
