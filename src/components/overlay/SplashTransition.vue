@@ -5,7 +5,6 @@ import { watch } from 'vue';
 const overlayData = overlayDataStore();
 
 watch(() => overlayData.replay.showTransition, () => {
-    console.log('replay.showTransition changed');
     if(overlayData.replay.showTransition) {
         setTimeout(() => {
           overlayData.updateReplay(false, 0);

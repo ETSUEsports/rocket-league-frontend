@@ -24,16 +24,15 @@ export function GameConnector() {
                break;
             case 'game:goal_scored':
                gameState.updateReplayStats(data.data);
-               console.log(data.data.scorer.teamnum);
                if(!gameState.hasWinner){
                   setTimeout(() => {
                      overlayData.updateReplay(true, data.data.scorer.teamnum);
                    }, 2500);
                }
-               console.log(data.data);
                break;
             case 'game:statfeed_event':
                console.log(data.data);
+               gameState.addStatfeedEvent(data.data);
                break;
             case 'game:ball_hit':
                console.log(`[Game WS]: Ball Hit`);

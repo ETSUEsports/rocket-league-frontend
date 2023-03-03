@@ -1,8 +1,7 @@
 import { defineStore, acceptHMRUpdate } from 'pinia';
-
 export const gameStateStore = defineStore({
     id: 'gameState',
-    persist: true,
+    persist: false,
     state: () => ({
         clock: 300,
         winner: "",
@@ -109,13 +108,51 @@ export const gameStateStore = defineStore({
             this.postGameStats = data;
         },
         addStatfeedEvent(event) {
-            this.statfeedEvents.push(event);
-            setTimeout(() => {
-                this.removeStatfeedEvent(event)
-              }, 7000)
+            let item = { type: "EVENT_TYPE", primary_player: { id: "PRIMARY_ID", name: "PRIMARY_NAME", team: -1 }, secondary_player: { id: "SECONDARY_ID", name: "SECONDARY_NAME", team: -1 } };
+            switch (event.event_name) {
+                case 'Shot':
+                    item.type = "SHOT";
+                    item.primary_player.id = event.main_target.id;
+                    item.primary_player.name = event.main_target.name;
+                    item.primary_player.team = event.main_target.team_num;
+                    this.statfeedEvents.push(item);
+                    setTimeout(() => {
+                        this.removeStatfeedEvent(item)
+                    }, 7000)
+                    break;
+                case 'Save':
+                    item.type = "SAVE";
+                    item.primary_player.id = event.main_target.id;
+                    item.primary_player.name = event.main_target.name;
+                    item.primary_player.team = event.main_target.team_num;
+                    this.statfeedEvents.push(item);
+                    setTimeout(() => {
+                        this.removeStatfeedEvent(item)
+                    }, 7000)
+                    break;
+                case 'Demolish':
+                    item.type = "SAVE";
+                    item.primary_player.id = event.main_target.id;
+                    item.primary_player.name = event.main_target.name;
+                    item.primary_player.team = event.main_target.team_num;
+                    item.secondary_player.id = event.secondary_target.id;
+                    item.secondary_player.name = event.secondary_target.name;
+                    item.secondary_player.team = event.secondary_target.team_num;
+                    this.statfeedEvents.push(item);
+                    setTimeout(() => {
+                        this.removeStatfeedEvent(item)
+                    }, 7000)
+                    break;
+                default:
+                    console.warn("Unknown event type: " + event.event_name);
+                    break;
+            }
         },
         removeStatfeedEvent(event) {
-            this.statfeedEvents = this.statfeedEvents.filter(item => item !== event)
+            const index = this.statfeedEvents.indexOf(event);
+            if (index > -1) {
+                this.statfeedEvents.splice(index, 1);
+            }
         },
         resetState() {
             const temp = this.postGameStats;
