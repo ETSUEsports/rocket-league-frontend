@@ -91,6 +91,7 @@ function playerItemColor(player) {
       font-size: 30px;
       margin-right: 10px;
       margin-left: 10px;
+      line-height: 30px;
     }
 
     h4 {

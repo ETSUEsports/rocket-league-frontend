@@ -21,7 +21,6 @@ export function GameConnector() {
                break;
             case 'game:update_state':
                gameState.updateState(data.data);
-               gameState.updatePostGameStats(data.data.players);
                break;
             case 'game:goal_scored':
                gameState.updateReplayStats(data.data);
@@ -37,19 +36,21 @@ export function GameConnector() {
                console.log(data.data);
                break;
             case 'game:ball_hit':
-               console.log(data.data);
+               console.log(`[Game WS]: Ball Hit`);
                break;
             case 'game:podium_start':
+               gameState.updatePostGameStats(data.data.players);
                setTimeout(function () {
                   Router.push({ name: 'post-game-stats' })
                }, 4800);
-
                console.log(`[Game WS]: Podium Started`);
-               gameState.updatePostGameStats(data.data.players);
                break;
             case 'game:match_created':
                Router.push({ name: 'overlay' })
                console.log(`[Game WS]: Match created`);
+               break;
+            case 'game:match_ended':
+               console.log(`[Game WS]: Match ended`);
                break;
             case 'game:match_destroyed':
                console.log(`[Game WS]: Match destroyed`);

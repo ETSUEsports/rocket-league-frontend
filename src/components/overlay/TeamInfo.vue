@@ -85,6 +85,7 @@ const bestOf = computed(() => {
     margin-left: 10px;
     margin-right: 10px;
     text-transform: none;
+    line-height: 21px;
   }
 
   .wins {

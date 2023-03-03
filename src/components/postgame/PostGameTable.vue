@@ -56,6 +56,8 @@ const stats = ['score', 'goals', 'assists', 'shots', 'saves', 'demos', 'touches'
     table-layout: fixed;
     border-collapse: collapse;
     .th_left {
+      line-height: 10px;
+      font-size: 2vw;
       background-color: var(--rl-primary-blue);
     }
     .th_center {
@@ -63,6 +65,8 @@ const stats = ['score', 'goals', 'assists', 'shots', 'saves', 'demos', 'touches'
       background: linear-gradient(112.5deg , var(--rl-primary-blue) 50%, var(--rl-primary-orange) 50%);
     }
     .th_right {
+      font-size: 2vw;
+      line-height: 10px;
       background-color: var(--rl-primary-orange);
     }
     .table_header{

@@ -80,7 +80,7 @@ const overlayData = overlayDataStore();
     text-transform: lowercase;
     width: 90%;
     margin: 0 auto;
-    top: 90px;
+    top: 120px;
 
     .replay_col {
       display: flex;
@@ -93,6 +93,7 @@ const overlayData = overlayDataStore();
         flex-direction: row;
         align-items: center;
         width: 100%;
+        line-height: 70px;
 
         &.ri_left {
           justify-content: flex-start;
@@ -143,6 +144,8 @@ const overlayData = overlayDataStore();
         width: 50px;
         height: 50px;
         margin-right: 5px;
+        position: relative;
+        bottom: -15px;
       }
     }
   }

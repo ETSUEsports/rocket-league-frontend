@@ -55,6 +55,7 @@ defineProps(['player', 'team']);
   font-size: 2.5em;
   .name{
     margin-left: 10px;
+    line-height: 40px;
   }
   .stats {
     display: flex;
