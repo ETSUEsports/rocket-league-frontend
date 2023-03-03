@@ -15,7 +15,8 @@ export const gameStateStore = defineStore({
         teams: [{ "color_primary": "1873FF", "color_secondary": "E5E5E5", "name": "Team 1", "score": 0 }, { "color_primary": "C26418", "color_secondary": "E5E5E5", "name": "Team 2", "score": 0 }],
         players: {},
         replayStats: { "assister": { "id": "", "name": "Player 2" }, "ball_last_touch": { "player": "", "speed": 0 }, "goalspeed": 0, "goaltime": 0, "impact_location": { "X": 0, "Y": 0 }, "scorer": { "id": "", "name": "Player 1", "teamnum": 0 } },
-        postGameStats: {}
+        postGameStats: {},
+        statfeedEvents: [],
     }),
     getters: {
         scoreboardClock: (state) => {
@@ -78,6 +79,9 @@ export const gameStateStore = defineStore({
                 const formatSide = side === 'left' ? 0 : 1;
                 return getTeamTotal(formatSide, stat, state.postGameStats);
             }
+        },
+        getStatfeedEvents: (state) => {
+            return state.statfeedEvents;
         }
     },
     actions: {
@@ -103,6 +107,15 @@ export const gameStateStore = defineStore({
         },
         updatePostGameStats(data) {
             this.postGameStats = data;
+        },
+        addStatfeedEvent(event) {
+            this.statfeedEvents.push(event);
+            setTimeout(() => {
+                this.removeStatfeedEvent(event)
+              }, 7000)
+        },
+        removeStatfeedEvent(event) {
+            this.statfeedEvents = this.statfeedEvents.filter(item => item !== event)
         },
         resetState() {
             const temp = this.postGameStats;
