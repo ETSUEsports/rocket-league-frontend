@@ -2,8 +2,9 @@
 import axios from 'axios';
 import { overlayDataStore } from '@/store/overlayDataStore';
 import { appSettingsStore } from '@/store/appSettingsStore';
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import AppSettings from './modal/AppSettings.vue';
+import { useDropzone } from "vue3-dropzone";
 
 const appSettings = appSettingsStore();
 const overlayData = overlayDataStore();
@@ -98,6 +99,17 @@ const openSettings = () => {
 };
 
 let showSettings = ref(false);
+
+function onDrop(acceptFiles, rejectReasons) {
+  console.log(acceptFiles);
+  console.log(rejectReasons);
+}
+
+const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+
+watch(isDragActive, () => {
+  console.log('isDragActive', isDragActive.value);
+});
 
 </script>
 
@@ -209,6 +221,21 @@ let showSettings = ref(false);
           </div>
         </div>
       </div>
+      <div class="outline">
+        <div class="toprow">
+          <h1>Files</h1>
+        </div>
+        <div v-bind="getRootProps()" class="dropzone">
+          <div class="border" :class="{
+            isDragActive,
+          }">
+          </div>
+          <input v-bind="getInputProps()" />
+          <p v-if="isDragActive">Drop files here to upload</p>
+          <p v-else>Drop files here to upload for team logos</p>
+        </div>
+      </div>
+
     </div>
   </div>
 </template>
@@ -237,12 +264,15 @@ p {
 
   .outline {
     border: 1px solid var(--etsu-primary-gold);
+
     &.orange {
       border: 1px solid var(--rl-primary-orange);
     }
+
     &.blue {
       border: 1px solid var(--rl-primary-blue);
     }
+
     border-radius: 4px;
     padding: 4px;
     margin: 10px;
@@ -313,9 +343,11 @@ p {
       font-size: 2em;
     }
   }
-  .settings{
+
+  .settings {
     margin-left: 20px;
   }
+
   .teams_container {
     display: flex;
     justify-content: space-between;
@@ -460,12 +492,15 @@ label {
   &.connected {
     background-color: #16a34a;
   }
+
   &.error {
     background-color: #f59e0b;
   }
+
   &.disconnected {
     background-color: #dc2626;
   }
+
   background-color: #6b7280;
   border-radius: 9999px;
   height: 0.5rem;
@@ -483,18 +518,54 @@ label {
   justify-content: space-between;
   align-items: center;
   margin: 4px;
+
   .left {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
   }
+
   .right {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: flex-end;
   }
+
 }
 
+.dropzone,
+.files {
+  width: 100%;
+  height: 60px;
+  border-radius: 8px;
+  box-shadow: rgba(255, 255, 255, 0.6) 0px 1px 2px 0px,
+    rgba(255, 255, 255, 0.15) 0px 1px 3px 1px;
+  font-size: 1.5rem;
+  text-align: center;
+  line-height: 1.5;
+  p{
+    margin: 0;
+    position: relative;
+    top: -50px;
+  }
+}
+
+.border {
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  transition: all 0.3s ease;
+  background-color: var(--etsu-secondary-bg);
+
+
+  &.isDragActive {
+    border: 2px dashed #ffb300;
+    background: rgb(255 167 18 / 20%);
+  }
+}
 </style>
