@@ -50,6 +50,7 @@ body,
 #app {
   height: 100vh;
   margin: 0px auto;
+  background-color: var(--db-primary-bg) !important;
 }
 
 @font-face {

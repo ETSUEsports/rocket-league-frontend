@@ -1,7 +1,7 @@
 <script setup>
-import { defineProps } from 'vue';
+import { defineProps, onMounted } from 'vue';
 const props = defineProps(['players', 'reverse', 'highlight']);
-
+let clipPath = "";
 function playerFocused(player) {
   if (props.highlight == null) return false;
   if (props.highlight.id == player.id) {
@@ -46,12 +46,23 @@ function playerItemColor(player) {
     }
   }
 }
+
+onMounted(() => {
+  switch (props.reverse) {
+    case true:
+      clipPath = "polygon(0 0, 98% 0, 100% 100%, 0% 100%)";
+      break;
+    default:
+      clipPath = "polygon(2% 0, 100% 0, 100% 100%, 0% 100%)";
+      break;
+  }
+});
 </script>
 
 <template>
   <div class="container">
     <div v-for="(player, propertyName, index) in players" :key="player.name" class="playerlist_item"
-      :style="`margin-left: ${reverse ? '0' : 'auto'}; margin-right: ${reverse ? 'auto' : '0'}; width: ${330 - index * 10}px; clip-path: ${reverse ? 'polygon(0 0, 98% 0, 100% 100%, 0% 100%)' : 'polygon(2% 0, 100% 0, 100% 100%, 0% 100%)'}; background-color: ${playerItemColor(player)};`">
+      :style="`margin-left: ${reverse ? '0' : 'auto'}; margin-right: ${reverse ? 'auto' : '0'}; width: ${330 - index * 10}px; clip-path: ${clipPath}; background-color: ${playerItemColor(player)};`">
       <div class="player_boost_bar" :style="`flex-direction: ${reverse ? 'row' : 'row-reverse'};`">
         <h3>{{ player.name }}</h3>
         <h4 class="boost_tag">{{ player.boost }}</h4>

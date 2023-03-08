@@ -122,13 +122,13 @@ const del = (type) => {
 
     .team_left {
         input:focus {
-            outline: 2px solid var(--rl-primary-orange);
+            outline: 2px solid var(--rl-primary-blue);
         }
     }
 
     .team_right {
         input:focus {
-            outline: 2px solid var(--rl-primary-blue);
+            outline: 2px solid var(--rl-primary-orange);
         }
     }
 

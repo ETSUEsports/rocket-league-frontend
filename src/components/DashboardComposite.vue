@@ -121,11 +121,7 @@ p {
   vertical-align: baseline;
   background: transparent;
 }
-body, html, #app {
-  background-color: var(--db-primary-bg) !important;
-}
 .dashboard {
-  background-color: var(--db-primary-bg);
   font-family: Verdana, sans-serif;
   height: 100%vh;
   color: #ffffff;

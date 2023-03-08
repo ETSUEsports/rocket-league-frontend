@@ -10,7 +10,8 @@ export const appSettingsStore = defineStore({
         controlWSIP: "localhost",
         controlWSPort: "3000",
         controlHTTPSecure: false,
-        controlWSStatus: "disconnected"
+        controlWSStatus: "disconnected",
+        obsStatus: "disconnected",
     }),
     getters: {
         getGameWSIP: (state) => {
@@ -43,6 +44,9 @@ export const appSettingsStore = defineStore({
         },
         getControlWSStatus: (state) => {
             return state.controlWSStatus;
+        },
+        getOBSStatus: (state) => {
+            return state.obsStatus;
         }
     },
     actions: {
@@ -66,6 +70,9 @@ export const appSettingsStore = defineStore({
         },
         updateControlWSStatus(status) {
             this.controlWSStatus = status;
+        },
+        updateOBSStatus(status) {
+            this.obsStatus = status;
         },
         resetState() {
             this.$reset();

@@ -3,6 +3,7 @@ import { appSettingsStore } from '@/store/appSettingsStore';
 import DecodeWSCode from '@/utils/DecodeWSCode';
 import Router from '@/router';
 import { overlayDataStore } from '@/store/overlayDataStore';
+import { muteAudio, unmuteAudio } from '@/components/connectors/OBS';
 
 export function GameConnector() {
    const gameState = gameStateStore();
@@ -54,17 +55,19 @@ export function GameConnector() {
                break;
             case 'game:podium_start':
                console.log(data);
-               if (Router.name != 'dashboard') {
+               if (Router.currentRoute.value.name != 'dashboard') {
                   setTimeout(function () {
                      Router.push({ name: 'post-game-stats' })
+                     muteAudio();
                   }, 4800);
                }
                console.log(`[Game WS]: Podium Started`);
                break;
             case 'game:match_created':
                savedStatsFlag = false;
-               if (Router.name != 'dashboard') {
+               if (Router.currentRoute.value.name != 'dashboard') {
                   Router.push({ name: 'overlay' })
+                  unmuteAudio();
                }
                console.log(`[Game WS]: Match created`);
                break;

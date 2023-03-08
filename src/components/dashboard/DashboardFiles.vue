@@ -146,7 +146,9 @@ div.images {
         outline: 2px solid var(--etsu-primary-gold);
         text-align: center;
         height: 100%;
-
+        p{
+            margin: 0;
+        }
         .imgDelete {
             font-size: 20px;
             margin-top: 10px;
@@ -164,6 +166,11 @@ div.images {
             object-fit: cover;
             border-radius: 8px;
         }
+    }
+    div.image:hover{
+        outline: 2px solid var(--etsu-primary-navy);
+        background-color: var(--db-primary-bg);
+
     }
 }
 </style>
