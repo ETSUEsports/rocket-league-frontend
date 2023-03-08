@@ -2,12 +2,14 @@
 import axios from 'axios';
 import { overlayDataStore } from '@/store/overlayDataStore';
 import { appSettingsStore } from '@/store/appSettingsStore';
-import { ref, watch } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import AppSettings from './modal/AppSettings.vue';
 import { useDropzone } from "vue3-dropzone";
-
+import { useToast } from 'vue-toastification';
+const toast = useToast();
 const appSettings = appSettingsStore();
 const overlayData = overlayDataStore();
+let images = ref([]);
 const add = (type) => {
   switch (type) {
     case 'game':
@@ -100,8 +102,56 @@ const openSettings = () => {
 
 let showSettings = ref(false);
 
+const url = `${appSettings.getControlHTTPConn}/images`; // Your url on the server side
+const uploadFiles = (files) => {
+  for (var x = 0; x < files.length; x++) {
+    const formData = new FormData(); // pass data as a form
+    formData.append("image", files[x]);
+    axios
+      .post(url, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        console.info(response.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+};
+
+const getFiles = () => {
+  axios
+    .get(url)
+    .then((response) => {
+      images.value = response.data;
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+};
+
+const copyURL = (url) => {
+  navigator.clipboard.writeText(url);
+  toast.success('Copied to clipboard');
+};
+
+const deleteImage = (name) => {
+  axios
+    .delete(`${url}/${name}`)
+    .then((response) => {
+      console.info(response.data);
+      toast.success('Deleted image');
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+}
+
 function onDrop(acceptFiles, rejectReasons) {
-  console.log(acceptFiles);
+  uploadFiles(acceptFiles);
   console.log(rejectReasons);
 }
 
@@ -109,6 +159,13 @@ const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
 watch(isDragActive, () => {
   console.log('isDragActive', isDragActive.value);
+});
+
+onMounted(() => {
+  getFiles();
+  setInterval(() => {
+    getFiles();
+  }, 1000);
 });
 
 </script>
@@ -233,6 +290,14 @@ watch(isDragActive, () => {
           <input v-bind="getInputProps()" />
           <p v-if="isDragActive">Drop files here to upload</p>
           <p v-else>Drop files here to upload for team logos</p>
+        </div>
+        <div class="images">
+          <div class="image" v-for="image in images" :key="image.name">
+            <img @click="copyURL(image.public_url)" :src="image.public_url" class="image" />
+            <p>{{ image.name }}</p>
+            <button class="button danger imgDelete" @click="deleteImage(image.name)"><span
+                  class="material-symbols-outlined">delete</span><span class="text">Delete</span></button>
+          </div>
         </div>
       </div>
 
@@ -545,7 +610,8 @@ label {
   font-size: 1.5rem;
   text-align: center;
   line-height: 1.5;
-  p{
+
+  p {
     margin: 0;
     position: relative;
     top: -50px;
@@ -567,5 +633,49 @@ label {
     border: 2px dashed #ffb300;
     background: rgb(255 167 18 / 20%);
   }
+}
+
+
+
+div.images {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin-top: 5px;
+
+  div.image {
+    margin: 4px;
+    background-color: var(--etsu-secondary-bg);
+    border-radius: 8px;
+    outline: 2px solid var(--etsu-primary-gold);
+    text-align: center;
+    height: 100%;
+
+    .imgDelete {
+      font-size: 20px;
+      margin-top: 10px;
+      width: 100%;
+      .text{
+        position: relative;
+        top: -5px;
+      }
+    }
+
+    img.image {
+      max-width: 100px;
+      max-height: 100px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+  }
+}
+</style>
+
+<style>
+html,
+body,
+#app {
+  overflow: scroll;
 }
 </style>

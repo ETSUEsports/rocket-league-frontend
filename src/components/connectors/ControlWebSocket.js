@@ -4,7 +4,12 @@ import DecodeWSCode from '@/utils/DecodeWSCode';
 export function ControlConnector() {
    const overlayData = overlayDataStore();
    const appSettings = appSettingsStore();
-   const ws = new WebSocket(appSettings.getControlWSConn);
+   let ws = new WebSocket(appSettings.getControlWSConn);
+   function reconnect(){
+      ws.close();
+      ws = new WebSocket(appSettings.getControlWSConn);
+      connect();
+   }
    function connect() {
       ws.onmessage = (event) => {
          let data = JSON.parse(event.data);
@@ -43,19 +48,19 @@ export function ControlConnector() {
       ws.onerror = function () {
          console.log(`[Control WS]: Error`);
          appSettings.updateControlWSStatus('error');
-         console.log('[Control WS] Reconnect will be attempted in 1 second.');
+         console.log('[Control WS] Reconnect will be attempted in 10 seconds.');
          setTimeout(function () {
-            connect();
-         }, 1000);
+            reconnect();
+         }, 10000);
       };
       ws.onclose = function (event) {
          const reason = DecodeWSCode(event);
          console.log(`[Control WS]: Disconnected - ${reason}`);
          appSettings.updateControlWSStatus('disconnected');
-         console.log('[Control WS] Reconnect will be attempted in 1 second.');
+         console.log('[Control WS] Reconnect will be attempted in 5 seconds.');
          setTimeout(function () {
-            connect();
-         }, 1000);
+            reconnect();
+         }, 5000);
       };
    }
    connect()
