@@ -10,12 +10,16 @@ export function GameConnector() {
    const overlayData = overlayDataStore();
    let savedStatsFlag = false;
    let ws = new WebSocket(appSettings.getGameWSConn);
-   function reconnect(){
+
+   let reattempt = 0;
+
+   const reconnect = () => {
       ws.close();
       ws = new WebSocket(appSettings.getGameWSConn);
       connect();
-   }
-   function connect() {
+   };
+
+   const connect = () => {
       ws.onmessage = (event) => {
          let data = JSON.parse(event.data);
          switch (data.event) {
@@ -82,18 +86,16 @@ export function GameConnector() {
          console.log(`[Game WS]: Connected`);
          appSettings.updateGameWSStatus('connected');
       };
-      ws.onerror = function () {
-         console.log(`[Game WS]: Error`);
-         appSettings.updateGameWSStatus('error');
-         console.log(`[Game WS] Reconnect will be attempted in 10 seconds.`);
-         setTimeout(function () {
-            reconnect();
-         }, 10000);
-      };
       ws.onclose = function (event) {
          const reason = DecodeWSCode(event);
          console.log(`[Game WS]: Disconnected - ${reason}`);
          appSettings.updateGameWSStatus('disconnected');
+         if (reattempt > 5) {
+            console.log(`[Game WS]: Reconnect failed, giving up`);
+            return;
+         }
+         reattempt++;
+         console.log(`[Game WS]: Reconnect attempt ${reattempt}`);
          console.log(`[Game WS] Reconnect will be attempted in 10 seconds.`);
          setTimeout(function () {
             reconnect();

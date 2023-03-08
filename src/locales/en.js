@@ -27,6 +27,8 @@ const message = {
         resetTeams: 'Reset Teams',
         swapTeams: 'Swap Teams',
         settings: 'Settings',
+        files: 'Files',
+        scorebug: 'Scorebug',
     }
 }
 export default message;

@@ -49,7 +49,6 @@ html,
 body,
 #app {
   height: 100vh;
-  overflow: hidden;
   margin: 0px auto;
 }
 

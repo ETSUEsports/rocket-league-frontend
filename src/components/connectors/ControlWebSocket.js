@@ -5,12 +5,15 @@ export function ControlConnector() {
    const overlayData = overlayDataStore();
    const appSettings = appSettingsStore();
    let ws = new WebSocket(appSettings.getControlWSConn);
-   function reconnect(){
+
+   let reattempt = 0;
+
+   const reconnect = () => {
       ws.close();
       ws = new WebSocket(appSettings.getControlWSConn);
       connect();
    }
-   function connect() {
+   const connect = () => {
       ws.onmessage = (event) => {
          let data = JSON.parse(event.data);
          switch (data.event) {
@@ -45,18 +48,16 @@ export function ControlConnector() {
          console.log(`[Control WS]: Connected`);
          appSettings.updateControlWSStatus('connected');
       };
-      ws.onerror = function () {
-         console.log(`[Control WS]: Error`);
-         appSettings.updateControlWSStatus('error');
-         console.log('[Control WS] Reconnect will be attempted in 10 seconds.');
-         setTimeout(function () {
-            reconnect();
-         }, 10000);
-      };
       ws.onclose = function (event) {
          const reason = DecodeWSCode(event);
          console.log(`[Control WS]: Disconnected - ${reason}`);
          appSettings.updateControlWSStatus('disconnected');
+         if (reattempt > 5) {
+            console.log(`[Control WS]: Reconnect failed, giving up`);
+            return;
+         }
+         reattempt++;
+         console.log(`[Control WS]: Reconnect attempt ${reattempt}`);
          console.log('[Control WS] Reconnect will be attempted in 5 seconds.');
          setTimeout(function () {
             reconnect();
