@@ -28,7 +28,7 @@ onMounted(() => {
         </div>
         <div class="content">
             <div class="content_text">
-                <h3>Login with...</h3>
+                <h3>{{ $t('dashboard.strategy_selector') }}</h3>
                 <div class="strategies">
                     <div v-for="strategy in strategies" :key="strategy.name" class="strategy" @click="authWith(strategy.name)">
                         <span class="label">{{ strategy.name }}</span>
@@ -51,6 +51,7 @@ onMounted(() => {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 
     &.popupOpen {
+        transition: all 0.25s ease-in;
         filter: blur(1px) brightness(0.5);
     }
 

@@ -54,7 +54,6 @@ export function GameConnector() {
                console.log(`[Game WS]: Ball Hit`);
                break;
             case 'game:podium_start':
-               console.log(data);
                if (Router.currentRoute.value.name != 'dashboard') {
                   setTimeout(function () {
                      Router.push({ name: 'post-game-stats' })
@@ -72,7 +71,6 @@ export function GameConnector() {
                console.log(`[Game WS]: Match created`);
                break;
             case 'game:match_ended':
-               console.log(data);
                savedStatsFlag = false;
                console.log(`[Game WS]: Match ended`);
                break;

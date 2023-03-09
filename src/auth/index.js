@@ -2,7 +2,6 @@ import axios from 'axios';
 import { appSettingsStore } from '@/store/appSettingsStore';
 import Router from '@/router';
 
-
 export class Auth {
 
     constructor() {
@@ -10,6 +9,7 @@ export class Auth {
     }
 
     login(strategy) {
+        const vm = this;
         this.appSettings.updateLoginState("loggingIn");
         this.appSettings.updateLoggingInState(true);
         const popupWinHeight = 800;
@@ -19,11 +19,10 @@ export class Auth {
         const popup = window.open(`${this.appSettings.getControlHTTPConn}/auth/strategies/${strategy}`, "Discord Login", `width=${popupWinWidth},height=${popupWinHeight},left=${left},top=${top}`);
         let timer = setInterval(function () {
             if (popup.closed) {
-                console.log("closed")
                 clearInterval(timer);
-                window.removeEventListener('message', this.receiveMessage.bind(this, popup), false);
-                this.appSettings.updateLoggingInState(false);
-                this.appSettings.updateLoginState("canceled");
+                window.removeEventListener('message', vm.receiveMessage.bind(vm, popup), false);
+                vm.appSettings.updateLoggingInState(false);
+                vm.appSettings.updateLoginState("canceled");
             }
         }, 1000);
         window.addEventListener('message', this.receiveMessage.bind(this, popup), false);

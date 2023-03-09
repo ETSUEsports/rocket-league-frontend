@@ -31,6 +31,7 @@ const message = {
         scorebug: 'Scorebug',
         login: 'Login',
         logout: 'Logout',
+        strategy_selector: 'Select a provider to login with'
     }
 }
 export default message;
