@@ -1,4 +1,4 @@
-import axios from 'axios';
+import controlAPI from '@/api';
 import { appSettingsStore } from '@/store/appSettingsStore';
 import Router from '@/router';
 
@@ -54,7 +54,7 @@ export class Auth {
 
     async getAuthStrategies() {
         return new Promise((resolve, reject) => {
-            axios.get(`${this.appSettings.getControlHTTPConn}/auth/strategies`).then((response) => {
+            controlAPI.get(`${this.appSettings.getControlHTTPConn}/auth/strategies`).then((response) => {
                 resolve(response.data.strategies);
             }).catch((error) => {
                 reject(error);

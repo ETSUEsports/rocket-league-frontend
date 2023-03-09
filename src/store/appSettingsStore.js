@@ -52,6 +52,9 @@ export const appSettingsStore = defineStore({
             return state.obsStatus;
         },
         getUser: (state) => {
+            if(state.user == null) {
+                return {};
+            }
             return state.user;
         },
         getLoginState: (state) => {

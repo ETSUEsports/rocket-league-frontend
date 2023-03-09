@@ -30,7 +30,8 @@ onMounted(() => {
             <div class="content_text">
                 <h3>{{ $t('dashboard.strategy_selector') }}</h3>
                 <div class="strategies">
-                    <div v-for="strategy in strategies" :key="strategy.name" class="strategy" @click="authWith(strategy.name)">
+                    <div v-for="strategy in strategies" :key="strategy.name" class="strategy discord" @click="authWith(strategy.name)">
+                        <img src="@/assets/discord.svg" alt="discord logo" class="icon" />
                         <span class="label">{{ strategy.name }}</span>
                     </div>
                 </div>
@@ -49,6 +50,11 @@ onMounted(() => {
     height: 100%;
     text-overflow: ellipsis;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+    background-image: url('@/assets/etsu_logo.png');
+    background-repeat: no-repeat;
+    background-position: right 10px bottom 10px;
+    background-size: 20%;
 
     &.popupOpen {
         transition: all 0.25s ease-in;
@@ -74,12 +80,31 @@ onMounted(() => {
             .strategy {
                 margin: 10px;
                 padding: 10px;
-                width: 100px;
+                width: 120px;
                 background-color: var(--rl-primary-blue);
                 border-radius: 10px;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+
+                .icon {
+                    width: 30px;
+                    height: 30px;
+                    margin-right: 10px;
+                }
+
                 .label {
                     font-size: 20px;
                     text-transform: capitalize;
+                }
+
+                &.discord {
+                    background-color: #5865F2;
+                }
+
+                &:hover {
+                    cursor: pointer;
+                    
                 }
             }
             .strategy:hover {

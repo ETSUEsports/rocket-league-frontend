@@ -27,5 +27,5 @@ createApp(App)
     .use(pinia)
     .use(router)
     .use(VueApexCharts)
-    .use(Toast)
+    .use(Toast, { pauseOnFocusLoss: false, pauseOnHover: false, timeout: 5000, position: "top-right"})
     .mount('#app');

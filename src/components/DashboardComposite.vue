@@ -1,11 +1,12 @@
 <script setup>
-import axios from 'axios';
+import controlAPI from '@/api';
 import { overlayDataStore } from '@/store/overlayDataStore';
 import { appSettingsStore } from '@/store/appSettingsStore';
 import { ref, onBeforeMount } from 'vue';
 import { useRouter } from 'vue-router';
 import AppSettings from './modal/AppSettings.vue';
 
+import DashboardAuthCheck from '@/components/dashboard/DashboardAuthCheck.vue';
 import DashboardSection from '@/components/dashboard/DashboardSection.vue';
 import DashboardFiles from '@/components/dashboard/DashboardFiles.vue';
 import DashboardTeams from '@/components/dashboard/DashboardTeams.vue';
@@ -19,34 +20,34 @@ const openSettings = () => {
 };
 
 const updateScorebug = () => {
-  axios.post(`${appSettings.getControlHTTPConn}/series`, { name: overlayData.series.name, gameNumber: overlayData.series.gameNumber, bestOf: overlayData.series.bestOf });
+  controlAPI.post(`${appSettings.getControlHTTPConn}/series`, { name: overlayData.series.name, gameNumber: overlayData.series.gameNumber, bestOf: overlayData.series.bestOf });
 };
 
 const resetScorebug = () => {
-  axios.delete(`${appSettings.getControlHTTPConn}/series`);
+  controlAPI.delete(`${appSettings.getControlHTTPConn}/series`);
 };
 
 const updateTeams = () => {
-  axios.post(`${appSettings.getControlHTTPConn}/teams`, { leftTeam: overlayData.leftTeam, rightTeam: overlayData.rightTeam });
+  controlAPI.post(`${appSettings.getControlHTTPConn}/teams`, { leftTeam: overlayData.leftTeam, rightTeam: overlayData.rightTeam });
 };
 const resetTeams = () => {
-  axios.delete(`${appSettings.getControlHTTPConn}/teams`);
+  controlAPI.delete(`${appSettings.getControlHTTPConn}/teams`);
 };
 const swapTeams = () => {
-  axios.post(`${appSettings.getControlHTTPConn}/teams/swap`);
+  controlAPI.post(`${appSettings.getControlHTTPConn}/teams/swap`);
 };
 
 let showSettings = ref(false);
 
 const logout = () => {
   appSettings.logout();
-  axios.post(`${appSettings.getControlHTTPConn}/auth/strategies/discord/logout`);
+  controlAPI.post(`${appSettings.getControlHTTPConn}/auth/strategies/discord/logout`);
   router.push({name: 'auth-login'});
 };
 const router = useRouter();
 onBeforeMount(() => {
   const loginState = appSettings.getUser;
-  if(loginState && Object.keys(loginState).length === 0 && Object.getPrototypeOf(loginState) === Object.prototype) {
+  if(loginState == null || loginState && Object.keys(loginState).length === 0 && Object.getPrototypeOf(loginState) === Object.prototype) {
     router.push({name: 'auth-login'});
   }
 });
@@ -54,13 +55,14 @@ onBeforeMount(() => {
 </script>
 
 <template>
+  <dashboard-auth-check />
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   <div class="dashboard">
     <transition name="modal">
       <AppSettings v-if="showSettings" @close="showSettings = false" />
     </transition>
-    <div class="user_info">
+    <div class="user_info" v-if="appSettings.getLoginState != 'loggedIn'">
       <h3>Logged in user: {{ appSettings.getUser.username }}#{{ appSettings.getUser.discriminator }}</h3>
       <button class="button danger logout small-text" @click="logout();">{{ $t('dashboard.logout') }}</button>
     </div>

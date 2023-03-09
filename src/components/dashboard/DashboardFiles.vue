@@ -1,9 +1,9 @@
 <script setup>
-import { ref, watch, onMounted } from 'vue'
+import { ref, watch, onMounted, onBeforeUnmount } from 'vue'
 import { useDropzone } from "vue3-dropzone";
 import { useToast } from 'vue-toastification';
 import { appSettingsStore } from '@/store/appSettingsStore';
-import axios from 'axios';
+import controlAPI from '@/api';
 const appSettings = appSettingsStore();
 const toast = useToast();
 let images = ref([]);
@@ -12,8 +12,9 @@ const uploadFiles = (files) => {
     for (var x = 0; x < files.length; x++) {
         const formData = new FormData(); // pass data as a form
         formData.append("image", files[x]);
-        axios
+        controlAPI
             .post(url, formData, {
+                withCredentials: true,
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
@@ -28,7 +29,7 @@ const uploadFiles = (files) => {
 };
 
 const getFiles = () => {
-    axios
+    controlAPI
         .get(url)
         .then((response) => {
             images.value = response.data;
@@ -44,7 +45,7 @@ const copyURL = (url) => {
 };
 
 const deleteImage = (name) => {
-    axios
+    controlAPI
         .delete(`${url}/${name}`)
         .then((response) => {
             console.info(response.data);
@@ -66,11 +67,17 @@ watch(isDragActive, () => {
     console.log('isDragActive', isDragActive.value);
 });
 
+let getFilesInterval;
+
 onMounted(() => {
     getFiles();
-    setInterval(() => {
+    getFilesInterval = setInterval(() => {
         getFiles();
     }, 1000);
+});
+
+onBeforeUnmount(() => {
+    clearInterval(getFilesInterval);
 });
 </script>
 
@@ -146,9 +153,11 @@ div.images {
         outline: 2px solid var(--etsu-primary-gold);
         text-align: center;
         height: 100%;
-        p{
+
+        p {
             margin: 0;
         }
+
         .imgDelete {
             font-size: 20px;
             margin-top: 10px;
@@ -167,10 +176,10 @@ div.images {
             border-radius: 8px;
         }
     }
-    div.image:hover{
+
+    div.image:hover {
         outline: 2px solid var(--etsu-primary-navy);
         background-color: var(--db-primary-bg);
 
     }
-}
-</style>
+}</style>
