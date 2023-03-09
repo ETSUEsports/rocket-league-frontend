@@ -2,7 +2,8 @@
 import axios from 'axios';
 import { overlayDataStore } from '@/store/overlayDataStore';
 import { appSettingsStore } from '@/store/appSettingsStore';
-import { ref } from 'vue'
+import { ref, onBeforeMount } from 'vue';
+import { useRouter } from 'vue-router';
 import AppSettings from './modal/AppSettings.vue';
 
 import DashboardSection from '@/components/dashboard/DashboardSection.vue';
@@ -37,6 +38,19 @@ const swapTeams = () => {
 
 let showSettings = ref(false);
 
+const logout = () => {
+  appSettings.logout();
+  axios.post(`${appSettings.getControlHTTPConn}/auth/strategies/discord/logout`);
+  router.push({name: 'auth-login'});
+};
+const router = useRouter();
+onBeforeMount(() => {
+  const loginState = appSettings.getUser;
+  if(loginState && Object.keys(loginState).length === 0 && Object.getPrototypeOf(loginState) === Object.prototype) {
+    router.push({name: 'auth-login'});
+  }
+});
+
 </script>
 
 <template>
@@ -46,24 +60,28 @@ let showSettings = ref(false);
     <transition name="modal">
       <AppSettings v-if="showSettings" @close="showSettings = false" />
     </transition>
-    <div class="container">
+    <div class="user_info">
+      <h3>Logged in user: {{ appSettings.getUser.username }}#{{ appSettings.getUser.discriminator }}</h3>
+      <button class="button danger logout small-text" @click="logout();">{{ $t('dashboard.logout') }}</button>
+    </div>
 
+    <div class="container">
       <dashboard-section>
         <template v-slot:toprow>
           <div class="left">
-          <h1>{{ $t('dashboard.title') }}</h1>
-          <button class="button default settings" @click="openSettings()">{{ $t('dashboard.settings') }}</button>
-        </div>
-        <div class="right">
-          <div class="status-light">
-            <div class="status-light__status" :class="appSettings.getGameWSStatus"></div>
-            <div class="status-light__content">Game WebSocket</div>
+            <h1>{{ $t('dashboard.title') }}</h1>
+            <button class="button default settings" @click="openSettings()">{{ $t('dashboard.settings') }}</button>
           </div>
-          <div class="status-light">
-            <div class="status-light__status" :class="appSettings.getControlWSStatus"></div>
-            <div class="status-light__content">Control WebSocket</div>
+          <div class="right">
+            <div class="status-light">
+              <div class="status-light__status" :class="appSettings.getGameWSStatus"></div>
+              <div class="status-light__content">Game WebSocket</div>
+            </div>
+            <div class="status-light">
+              <div class="status-light__status" :class="appSettings.getControlWSStatus"></div>
+              <div class="status-light__content">Control WebSocket</div>
+            </div>
           </div>
-        </div>
         </template>
       </dashboard-section>
 
@@ -79,7 +97,7 @@ let showSettings = ref(false);
           <dashboard-scorebug />
         </template>
       </dashboard-section>
-      
+
       <dashboard-section>
         <template v-slot:toprow>
           <h1>{{ $t('dashboard.teams') }}</h1>
@@ -102,6 +120,7 @@ let showSettings = ref(false);
           <dashboard-files />
         </template>
       </dashboard-section>
+
     </div>
   </div>
 </template>
@@ -121,6 +140,15 @@ p {
   vertical-align: baseline;
   background: transparent;
 }
+
+.user_info {
+  position: relative;
+  // position on the top right of page
+  top: 0;
+  right: 0;
+  // width and height of the element
+}
+
 .dashboard {
   font-family: Verdana, sans-serif;
   height: 100%vh;
@@ -190,6 +218,7 @@ label {
   text-align: left;
   font-size: 2.5vh;
 }
+
 .button {
   &.success {
     background-color: #4CAF50;
@@ -217,6 +246,9 @@ label {
     color: black;
   }
 
+  &.small-text {
+    font-size: 1.5vh;
+  }
   border: none;
   color: white;
   text-align: center;
@@ -261,5 +293,4 @@ label {
 .status-light__content {
   flex: 1;
 }
-
 </style>

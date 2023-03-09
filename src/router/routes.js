@@ -2,6 +2,7 @@ import HomeView from '../views/HomeView.vue';
 import OverlayView from '../views/OverlayView.vue';
 import PostGameStats from '../views/PostGameStats.vue';
 import DashboardView from '../views/DashboardView.vue';
+import AuthLogin from '../views/AuthLogin.vue';
 const routes = [
     {
         path: '/',
@@ -23,6 +24,11 @@ const routes = [
         path: '/dashboard',
         name: 'dashboard',
         component: DashboardView
+    },
+    {
+        path: '/auth/login',
+        name: 'auth-login',
+        component: AuthLogin
     }
 ]
 

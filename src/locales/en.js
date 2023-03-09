@@ -29,6 +29,8 @@ const message = {
         settings: 'Settings',
         files: 'Files',
         scorebug: 'Scorebug',
+        login: 'Login',
+        logout: 'Logout',
     }
 }
 export default message;

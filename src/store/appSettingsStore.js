@@ -12,6 +12,9 @@ export const appSettingsStore = defineStore({
         controlHTTPSecure: false,
         controlWSStatus: "disconnected",
         obsStatus: "disconnected",
+        user: null,
+        loginState: "loggedOut",
+        loggingInState: false,
     }),
     getters: {
         getGameWSIP: (state) => {
@@ -47,7 +50,16 @@ export const appSettingsStore = defineStore({
         },
         getOBSStatus: (state) => {
             return state.obsStatus;
-        }
+        },
+        getUser: (state) => {
+            return state.user;
+        },
+        getLoginState: (state) => {
+            return state.loginState;
+        },
+        getLoggingInState: (state) => {
+            return state.loggingInState;
+        },
     },
     actions: {
         updateGameWSIP(ip) {
@@ -73,6 +85,20 @@ export const appSettingsStore = defineStore({
         },
         updateOBSStatus(status) {
             this.obsStatus = status;
+        },
+        updateUser(user) {
+            this.user = user;
+        },
+        updateLoginState(state) {
+            this.loginState = state;
+        },
+        updateLoggingInState(state) {
+            this.loggingInState = state;
+        },
+        logout() {
+            this.user = {};
+            this.loginState = "loggedOut";
+            this.loggingInState = false;
         },
         resetState() {
             this.$reset();
