@@ -1,9 +1,12 @@
 <script setup>
+import { onMounted, onBeforeUnmount } from 'vue'
 import { gameStateStore } from '@/store/gameStateStore';
 import { overlayDataStore } from '@/store/overlayDataStore';
+import { useRouter } from 'vue-router'
 import TeamInfo from '@/components/overlay/TeamInfo.vue';
 import PostGameMiddle from './postgame/PostGameMiddle.vue';
 import PostGameTable from './postgame/PostGameTable.vue';
+const router = useRouter();
 const gameState = gameStateStore();
 const overlayData = overlayDataStore();
 const getPlayers = gameState.getPostPlayers;
@@ -15,6 +18,21 @@ const team = (side) => {
     series_score: overlayData.getTeam(side).score,
   }
 };
+
+onMounted(() => {
+  window.addEventListener('keydown', onKeyPress);
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('keydown', onKeyPress);
+})
+
+function onKeyPress(e) {
+  if (e.key == 'i') {
+    router.push({ name: 'overlay' });
+  }
+}
+
 </script>
 
 <template>
