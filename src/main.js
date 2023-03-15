@@ -11,13 +11,15 @@ import VueApexCharts from "vue3-apexcharts";
 import en from './locales/en.js';
 import "vue-toastification/dist/index.css";
 
+const app = createApp(App);
+
 Sentry.init({
-    App,
+    app,
     dsn: "https://322393fa3b0f469ca03348a7057bb709@o4504840394178560.ingest.sentry.io/4504840408924160",
     integrations: [
         new BrowserTracing({
             routingInstrumentation: Sentry.vueRouterInstrumentation(router),
-            tracePropagationTargets: ["localhost", "my-site-url.com", /^\//],
+            tracePropagationTargets: ["localhost", "etsuesports.ryois.net", /^\//],
         }),
     ],
     tracesSampleRate: 1.0,
@@ -36,10 +38,5 @@ const i18n = createI18n({
 })
 
 
-createApp(App)
-    .use(i18n)
-    .use(pinia)
-    .use(router)
-    .use(VueApexCharts)
-    .use(Toast, { pauseOnFocusLoss: false, pauseOnHover: false, timeout: 5000, position: "top-right" })
-    .mount('#app');
+
+app.use(i18n).use(pinia).use(router).use(VueApexCharts).use(Toast, { pauseOnFocusLoss: false, pauseOnHover: false, timeout: 5000, position: "top-right" }).mount('#app');
