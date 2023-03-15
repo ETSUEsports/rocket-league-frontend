@@ -4,7 +4,6 @@ import DecodeWSCode from '@/utils/DecodeWSCode';
 import Router from '@/router';
 import { overlayDataStore } from '@/store/overlayDataStore';
 import { inject } from 'vue';
-const obs = inject('obs');
 
 export function GameConnector() {
    const gameState = gameStateStore();
@@ -12,7 +11,7 @@ export function GameConnector() {
    const overlayData = overlayDataStore();
    let savedStatsFlag = false;
    let ws = new WebSocket(appSettings.getGameWSConn);
-
+   const obs = inject('obs');
    let reattempt = 0;
 
    const reconnect = () => {
