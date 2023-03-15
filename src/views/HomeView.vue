@@ -28,7 +28,7 @@ const clickToCopy = (event) => {
 }
 
 const autoRedirectTarget = () => {
-  if (obs.detectOBS()) {
+  if (obs.detect()) {
     return 'overlay';
   } else {
     return 'dashboard';
