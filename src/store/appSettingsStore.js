@@ -33,13 +33,21 @@ export const appSettingsStore = defineStore({
             return `ws://${state.gameWSIP}:${state.gameWSPort}/`;
         },
         getControlWSConn: (state) => {
-            return `ws://${state.controlWSIP}:${state.controlWSPort}/`;
+            if (process.env.NODE_ENV === 'development') {
+                return `ws://${state.controlWSIP}:${state.controlWSPort}/`;
+            } else {
+                return `wss://${state.controlWSIP}/rocket-league-backend/`;
+            }
         },
         getControlHTTPConn: (state) => {
-            if (state.controlHTTPSecure) {
-                return `https://${state.controlWSIP}:${state.controlWSPort}/api/v1`;
+            if (process.env.NODE_ENV === 'development') {
+                if (state.controlHTTPSecure) {
+                    return `https://${state.controlWSIP}:${state.controlWSPort}/api/v1`;
+                } else {
+                    return `http://${state.controlWSIP}:${state.controlWSPort}/api/v1`;
+                }
             } else {
-                return `http://${state.controlWSIP}:${state.controlWSPort}/api/v1`;
+                return `https://${state.controlWSIP}/rocket-league-backend/api/v1`;
             }
         },
         getGameWSStatus: (state) => {
@@ -52,7 +60,7 @@ export const appSettingsStore = defineStore({
             return state.obsStatus;
         },
         getUser: (state) => {
-            if(state.user == null) {
+            if (state.user == null) {
                 return {};
             }
             return state.user;
