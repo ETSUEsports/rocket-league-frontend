@@ -3,7 +3,7 @@ import { appSettingsStore } from '@/store/appSettingsStore';
 import DecodeWSCode from '@/utils/DecodeWSCode';
 import Router from '@/router';
 import { overlayDataStore } from '@/store/overlayDataStore';
-import { inject } from 'vue';
+import OBS from '@/components/connectors/OBS';
 
 export function GameConnector() {
    const gameState = gameStateStore();
@@ -11,7 +11,7 @@ export function GameConnector() {
    const overlayData = overlayDataStore();
    let savedStatsFlag = false;
    let ws = new WebSocket(appSettings.getGameWSConn);
-   const obs = inject('obs');
+   const obs = new OBS();
    let reattempt = 0;
 
    const reconnect = () => {

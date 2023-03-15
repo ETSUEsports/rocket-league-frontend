@@ -15,11 +15,11 @@ export class OBS {
         }
     }
 
-    async disconnect() {
+    disconnect() {
         this.obs.disconnect();
     }
 
-    async detect() {
+    detect() {
         if (!window.obsstudio) {
             console.log("[OBS WS] OBS not detected");
             return false;
@@ -30,7 +30,7 @@ export class OBS {
         }
     }
 
-    async muteAudio() {
+    muteAudio() {
         this.obs.call('GetInputList', { inputKind: 'wasapi_process_output_capture' }).then(data => {
             data.inputs.forEach(input => {
                 if (input.inputName === 'ROCKET_LEAGUE_AUDIO') {
@@ -40,7 +40,7 @@ export class OBS {
         });
     }
 
-    async unmuteAudio() {
+    unmuteAudio() {
         this.obs.call('GetInputList', { inputKind: 'wasapi_process_output_capture' }).then(data => {
             data.inputs.forEach(input => {
                 if (input.inputName === 'ROCKET_LEAGUE_AUDIO') {

@@ -1,8 +1,7 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import { useToast } from 'vue-toastification';
-import { onMounted, ref, inject } from 'vue';
-const obs = inject('obs');
+import { onMounted, ref } from 'vue';
 const router = useRouter();
 const toast = useToast();
 let timer = ref(10);
@@ -27,18 +26,10 @@ const clickToCopy = (event) => {
   toast.success('Copied to clipboard!');
 }
 
-const autoRedirectTarget = () => {
-  if (obs.detect()) {
-    return 'overlay';
-  } else {
-    return 'dashboard';
-  }
-}
-
 onMounted(() => {
   setInterval(() => {
     timer.value -= 1;
-    if (timer.value == 0) router.push({ name: autoRedirectTarget() });
+    if (timer.value == 0) router.push({ name: 'dashboard' });
   }, 1000);
 })
 
@@ -48,7 +39,7 @@ onMounted(() => {
   <div class="home">
     <img src="@/assets/etsu_logo.png" alt="ETSU Esports Logo" class="home_image" />
     <h1>{{ $t('home.welcome') }}</h1>
-    <h3>{{ $t('home.auto_redirect', { path: autoRedirectTarget(), seconds: timer}) }}</h3>
+    <h3>{{ $t('home.auto_redirect', { path: 'dashboard', seconds: timer}) }}</h3>
     <h3>{{  $t('home.click_to_copy', { object: "code blocks"}) }}</h3>
     <div class="container">
       <div class="left">
