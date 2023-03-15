@@ -47,7 +47,6 @@ export function GameConnector() {
                }
                break;
             case 'game:statfeed_event':
-               console.log(data.data);
                gameState.addStatfeedEvent(data.data);
                break;
             case 'game:ball_hit':

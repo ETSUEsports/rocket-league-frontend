@@ -1,18 +1,17 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue';
-import { appSettingsStore } from '@/store/appSettingsStore';
 import { useToast } from 'vue-toastification';
 import router from '@/router';
-import controlAPI from '@/api';
+import { ControlAPI } from '@/api';
 
+const api = new ControlAPI();
 const toast = useToast();
-const appSettings = appSettingsStore();
 
 let alertFlag = ref(false);
 
 const isAuth = ref(false);
 const authCheck = async () => {
-    const response = await controlAPI.get(`${appSettings.getControlHTTPConn}/auth/me`, { withCredentials: true });
+    const response = await api.get('/auth/me', { withCredentials: true });
     switch(response.data.status) {
         case 'error':
             isAuth.value = false;

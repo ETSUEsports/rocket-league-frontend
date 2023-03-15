@@ -50,7 +50,6 @@ function playerItemColor(player) {
 }
 
 function statfeedIcon(event) {
-  console.log(event);
   const image = require(`@/assets/icons/${event}.png`);
   return image;
 }

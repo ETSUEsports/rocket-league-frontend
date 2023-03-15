@@ -1,36 +1,94 @@
 import axios from 'axios';
 import { useToast } from 'vue-toastification';
+import { appSettingsStore } from '@/store/appSettingsStore';
 
-const toast = useToast();
+export class ControlAPI {
 
-const controlAPI = axios.create({
-  baseURL: 'http://localhost:3000/api/v1',
-  timeout: 1000,
-  withCredentials: true,
-});
+  constructor() {
+    this.appSettings = appSettingsStore();
+    this.toast = useToast();
+    this.controlAPI = axios.create({
+      baseURL: this.appSettings.getControlHTTPConn,
+      timeout: 1000,
+      withCredentials: true,
+    });
 
-controlAPI.interceptors.response.use(
-  function (response) {
-    return response;
-  },
-  function (error) {
-    switch (error.response.status) {
-      case 401:
-        toast.error('Control API: Unauthorized');
-        throw new Error('Invalid token detected')
-      case 403:
-        toast.error('Control API: Forbidden');
-        throw new Error('Forbidden')
-      case 404:
-        toast.error('Control API: Not Found');
-        throw new Error('Not Found')
-      case 500:
-        toast.error('Control API: Internal Server Error');
-        throw new Error('Internal Server Error')
-      default:
-        toast.error('Control API: Unknown Error');
-    }
+
+    this.controlAPI.interceptors.response.use(
+      function (response) {
+        return response;
+      },
+      function (error) {
+        if (!error.response) return;
+        switch (error.response.status) {
+          case 401:
+            this.toast.error('Control API: Unauthorized');
+            throw new Error('Invalid token detected')
+          case 403:
+            this.toast.error('Control API: Forbidden');
+            throw new Error('Forbidden')
+          case 404:
+            this.toast.error('Control API: Not Found');
+            throw new Error('Not Found')
+          case 500:
+            this.toast.error('Control API: Internal Server Error');
+            throw new Error('Internal Server Error')
+          default:
+            this.toast.error('Control API: Unknown Error');
+        }
+      }
+    );
+
   }
-);
 
-export default controlAPI;
+  async get(url) {
+    return new Promise((resolve, reject) => {
+      this.controlAPI.get(url).then((response) => {
+        resolve(response);
+      }).catch((error) => {
+        reject(error);
+      });
+    });
+  }
+
+  async post(url, data) {
+    return new Promise((resolve, reject) => {
+      this.controlAPI.post(url, data).then((response) => {
+        resolve(response);
+      }).catch((error) => {
+        reject(error);
+      });
+    });
+  }
+
+  async put(url, data) {
+    return new Promise((resolve, reject) => {
+      this.controlAPI.put(url, data).then((response) => {
+        resolve(response);
+      }).catch((error) => {
+        reject(error);
+      });
+    });
+  }
+
+  async delete(url) {
+    return new Promise((resolve, reject) => {
+      this.controlAPI.delete(url).then((response) => {
+        resolve(response);
+      }).catch((error) => {
+        reject(error);
+      });
+    });
+  }
+
+  async patch(url, data) {
+    return new Promise((resolve, reject) => {
+      this.controlAPI.patch(url, data).then((response) => {
+        resolve(response);
+      }).catch((error) => {
+        reject(error);
+      });
+    });
+  }
+
+}

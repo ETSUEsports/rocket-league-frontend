@@ -1,5 +1,5 @@
 <script setup>
-import controlAPI from '@/api';
+import { ControlAPI } from '@/api';
 import { overlayDataStore } from '@/store/overlayDataStore';
 import { appSettingsStore } from '@/store/appSettingsStore';
 import { ref, onBeforeMount } from 'vue';
@@ -12,6 +12,8 @@ import DashboardFiles from '@/components/dashboard/DashboardFiles.vue';
 import DashboardTeams from '@/components/dashboard/DashboardTeams.vue';
 import DashboardScorebug from './dashboard/DashboardScorebug.vue';
 
+const api = new ControlAPI();
+
 const appSettings = appSettingsStore();
 const overlayData = overlayDataStore();
 
@@ -20,28 +22,28 @@ const openSettings = () => {
 };
 
 const updateScorebug = () => {
-  controlAPI.post(`${appSettings.getControlHTTPConn}/series`, { name: overlayData.series.name, gameNumber: overlayData.series.gameNumber, bestOf: overlayData.series.bestOf });
+  api.post('/series', { name: overlayData.series.name, gameNumber: overlayData.series.gameNumber, bestOf: overlayData.series.bestOf });
 };
 
 const resetScorebug = () => {
-  controlAPI.delete(`${appSettings.getControlHTTPConn}/series`);
+  api.delete('/series');
 };
 
 const updateTeams = () => {
-  controlAPI.post(`${appSettings.getControlHTTPConn}/teams`, { leftTeam: overlayData.leftTeam, rightTeam: overlayData.rightTeam });
+  api.post('/teams', { leftTeam: overlayData.leftTeam, rightTeam: overlayData.rightTeam });
 };
 const resetTeams = () => {
-  controlAPI.delete(`${appSettings.getControlHTTPConn}/teams`);
+  api.del('/teams');
 };
 const swapTeams = () => {
-  controlAPI.post(`${appSettings.getControlHTTPConn}/teams/swap`);
+  api.post('/teams/swap');
 };
 
 let showSettings = ref(false);
 
 const logout = () => {
   appSettings.logout();
-  controlAPI.post(`${appSettings.getControlHTTPConn}/auth/strategies/discord/logout`);
+  api.post('/auth/strategies/discord/logout');
   router.push({name: 'auth-login'});
 };
 const router = useRouter();

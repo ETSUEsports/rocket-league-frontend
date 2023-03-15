@@ -1,10 +1,10 @@
-import controlAPI from '@/api';
+import { ControlAPI } from '@/api';
 import { appSettingsStore } from '@/store/appSettingsStore';
 import Router from '@/router';
-
 export class Auth {
 
     constructor() {
+        this.api = new ControlAPI(); 
         this.appSettings = appSettingsStore();
     }
 
@@ -54,7 +54,7 @@ export class Auth {
 
     async getAuthStrategies() {
         return new Promise((resolve, reject) => {
-            controlAPI.get(`${this.appSettings.getControlHTTPConn}/auth/strategies`).then((response) => {
+            this.api.get(`${this.appSettings.getControlHTTPConn}/auth/strategies`).then((response) => {
                 resolve(response.data.strategies);
             }).catch((error) => {
                 reject(error);

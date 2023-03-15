@@ -1,24 +1,22 @@
 <script setup>
-import { ref, watch, onMounted, onBeforeUnmount } from 'vue'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { useDropzone } from "vue3-dropzone";
 import { useToast } from 'vue-toastification';
-import { appSettingsStore } from '@/store/appSettingsStore';
-import controlAPI from '@/api';
-const appSettings = appSettingsStore();
+import { ControlAPI } from '@/api';
+const api = new ControlAPI();
 const toast = useToast();
 let images = ref([]);
-const url = `${appSettings.getControlHTTPConn}/images`; // Your url on the server side
+const url = '/images';
 const uploadFiles = (files) => {
     for (var x = 0; x < files.length; x++) {
         const formData = new FormData(); // pass data as a form
         formData.append("image", files[x]);
-        controlAPI
-            .post(url, formData, {
-                withCredentials: true,
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                },
-            })
+        api.post(url, formData, {
+            withCredentials: true,
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        })
             .then((response) => {
                 console.info(response.data);
             })
@@ -29,8 +27,7 @@ const uploadFiles = (files) => {
 };
 
 const getFiles = () => {
-    controlAPI
-        .get(url)
+    api.get(url)
         .then((response) => {
             images.value = response.data;
         })
@@ -45,10 +42,8 @@ const copyURL = (url) => {
 };
 
 const deleteImage = (name) => {
-    controlAPI
-        .delete(`${url}/${name}`)
-        .then((response) => {
-            console.info(response.data);
+    api.delete(`${url}/${name}`)
+        .then(() => {
             toast.success('Deleted image');
         })
         .catch((err) => {
@@ -58,14 +53,10 @@ const deleteImage = (name) => {
 
 function onDrop(acceptFiles, rejectReasons) {
     uploadFiles(acceptFiles);
-    console.log(rejectReasons);
+    if(rejectReasons.length > 0) console.log(`Control API: Image upload error ${JSON.stringify(rejectReasons)}`);    
 }
 
 const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
-
-watch(isDragActive, () => {
-    console.log('isDragActive', isDragActive.value);
-});
 
 let getFilesInterval;
 
@@ -182,4 +173,5 @@ div.images {
         background-color: var(--db-primary-bg);
 
     }
-}</style>
+}
+</style>
