@@ -19,7 +19,7 @@ const getDashboardUrl = () => {
 }
 
 const obsCSSOverrides = () => {
-  return "html, body, #app { background-color: rgba(0, 0, 0, 0); margin: 0px auto; overflow: hidden; }";
+  return "html, body, #app { background-color: rgba(0, 0, 0, 0) !important; margin: 0px auto; overflow: hidden; }";
 }
 
 const clickToCopy = (event) => {
