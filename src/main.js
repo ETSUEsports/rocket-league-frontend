@@ -13,6 +13,9 @@ import "vue-toastification/dist/index.css";
 
 const app = createApp(App);
 
+
+app.config.globalProperties.window = window;
+
 Sentry.init({
     app,
     dsn: "https://322393fa3b0f469ca03348a7057bb709@o4504840394178560.ingest.sentry.io/4504840408924160",

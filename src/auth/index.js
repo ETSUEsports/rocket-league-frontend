@@ -12,8 +12,8 @@ export class Auth {
         const vm = this;
         this.appSettings.updateLoginState("loggingIn");
         this.appSettings.updateLoggingInState(true);
-        const popupWinHeight = 800;
-        const popupWinWidth = 500;
+        const popupWinHeight = 890;
+        const popupWinWidth = 1470;
         const left = (screen.width - popupWinWidth) / 2;
         const top = (screen.height - popupWinHeight) / 4;
         const popup = window.open(`${this.appSettings.getControlHTTPConn}/auth/strategies/${strategy}`, "Discord Login", `width=${popupWinWidth},height=${popupWinHeight},left=${left},top=${top}`);
