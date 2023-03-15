@@ -3,7 +3,8 @@ import { appSettingsStore } from '@/store/appSettingsStore';
 import DecodeWSCode from '@/utils/DecodeWSCode';
 import Router from '@/router';
 import { overlayDataStore } from '@/store/overlayDataStore';
-import { muteAudio, unmuteAudio } from '@/components/connectors/OBS';
+import { inject } from 'vue';
+const obs = inject('obs');
 
 export function GameConnector() {
    const gameState = gameStateStore();
@@ -56,7 +57,7 @@ export function GameConnector() {
                if (Router.currentRoute.value.name != 'dashboard') {
                   setTimeout(function () {
                      Router.push({ name: 'post-game-stats' })
-                     muteAudio();
+                     obs.muteAudio();
                   }, 4800);
                }
                console.log(`[Game WS]: Podium Started`);
@@ -65,7 +66,7 @@ export function GameConnector() {
                savedStatsFlag = false;
                if (Router.currentRoute.value.name != 'dashboard') {
                   Router.push({ name: 'overlay' })
-                  unmuteAudio();
+                  obs.unmuteAudio();
                }
                console.log(`[Game WS]: Match created`);
                break;

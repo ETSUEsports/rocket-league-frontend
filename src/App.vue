@@ -1,12 +1,16 @@
 <script setup>
 import { GameConnector } from '@/components/connectors/GameWebSocket.js';
 import { ControlConnector } from '@/components/connectors/ControlWebSocket.js';
-import { detectOBS } from '@/components/connectors/OBS.js';
-import { onMounted } from 'vue';
+import { appSettingsStore } from './store/appSettingsStore';
+import { OBS } from '@/components/connectors/OBS.js';
+import { onMounted, provide, reactive } from 'vue';
+const appSettings = appSettingsStore();
+const obs = new OBS(appSettings.getOBSIP, appSettings.getOBSPort, appSettings.getOBSPassword);
+const globalOBS = reactive(obs);
+provide('obs', globalOBS);
 onMounted(() => {
   GameConnector();
   ControlConnector();
-  detectOBS();
 })
 </script>
 

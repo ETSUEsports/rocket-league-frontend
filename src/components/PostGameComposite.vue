@@ -28,7 +28,7 @@ onBeforeUnmount(() => {
 })
 
 function onKeyPress(e) {
-  if (e.key == 'i') {
+  if (e.key == 'o') {
     router.push({ name: 'overlay' });
   }
 }

@@ -12,6 +12,9 @@ export const appSettingsStore = defineStore({
         controlHTTPSecure: false,
         controlWSStatus: "disconnected",
         obsStatus: "disconnected",
+        obsIP: "localhost",
+        obsPort: "4444",
+        obsPassword: "password",
         user: null,
         loginState: "loggedOut",
         loggingInState: false,
@@ -59,6 +62,15 @@ export const appSettingsStore = defineStore({
         getOBSStatus: (state) => {
             return state.obsStatus;
         },
+        getOBSIP: (state) => {
+            return state.obsIP;
+        },
+        getOBSPort: (state) => {
+            return state.obsPort;
+        },
+        getOBSPassword: (state) => {
+            return state.obsPassword;
+        },
         getUser: (state) => {
             if (state.user == null) {
                 return {};
@@ -96,6 +108,15 @@ export const appSettingsStore = defineStore({
         },
         updateOBSStatus(status) {
             this.obsStatus = status;
+        },
+        updateOBSIP(ip) {
+            this.obsIP = ip;
+        },
+        updateOBSPort(port) {
+            this.obsPort = port;
+        },
+        updateOBSPassword(password) {
+            this.obsPassword = password;
         },
         updateUser(user) {
             this.user = user;

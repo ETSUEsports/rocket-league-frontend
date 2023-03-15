@@ -9,8 +9,9 @@ import ReplayComposite from '@/components/replay/ReplayComposite.vue';
 import SplashTransition from '@/components/overlay/SplashTransition.vue';
 import TeamInfo from '@/components/overlay/TeamInfo.vue';
 import AppSettings from './modal/AppSettings.vue';
-import { ref, onMounted, onBeforeUnmount } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref, onMounted, onBeforeUnmount, inject } from 'vue';
+import { useRouter } from 'vue-router';
+const obs = inject('obs');
 const router = useRouter()
 const gameState = gameStateStore();
 const overlayData = overlayDataStore();
@@ -35,12 +36,20 @@ onBeforeUnmount(() => {
 function onKeyPress(e) {
   if (e.key == 's') {
     showSettings.value = true;
+    window.removeEventListener('keydown', onKeyPress);
   }
   if (e.key == 'p') {
     router.push({ name: 'post-game-stats' });
   }
   if (e.key == 'Escape') {
     showSettings.value = false;
+    window.addEventListener('keydown', onKeyPress);
+  }
+  if (e.key == 'm') {
+    obs.muteAudio();
+  }
+  if (e.key == 'u') {
+    obs.unmuteAudio();
   }
 }
 

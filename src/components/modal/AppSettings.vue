@@ -62,6 +62,18 @@ function onKeyPress(e) {
               <input v-model="appSettings.controlWSPort" type="text" id="controlWSPort" name="controlWSPort" />
             </div>
             <div class="inputgroup">
+              <label for="obsIP">OBS WebSocket IP</label>
+              <input v-model="appSettings.obsIP" type="text" id="obsIP" name="obsIP" />
+            </div>
+            <div class="inputgroup">
+              <label for="obsPort">OBS WebSocket Port</label>
+              <input v-model="appSettings.obsPort" type="text" id="obsPort" name="obsPort" />
+            </div>
+            <div class="inputgroup">
+              <label for="obsPassword">OBS WebSocket Password</label>
+              <input v-model="appSettings.obsPassword" type="text" id="obsPassword" name="obsPassword" />
+            </div>
+            <div class="inputgroup">
               <label for="resetStates">Reset All States</label>
               <button class="button danger" @click="resetStates()">Reset</button>
             </div>

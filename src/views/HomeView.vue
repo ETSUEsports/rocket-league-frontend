@@ -1,8 +1,8 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import { useToast } from 'vue-toastification';
-import { detectOBS } from '@/components/connectors/OBS';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, inject } from 'vue';
+const obs = inject('obs');
 const router = useRouter();
 const toast = useToast();
 let timer = ref(10);
@@ -28,7 +28,7 @@ const clickToCopy = (event) => {
 }
 
 const autoRedirectTarget = () => {
-  if (detectOBS()) {
+  if (obs.detectOBS()) {
     return 'overlay';
   } else {
     return 'dashboard';
