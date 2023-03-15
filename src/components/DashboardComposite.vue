@@ -65,7 +65,7 @@ onBeforeMount(() => {
       <AppSettings v-if="showSettings" @close="showSettings = false" />
     </transition>
     <div class="user_info" v-if="appSettings.getLoginState != 'loggedIn'">
-      <h3>Logged in user: {{ appSettings.getUser.username }}#{{ appSettings.getUser.discriminator }}</h3>
+      <h3>{{ $t('dashboard.discord_logged_in_as', { username: appSettings.getUser.username, discriminator: appSettings.getUser.discriminator}) }}</h3>
       <button class="button danger logout small-text" @click="logout();">{{ $t('dashboard.logout') }}</button>
     </div>
 
@@ -79,11 +79,11 @@ onBeforeMount(() => {
           <div class="right">
             <div class="status-light">
               <div class="status-light__status" :class="appSettings.getGameWSStatus"></div>
-              <div class="status-light__content">Game WebSocket</div>
+              <div class="status-light__content">{{ $t('dashboard.game_ws') }}</div>
             </div>
             <div class="status-light">
               <div class="status-light__status" :class="appSettings.getControlWSStatus"></div>
-              <div class="status-light__content">Control WebSocket</div>
+              <div class="status-light__content">{{ $t('dashboard.control_ws') }}</div>
             </div>
           </div>
         </template>

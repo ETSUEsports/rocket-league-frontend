@@ -13,23 +13,23 @@ defineProps(['player', 'team']);
       <div class="stats">
         <div class="stat">
           <div class="value">{{player.score}}</div>
-          <div class="label">{{ $t('message.score') }}</div>
+          <div class="label">{{ $t('overlay.score') }}</div>
         </div>
         <div class="stat">
           <div class="value">{{player.goals}}</div>
-          <div class="label">{{ $tc('message.goal', player.goals) }}</div>
+          <div class="label">{{ $tc('overlay.goal', player.goals) }}</div>
         </div>
         <div class="stat">
           <div class="value">{{player.shots}}</div>
-          <div class="label">{{ $tc('message.shot', player.shots) }}</div>
+          <div class="label">{{ $tc('overlay.shot', player.shots) }}</div>
         </div>
         <div class="stat">
           <div class="value">{{player.assists}}</div>
-          <div class="label">{{ $tc('message.assist', player.assists) }}</div>
+          <div class="label">{{ $tc('overlay.assist', player.assists) }}</div>
         </div>
         <div class="stat">
           <div class="value">{{player.saves}}</div>
-          <div class="label">{{ $tc('message.save', player.saves) }}</div>
+          <div class="label">{{ $tc('overlay.save', player.saves) }}</div>
         </div>
       </div>
       <BoostGauge class="gauge" :player=player :team=team />

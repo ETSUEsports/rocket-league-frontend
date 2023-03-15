@@ -15,7 +15,7 @@ const overlayData = overlayDataStore();
           <div class="replay_item ri_left">
             <div class="replay_label"><img class="replay_icon"
                 :src="overlayData.getTeam(gameState.getReplayStats.scorer.teamnum).image" /></div>
-            <div class="replay_value">{{ overlayData.getTeam(gameState.getReplayStats.scorer.teamnum).name }} Goal</div>
+            <div class="replay_value">{{ $t('overlay.replay_goal', {team: overlayData.getTeam(gameState.getReplayStats.scorer.teamnum).name}) }}</div>
           </div>
         </div>
         <div class="replay_col replay_middle">
@@ -35,9 +35,7 @@ const overlayData = overlayDataStore();
           </div>
           <div class="replay_item ri_right">
             <div class="replay_label"><img class="replay_icon" src="@/assets/icons/TIME_ICON.png"></div>
-            <div class="replay_value">{{ new Date(gameState.getReplayStats.goaltime * 1000).toISOString().substring(14,
-              19)
-              || "" }} </div>
+            <div class="replay_value">{{ new Date(gameState.getReplayStats.goaltime * 1000).toISOString().substring(14, 19) || "" }} </div>
           </div>
         </div>
       </div>

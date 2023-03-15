@@ -1,6 +1,5 @@
 const message = {
-    message: {
-        hello: 'hello world',
+    overlay: {
         game: 'Game {game}',
         best_of: 'Best of {bestOf}',
         score: 'score',
@@ -9,6 +8,12 @@ const message = {
         save: 'save | saves',
         assist: 'asst | assts',
         replay: 'replay',
+        replay_goal: '{team} Goal',
+    },
+    home: {
+        welcome: 'Welcome to ETSU Esports Rocket League Overlay',
+        auto_redirect: 'Automatically redirecting to {path} in {seconds} seconds...',
+        click_to_copy: 'Click {object} to copy',
     },
     dashboard: {
         title: 'Rocket League Overlay Dashboard',
@@ -31,7 +36,10 @@ const message = {
         scorebug: 'Scorebug',
         login: 'Login',
         logout: 'Logout',
-        strategy_selector: 'Select a provider to login with'
+        strategy_selector: 'Select a provider to login with',
+        discord_logged_in_as: 'Logged in as {username}#{discriminator}',
+        control_ws: 'Control WebSocket',
+        game_ws: 'Game WebSocket',
     }
 }
 export default message;

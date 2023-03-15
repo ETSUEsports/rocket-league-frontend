@@ -6,7 +6,7 @@ defineProps(['time', 'game_num', 'best_of']);
 <template>
   <div class="container">
     <h1>{{ time }}</h1>
-    <p>{{ $t('message.game', { game: game_num }) }} - {{ $t('message.best_of', { bestOf: best_of }) }}</p>
+    <p>{{ $t('overlay.game', { game: game_num }) }} - {{ $t('overlay.best_of', { bestOf: best_of }) }}</p>
   </div>
 </template>
 

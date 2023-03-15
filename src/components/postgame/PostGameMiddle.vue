@@ -6,7 +6,7 @@ defineProps(['game_num', 'best_of']);
 <template>
   <div class="container">
     <img src="@/assets/etsu_logo.png" alt="ETSU Logo" />
-    <p>{{ $t('message.game', { game: game_num }) }} - {{ $t('message.best_of', { bestOf: best_of }) }}</p>
+    <p>{{ $t('overlay.game', { game: game_num }) }} - {{ $t('overlay.best_of', { bestOf: best_of }) }}</p>
   </div>
 </template>
 
