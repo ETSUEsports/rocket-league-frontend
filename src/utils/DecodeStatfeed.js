@@ -7,6 +7,7 @@ function DecodeStatfeed(event) {
             item.primary_player.name = event.main_target.name;
             item.primary_player.team = event.main_target.team_num;
             delete item.secondary_player;
+            console.log(item);
             return item;
         case 'Save':
             item.type = "SAVE";
@@ -16,7 +17,7 @@ function DecodeStatfeed(event) {
             delete item.secondary_player;
             return item;
         case 'Demolish':
-            item.type = "SAVE";
+            item.type = "DEMO";
             item.primary_player.id = event.main_target.id;
             item.primary_player.name = event.main_target.name;
             item.primary_player.team = event.main_target.team_num;

@@ -65,7 +65,7 @@ const overlayData = overlayDataStore();
   left: 0;
   width: 100vw;
   height: 60px;
-  background-color: var(--etsu-primary-bg);
+  background-color: var(--etsu-secondary-trans);
 
   .replay_content {
     position: relative;

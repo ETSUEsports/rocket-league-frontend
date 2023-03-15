@@ -1,5 +1,12 @@
 import DecodeStatfeed from '@/utils/DecodeStatfeed';
 import { defineStore, acceptHMRUpdate } from 'pinia';
+const iconsMap = {
+    'SHOT': 'SHOT_ICON',
+    'SAVE': 'SAVE_ICON',
+    'DEMO': 'DEMO_ICON',
+    'MVP': 'MVP_ICON'
+};
+
 export const gameStateStore = defineStore({
     id: 'gameState',
     persist: false,
@@ -83,6 +90,19 @@ export const gameStateStore = defineStore({
         },
         getStatfeedEvents: (state) => {
             return state.statfeedEvents;
+        },
+        getStatfeedEventsByPlayer: (state) => {
+            return (playerId) => {
+                return state.statfeedEvents.filter(event => event.primary_player.id === playerId);
+            }
+        },
+        getStatfeedIconForPlayer: (state) => {
+            return (playerId) => {
+                const events = state.statfeedEvents.filter(event => event.primary_player.id === playerId);
+                if (events.length > 0) {
+                    return iconsMap[events[events.length - 1].type];
+                }
+            }
         }
     },
     actions: {
