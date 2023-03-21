@@ -48,6 +48,8 @@ export function ControlConnector() {
                   overlayData.updateCasters({casterl: overlayData.getCasters.casterl, casterr: data.caster.name});
                }
                break;
+            case 'heartbeat':
+               break;
             default:
                console.log(`[Control WS]: Unknown event ${data.event}`);
          }
