@@ -40,6 +40,10 @@ const message = {
         discord_logged_in_as: 'Logged in as {username}#{discriminator}',
         control_ws: 'Control WebSocket',
         game_ws: 'Game WebSocket',
+        casters: 'Casters',
+        updateCasters: 'Update Casters',
+        left_caster: 'Left Caster',
+        right_caster: 'Right Caster',
     }
 }
 export default message;

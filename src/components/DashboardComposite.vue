@@ -11,6 +11,7 @@ import DashboardSection from '@/components/dashboard/DashboardSection.vue';
 import DashboardFiles from '@/components/dashboard/DashboardFiles.vue';
 import DashboardTeams from '@/components/dashboard/DashboardTeams.vue';
 import DashboardScorebug from './dashboard/DashboardScorebug.vue';
+import DashboardCasters from './dashboard/DashboardCasters.vue';
 
 const api = new ControlAPI();
 
@@ -37,6 +38,11 @@ const resetTeams = () => {
 };
 const swapTeams = () => {
   api.post('/teams/swap');
+};
+
+const updateCasters = () => {
+  api.post('/casters/left', { name: overlayData.casters.casterl });
+  api.post('/casters/right', { name: overlayData.casters.casterr });
 };
 
 let showSettings = ref(false);
@@ -113,6 +119,18 @@ onBeforeMount(() => {
         </template>
         <template v-slot:main>
           <dashboard-teams />
+        </template>
+      </dashboard-section>
+
+      <dashboard-section>
+        <template v-slot:toprow>
+          <h1>{{ $t('dashboard.casters') }}</h1>
+          <span>
+            <button class="button success save" @click="updateCasters()">{{ $t('dashboard.updateCasters') }}</button>
+          </span>
+        </template>
+        <template v-slot:main>
+          <dashboard-casters />
         </template>
       </dashboard-section>
 

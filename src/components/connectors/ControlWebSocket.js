@@ -40,6 +40,14 @@ export function ControlConnector() {
                console.log(`[Control WS]: Series update`);
                overlayData.updateSeries(data.series);
                break;
+            case 'caster:update':
+               console.log(`[Control WS]: Caster update`);
+               if(data.side === 'left') {
+                  overlayData.updateCasters({casterl: data.caster.name, casterr: overlayData.getCasters.casterr});
+               } else {
+                  overlayData.updateCasters({casterl: overlayData.getCasters.casterl, casterr: data.caster.name});
+               }
+               break;
             default:
                console.log(`[Control WS]: Unknown event ${data.event}`);
          }
