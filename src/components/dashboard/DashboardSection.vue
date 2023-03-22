@@ -126,7 +126,6 @@ label {
 }
 
 .button:hover {
-  opacity: 0.8;
   outline: 2px solid var(--etsu-primary-gold);
 }
 </style>

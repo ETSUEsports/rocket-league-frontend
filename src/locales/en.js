@@ -44,6 +44,8 @@ const message = {
         updateCasters: 'Update Casters',
         left_caster: 'Left Caster',
         right_caster: 'Right Caster',
+        teamsPresets: 'Teams Presets',
+        teamsPresetsWarning: 'Warning: This will overwrite the current teams and scores!'
     }
 }
 export default message;

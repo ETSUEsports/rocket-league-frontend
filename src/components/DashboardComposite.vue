@@ -5,6 +5,7 @@ import { appSettingsStore } from '@/store/appSettingsStore';
 import { ref, onBeforeMount } from 'vue';
 import { useRouter } from 'vue-router';
 import AppSettings from './modal/AppSettings.vue';
+import { useToast } from 'vue-toastification';
 
 import DashboardAuthCheck from '@/components/dashboard/DashboardAuthCheck.vue';
 import DashboardSection from '@/components/dashboard/DashboardSection.vue';
@@ -12,8 +13,10 @@ import DashboardFiles from '@/components/dashboard/DashboardFiles.vue';
 import DashboardTeams from '@/components/dashboard/DashboardTeams.vue';
 import DashboardScorebug from './dashboard/DashboardScorebug.vue';
 import DashboardCasters from './dashboard/DashboardCasters.vue';
+import DashboardTeamsPresets from './dashboard/DashboardTeamsPresets.vue';
 
 const api = new ControlAPI();
+const toast = useToast();
 
 const appSettings = appSettingsStore();
 const overlayData = overlayDataStore();
@@ -23,21 +26,41 @@ const openSettings = () => {
 };
 
 const updateScorebug = () => {
-  api.post('/series', { name: overlayData.series.name, gameNumber: overlayData.series.gameNumber, bestOf: overlayData.series.bestOf });
+  api.post('/series', { name: overlayData.series.name, gameNumber: overlayData.series.gameNumber, bestOf: overlayData.series.bestOf }).then(() => {
+    toast.success('Scorebug updated');
+  }).catch(() => {
+    toast.error('Failed to update scorebug');
+  });
 };
 
 const resetScorebug = () => {
-  api.delete('/series');
+  api.delete('/series').then(() => {
+    toast.success('Scorebug reset');
+  }).catch(() => {
+    toast.error('Failed to reset scorebug');
+  });
 };
 
 const updateTeams = () => {
-  api.post('/teams', { leftTeam: overlayData.leftTeam, rightTeam: overlayData.rightTeam });
+  api.post('/teams', { leftTeam: overlayData.leftTeam, rightTeam: overlayData.rightTeam }).then(() => {
+    toast.success('Teams updated');
+  }).catch(() => {
+    toast.error('Failed to update teams');
+  });
 };
 const resetTeams = () => {
-  api.del('/teams');
+  api.del('/teams').then(() => {
+    toast.success('Teams reset');
+  }).catch(() => {
+    toast.error('Failed to reset teams');
+  });
 };
 const swapTeams = () => {
-  api.post('/teams/swap');
+  api.post('/teams/swap').then(() => {
+    toast.success('Teams swapped');
+  }).catch(() => {
+    toast.error('Failed to swap teams');
+  });
 };
 
 const updateCasters = () => {
@@ -124,6 +147,16 @@ onBeforeMount(() => {
 
       <dashboard-section>
         <template v-slot:toprow>
+          <h1>{{ $t('dashboard.teamsPresets') }}</h1>
+          <h1 class="text-red">{{ $t('dashboard.teamsPresetsWarning') }}</h1>
+        </template>
+        <template v-slot:main>
+          <dashboard-teams-presets />
+        </template>
+      </dashboard-section>
+
+      <dashboard-section>
+        <template v-slot:toprow>
           <h1>{{ $t('dashboard.casters') }}</h1>
           <span>
             <button class="button success save" @click="updateCasters()">{{ $t('dashboard.updateCasters') }}</button>
@@ -161,6 +194,10 @@ p {
   outline: 0;
   vertical-align: baseline;
   background: transparent;
+}
+
+.text-red {
+  color: red;
 }
 
 .user_info {
@@ -268,6 +305,14 @@ label {
     color: black;
   }
 
+  &.blue {
+    background-color: var(--rl-primary-blue);
+  }
+
+  &.orange {
+    background-color: var(--rl-primary-orange);
+  }
+
   &.small-text {
     font-size: 1.5vh;
   }
@@ -282,7 +327,6 @@ label {
 }
 
 .button:hover {
-  opacity: 0.8;
   outline: 2px solid var(--etsu-primary-gold);
 }
 
