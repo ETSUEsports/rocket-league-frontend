@@ -2,7 +2,7 @@
 import { Carousel, Slide } from 'vue3-carousel';
 import { ref } from 'vue';
 import 'vue3-carousel/dist/carousel.css';
-const ads = ref(['@/assets/ads/etsu_online.png', '@/assets/ads/mgp.png', '@/assets/ads/etsuesports_socials.png']);
+const ads = ref([require('@/assets/ads/etsu_online.png'), require('@/assets/ads/mgp.png'), require('@/assets/ads/etsuesports_socials.png')]);
 </script>
 
 <template>
