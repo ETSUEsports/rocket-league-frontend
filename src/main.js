@@ -22,7 +22,7 @@ Sentry.init({
     integrations: [
         new BrowserTracing({
             routingInstrumentation: Sentry.vueRouterInstrumentation(router),
-            tracePropagationTargets: ["localhost", "etsuesports.ryois.net", /^\//],
+            tracePropagationTargets: ["localhost", "etsuesports.ryois.me", /^\//],
         }),
     ],
     tracesSampleRate: 1.0,
