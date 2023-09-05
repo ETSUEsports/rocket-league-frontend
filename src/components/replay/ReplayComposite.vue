@@ -54,7 +54,7 @@ const overlayData = overlayDataStore();
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-image: url('@/assets/replay_border.png');
+  background-image: url('@/assets/new_replay_border.png');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -63,7 +63,7 @@ const overlayData = overlayDataStore();
 
 .replay_background {
   position: absolute;
-  bottom: 38px;
+  bottom: 53px;
   left: 0;
   width: 100vw;
   height: 60px;
