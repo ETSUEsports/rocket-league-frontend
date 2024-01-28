@@ -13,20 +13,30 @@ import DashboardFiles from '@/components/dashboard/DashboardFiles.vue';
 import DashboardTeams from '@/components/dashboard/DashboardTeams.vue';
 import DashboardScorebug from './dashboard/DashboardScorebug.vue';
 import DashboardCasters from './dashboard/DashboardCasters.vue';
-import DashboardTeamsPresets from './dashboard/DashboardTeamsPresets.vue';
+// import DashboardTeamsPresets from './dashboard/DashboardTeamsPresets.vue';
 
 const api = new ControlAPI();
 const toast = useToast();
 
+const router = useRouter();
+const game = router.currentRoute.value.params.game;
+
 const appSettings = appSettingsStore();
 const overlayData = overlayDataStore();
+overlayData.game = Number(game);
+onBeforeMount(() => {
+  const loginState = appSettings.getUser;
+  if(loginState == null || loginState && Object.keys(loginState).length === 0 && Object.getPrototypeOf(loginState) === Object.prototype) {
+    router.push({name: 'auth-login'});
+  }
+});
 
 const openSettings = () => {
   showSettings.value = true;
 };
 
 const updateScorebug = () => {
-  api.post('/series', { name: overlayData.series.name, gameNumber: overlayData.series.gameNumber, bestOf: overlayData.series.bestOf }).then(() => {
+  api.post(`/series/${game}`, { name: overlayData.games[game].series.name, gameNumber: overlayData.games[game].series.gameNumber, bestOf: overlayData.games[game].series.bestOf }).then(() => {
     toast.success('Scorebug updated');
   }).catch(() => {
     toast.error('Failed to update scorebug');
@@ -34,7 +44,7 @@ const updateScorebug = () => {
 };
 
 const resetScorebug = () => {
-  api.delete('/series').then(() => {
+  api.delete(`/series/${game}`).then(() => {
     toast.success('Scorebug reset');
   }).catch(() => {
     toast.error('Failed to reset scorebug');
@@ -42,21 +52,21 @@ const resetScorebug = () => {
 };
 
 const updateTeams = () => {
-  api.post('/teams', { leftTeam: overlayData.leftTeam, rightTeam: overlayData.rightTeam }).then(() => {
+  api.post(`/teams/${game}`, { leftTeam: overlayData.games[game].leftTeam, rightTeam: overlayData.games[game].rightTeam }).then(() => {
     toast.success('Teams updated');
   }).catch(() => {
     toast.error('Failed to update teams');
   });
 };
 const resetTeams = () => {
-  api.del('/teams').then(() => {
+  api.del(`/teams/${game}`).then(() => {
     toast.success('Teams reset');
   }).catch(() => {
     toast.error('Failed to reset teams');
   });
 };
 const swapTeams = () => {
-  api.post('/teams/swap').then(() => {
+  api.post(`/teams/${game}/swap/`).then(() => {
     toast.success('Teams swapped');
   }).catch(() => {
     toast.error('Failed to swap teams');
@@ -64,8 +74,8 @@ const swapTeams = () => {
 };
 
 const updateCasters = () => {
-  api.post('/casters/left', { name: overlayData.casters.casterl });
-  api.post('/casters/right', { name: overlayData.casters.casterr });
+  api.post(`/casters/${game}/left`, { name: overlayData.games[game].casters.casterl });
+  api.post(`/casters/${game}/right`, { name: overlayData.games[game].casters.casterr });
 };
 
 let showSettings = ref(false);
@@ -75,13 +85,7 @@ const logout = () => {
   api.post('/auth/strategies/discord/logout');
   router.push({name: 'auth-login'});
 };
-const router = useRouter();
-onBeforeMount(() => {
-  const loginState = appSettings.getUser;
-  if(loginState == null || loginState && Object.keys(loginState).length === 0 && Object.getPrototypeOf(loginState) === Object.prototype) {
-    router.push({name: 'auth-login'});
-  }
-});
+
 
 </script>
 
@@ -102,7 +106,7 @@ onBeforeMount(() => {
       <dashboard-section>
         <template v-slot:toprow>
           <div class="left">
-            <h1>{{ $t('dashboard.title') }}</h1>
+            <h1>{{ $t('dashboard.title', { game: game}) }}</h1>
             <button class="button default settings" @click="openSettings()">{{ $t('dashboard.settings') }}</button>
           </div>
           <div class="right">
@@ -145,7 +149,7 @@ onBeforeMount(() => {
         </template>
       </dashboard-section>
 
-      <dashboard-section>
+      <!--<dashboard-section>
         <template v-slot:toprow>
           <h1>{{ $t('dashboard.teamsPresets') }}</h1>
           <h1 class="text-red">{{ $t('dashboard.teamsPresetsWarning') }}</h1>
@@ -154,7 +158,7 @@ onBeforeMount(() => {
           <dashboard-teams-presets />
         </template>
       </dashboard-section>
-
+      -->
       <dashboard-section>
         <template v-slot:toprow>
           <h1>{{ $t('dashboard.casters') }}</h1>

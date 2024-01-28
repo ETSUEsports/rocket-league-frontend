@@ -1,35 +1,37 @@
 <script setup>
 import { overlayDataStore } from '@/store/overlayDataStore';
 const overlayData = overlayDataStore();
+const game = overlayData.game;
+
 const add = (type) => {
     switch (type) {
         case 'game':
             // cannot go over bestOf
-            if (overlayData.series.gameNumber >= overlayData.series.bestOf) {
+            if (overlayData.games[game].series.gameNumber >= overlayData.games[game].series.bestOf) {
                 return;
             }
-            overlayData.series.gameNumber += 1;
+            overlayData.games[game].series.gameNumber += 1;
             break;
         case 'best_of':
             // cannot go over 7
-            if (overlayData.series.bestOf >= 7) {
+            if (overlayData.games[game].series.bestOf >= 7) {
                 return;
             }
-            overlayData.series.bestOf += 1;
+            overlayData.games[game].series.bestOf += 1;
             break;
         case 'left_score':
             // cannot go over best of
-            if (overlayData.leftTeam.score >= overlayData.series.bestOf) {
+            if (overlayData.games[game].leftTeam.score >= overlayData.games[game].series.bestOf) {
                 return;
             }
-            overlayData.leftTeam.score += 1;
+            overlayData.games[game].leftTeam.score += 1;
             break;
         case 'right_score':
             // cannot go over best of
-            if (overlayData.rightTeam.score >= overlayData.series.bestOf) {
+            if (overlayData.games[game].rightTeam.score >= overlayData.games[game].series.bestOf) {
                 return;
             }
-            overlayData.rightTeam.score += 1;
+            overlayData.games[game].rightTeam.score += 1;
             break;
     }
 };
@@ -38,31 +40,31 @@ const del = (type) => {
     switch (type) {
         case 'game':
             // cannot go below 1
-            if (overlayData.series.gameNumber <= 1) {
+            if (overlayData.games[game].series.gameNumber <= 1) {
                 return;
             }
-            overlayData.series.gameNumber -= 1;
+            overlayData.games[game].series.gameNumber -= 1;
             break;
         case 'best_of':
             // cannot go below 3
-            if (overlayData.series.bestOf <= 3) {
+            if (overlayData.games[game].series.bestOf <= 3) {
                 return;
             }
-            overlayData.series.bestOf -= 1;
+            overlayData.games[game].series.bestOf -= 1;
             break;
         case 'left_score':
             // cannot go below 0
-            if (overlayData.leftTeam.score <= 0) {
+            if (overlayData.games[game].leftTeam.score <= 0) {
                 return;
             }
-            overlayData.leftTeam.score -= 1;
+            overlayData.games[game].leftTeam.score -= 1;
             break;
         case 'right_score':
             // cannot go below 0
-            if (overlayData.rightTeam.score <= 0) {
+            if (overlayData.games[game].rightTeam.score <= 0) {
                 return;
             }
-            overlayData.rightTeam.score -= 1;
+            overlayData.games[game].rightTeam.score -= 1;
             break;
     }
 };
@@ -75,7 +77,7 @@ const del = (type) => {
             <h2>{{ $t('dashboard.left_team') }}</h2>
             <div class="inputgroup">
                 <label for="left_team_name">{{ $t('dashboard.team_name') }}</label>
-                <input v-model="overlayData.leftTeam.name" type="text" id="left_team_name" name="left_team_name" />
+                <input v-model="overlayData.games[game].leftTeam.name" type="text" id="left_team_name" name="left_team_name" />
             </div>
             <div class="inputgroup">
                 <label for="left_team_score">{{ $t('dashboard.team_score') }}</label>
@@ -83,18 +85,18 @@ const del = (type) => {
                         class="material-symbols-outlined">add</span></button>
                 <button class="button danger" @click="del('left_score')"><span
                         class="material-symbols-outlined">remove</span></button>
-                <input v-model="overlayData.leftTeam.score" type="number" id="left_team_score" name="left_team_score" />
+                <input v-model="overlayData.games[game].leftTeam.score" type="number" id="left_team_score" name="left_team_score" />
             </div>
             <div class="inputgroup">
                 <label for="left_team_logo">{{ $t('dashboard.team_logo') }}</label>
-                <input v-model="overlayData.leftTeam.image" type="text" id="left_team_logo" name="left_team_logo" />
+                <input v-model="overlayData.games[game].leftTeam.image" type="text" id="left_team_logo" name="left_team_logo" />
             </div>
         </div>
         <div class="team team_right outline orange">
             <h2>{{ $t('dashboard.right_team') }}</h2>
             <div class="inputgroup">
                 <label for="right_team_name">{{ $t('dashboard.team_name') }}</label>
-                <input v-model="overlayData.rightTeam.name" type="text" id="right_team_name" name="right_team_name" />
+                <input v-model="overlayData.games[game].rightTeam.name" type="text" id="right_team_name" name="right_team_name" />
             </div>
             <div class="inputgroup">
                 <label for="right_team_score">{{ $t('dashboard.team_score') }}</label>
@@ -102,11 +104,11 @@ const del = (type) => {
                         class="material-symbols-outlined">add</span></button>
                 <button class="button danger" @click="del('right_score')"><span
                         class="material-symbols-outlined">remove</span></button>
-                <input v-model="overlayData.rightTeam.score" type="number" id="right_team_score" name="right_team_score" />
+                <input v-model="overlayData.games[game].rightTeam.score" type="number" id="right_team_score" name="right_team_score" />
             </div>
             <div class="inputgroup">
                 <label for="right_team_logo">{{ $t('dashboard.team_logo') }}</label>
-                <input v-model="overlayData.rightTeam.image" type="text" id="right_team_logo" name="right_team_logo" />
+                <input v-model="overlayData.games[game].rightTeam.image" type="text" id="right_team_logo" name="right_team_logo" />
             </div>
         </div>
     </div>

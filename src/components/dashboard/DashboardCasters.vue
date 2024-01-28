@@ -1,6 +1,7 @@
 <script setup>
 import { overlayDataStore } from '@/store/overlayDataStore';
 const overlayData = overlayDataStore();
+const game = overlayData.game;
 
 </script>
 
@@ -10,14 +11,14 @@ const overlayData = overlayDataStore();
             <h2>{{ $t('dashboard.left_caster') }}</h2>
             <div class="inputgroup">
                 <label for="left_caster_name">{{ $t('dashboard.team_name') }}</label>
-                <input v-model="overlayData.casters.casterl" type="text" id="left_caster_name" name="left_caster_name" />
+                <input v-model="overlayData.games[game].casters.casterl" type="text" id="left_caster_name" name="left_caster_name" />
             </div>
         </div>
         <div class="caster team_right outline orange">
             <h2>{{ $t('dashboard.right_caster') }}</h2>
             <div class="inputgroup">
                 <label for="right_caster_name">{{ $t('dashboard.team_name') }}</label>
-                <input v-model="overlayData.casters.casterr" type="text" id="right_caster_name" name="right_caster_name" />
+                <input v-model="overlayData.games[game].casters.casterr" type="text" id="right_caster_name" name="right_caster_name" />
             </div>
         </div>
     </div>

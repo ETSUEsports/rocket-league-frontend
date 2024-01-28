@@ -14,15 +14,17 @@ import { ref, onMounted, onBeforeUnmount  } from 'vue';
 import { useRouter } from 'vue-router';
 // const obs = inject('obs');
 const router = useRouter()
+const game = router.currentRoute.value.params.game;
 const gameState = gameStateStore();
 const overlayData = overlayDataStore();
+overlayData.game = Number(game);
 const getPlayers = gameState.getPlayers;
 const team = (side) => {
   return {
-    name: overlayData.getTeam(side).name,
-    image: overlayData.getTeam(side).image,
-    score: gameState.getTeam(side).score,
-    series_score: overlayData.getTeam(side).score,
+    name: overlayData.getTeam(game, side).name,
+    image: overlayData.getTeam(game, side).image,
+    score: gameState.getTeam(game, side).score,
+    series_score: overlayData.getTeam(game, side).score,
   }
 };
 
@@ -67,11 +69,11 @@ let showSettings = ref(false);
     <div class="header" v-if="!gameState.isReplay && !gameState.hasWinner">
       <PlayerList :players="getPlayers('left')" :reverse=true :highlight="gameState.getHighlightedPlayer" />
       <div class="scoreboard">
-          <TeamInfo :team="team('left')" :reverse=true :best_of=overlayData.getSeries.bestOf
+          <TeamInfo :team="team('left')" :reverse=true :best_of=overlayData.getSeries(game).bestOf
           :players="getPlayers('left')" />
-        <GameClock :time=gameState.scoreboardClock :game_num=overlayData.getSeries.gameNumber
+        <GameClock :time=gameState.scoreboardClock :game_num=overlayData.getSeries(game).gameNumber
           :best_of=overlayData.getSeries.bestOf />
-        <TeamInfo :team="team('right')" :reverse=false :best_of=overlayData.getSeries.bestOf
+        <TeamInfo :team="team('right')" :reverse=false :best_of=overlayData.getSeries(game).bestOf
           :players="getPlayers('right')" />
       </div>
       <PlayerList :players="getPlayers('right')" :reverse=false :highlight="gameState.getHighlightedPlayer" />
@@ -80,7 +82,7 @@ let showSettings = ref(false);
     <div class="footer" v-if="!gameState.isReplay">
       <AdPanel class="ads" />
       <div class="player">
-        <PlayerHighlight v-if="gameState.getHighlightedPlayer" :player="gameState.getHighlightedPlayer" :team="overlayData.getTeam(gameState.getHighlightedPlayer.team)" />
+        <PlayerHighlight v-if="gameState.getHighlightedPlayer" :player="gameState.getHighlightedPlayer" :team="overlayData.getTeam(game, gameState.getHighlightedPlayer.team)" />
       </div>
     </div>
   </div>

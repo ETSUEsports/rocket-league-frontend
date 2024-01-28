@@ -16,7 +16,7 @@ const message = {
         click_to_copy: 'Click {object} to copy',
     },
     dashboard: {
-        title: 'Rocket League Overlay Dashboard',
+        title: 'Rocket League Overlay Dashboard for Game {game}',
         series: 'Series Name',
         game: 'Game',
         best_of: 'Best of',
@@ -37,7 +37,7 @@ const message = {
         login: 'Login',
         logout: 'Logout',
         strategy_selector: 'Select a provider to login with',
-        discord_logged_in_as: 'Logged in as {username}#{discriminator}',
+        discord_logged_in_as: 'Logged in as {username}',
         control_ws: 'Control WebSocket',
         game_ws: 'Game WebSocket',
         casters: 'Casters',

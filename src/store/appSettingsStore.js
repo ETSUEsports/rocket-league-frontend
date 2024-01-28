@@ -37,18 +37,14 @@ export const appSettingsStore = defineStore({
         },
         getControlWSConn: (state) => {
             if (process.env.NODE_ENV === 'development') {
-                return `ws://${state.controlWSIP}:${state.controlWSPort}/`;
+                return `ws://localhost:${state.controlWSPort}/`;
             } else {
                 return `wss://${state.controlWSIP}/rocket-league-backend/`;
             }
         },
         getControlHTTPConn: (state) => {
             if (process.env.NODE_ENV === 'development') {
-                if (state.controlHTTPSecure) {
-                    return `https://${state.controlWSIP}:${state.controlWSPort}/api/v1`;
-                } else {
-                    return `http://${state.controlWSIP}:${state.controlWSPort}/api/v1`;
-                }
+                return `http://localhost:${state.controlWSPort}/api/v1`;
             } else {
                 return `https://${state.controlWSIP}/rocket-league-backend/api/v1`;
             }

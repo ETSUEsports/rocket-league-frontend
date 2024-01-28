@@ -10,18 +10,18 @@ const routes = [
         component: HomeView
     },
     {
-        path: '/overlay',
+        path: '/overlay/:game',
         name: 'overlay',
         component: OverlayView
     },
     {
-        path: '/post-game-stats',
+        path: '/post-game-stats/:game',
         name: 'post-game-stats',
         meta: { transition: 'fade' },
         component: PostGameStats
     },
     {
-        path: '/dashboard',
+        path: '/dashboard/:game',
         name: 'dashboard',
         component: DashboardView
     },

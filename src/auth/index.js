@@ -41,7 +41,7 @@ export class Auth {
             this.appSettings.updateLoginState("loggedIn");
             this.appSettings.updateLoggingInState(false);
             this.appSettings.updateUser(data.user);
-            Router.push({ name: 'dashboard' });
+            Router.push({ name: 'dashboard', params: { game: 0 }});
         }
     }
 
