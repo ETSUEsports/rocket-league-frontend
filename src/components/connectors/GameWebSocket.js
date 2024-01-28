@@ -2,16 +2,14 @@ import { gameStateStore } from '@/store/gameStateStore';
 import { appSettingsStore } from '@/store/appSettingsStore';
 import DecodeWSCode from '@/utils/DecodeWSCode';
 import Router from '@/router';
-import { useRouter } from 'vue-router';
 import { overlayDataStore } from '@/store/overlayDataStore';
 // import { OBS } from '@/components/connectors/OBS.js';
 
 export function GameConnector() {
    const gameState = gameStateStore();
-   const router = useRouter();
-   const game = router.currentRoute.value.params.game;
    const appSettings = appSettingsStore();
    const overlayData = overlayDataStore();
+   const game = overlayData.game;
    let savedStatsFlag = false;
    let ws = new WebSocket(appSettings.getGameWSConn);
    // const obs = new OBS(appSettings.getOBSIP, appSettings.getOBSPort, appSettings.getOBSPassword);
@@ -58,7 +56,7 @@ export function GameConnector() {
             case 'game:podium_start':
                if (Router.currentRoute.value.name != 'dashboard') {
                   setTimeout(function () {
-                     Router.push({ name: 'post-game-stats' })
+                     Router.push({ name: 'post-game-stats', params: { game: game }})
                      // obs.muteAudio();
                   }, 4800);
                }
@@ -67,7 +65,7 @@ export function GameConnector() {
             case 'game:match_created':
                savedStatsFlag = false;
                if (Router.currentRoute.value.name != 'dashboard') {
-                  Router.push({ name: 'overlay' })
+                  Router.push({ name: 'overlay', params: { game: game }})
                   // obs.unmuteAudio();
                }
                console.log(`[Game WS]: Match created`);

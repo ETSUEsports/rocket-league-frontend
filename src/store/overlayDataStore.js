@@ -66,6 +66,7 @@ export const overlayDataStore = defineStore({
             this.games[game].series = series;
         },
         updateReplay(game, transition, side) {
+            console.log(game, transition, side)
             this.games[game].replay.showTransition = transition;
             this.games[game].replay.color = side === 0 ? "blue" : "orange";
         },

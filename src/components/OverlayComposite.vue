@@ -69,12 +69,9 @@ let showSettings = ref(false);
     <div class="header" v-if="!gameState.isReplay && !gameState.hasWinner">
       <PlayerList :players="getPlayers('left')" :reverse=true :highlight="gameState.getHighlightedPlayer" />
       <div class="scoreboard">
-          <TeamInfo :team="team('left')" :reverse=true :best_of=overlayData.getSeries(game).bestOf
-          :players="getPlayers('left')" />
-        <GameClock :time=gameState.scoreboardClock :game_num=overlayData.getSeries(game).gameNumber
-          :best_of=overlayData.getSeries.bestOf />
-        <TeamInfo :team="team('right')" :reverse=false :best_of=overlayData.getSeries(game).bestOf
-          :players="getPlayers('right')" />
+          <TeamInfo :team="team('left')" :reverse=true :best_of=overlayData.getSeries(game).bestOf :players="getPlayers('left')" />
+        <GameClock :time=gameState.scoreboardClock :game_num=overlayData.getSeries(game).gameNumber :best_of=overlayData.getSeries(game).bestOf />
+        <TeamInfo :team="team('right')" :reverse=false :best_of=overlayData.getSeries(game).bestOf :players="getPlayers('right')" />
       </div>
       <PlayerList :players="getPlayers('right')" :reverse=false :highlight="gameState.getHighlightedPlayer" />
     </div>

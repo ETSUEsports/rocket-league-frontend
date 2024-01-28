@@ -2,21 +2,19 @@
 import { onMounted, onBeforeUnmount } from 'vue'
 import { gameStateStore } from '@/store/gameStateStore';
 import { overlayDataStore } from '@/store/overlayDataStore';
-import { useRouter } from 'vue-router'
 import TeamInfo from '@/components/overlay/TeamInfo.vue';
 import PostGameMiddle from './postgame/PostGameMiddle.vue';
 import PostGameTable from './postgame/PostGameTable.vue';
-const router = useRouter();
-const game = router.currentRoute.value.params.game;
+import router from '@/router';
 const gameState = gameStateStore();
-overlayData.game = Number(game);
 const overlayData = overlayDataStore();
+const game = overlayData.game;
 const getPlayers = gameState.getPostPlayers;
 const team = (side) => {
   return {
     name: overlayData.getTeam(game, side).name,
     image: overlayData.getTeam(game, side).image,
-    score: gameState.getTeam(game, side).score,
+    score: gameState.getTeam(side).score,
     series_score: overlayData.getTeam(game, side).score,
   }
 };
