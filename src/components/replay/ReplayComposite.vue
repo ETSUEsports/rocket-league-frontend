@@ -1,4 +1,5 @@
 <script setup>
+import { useRouter } from 'vue-router';
 import { gameStateStore } from '@/store/gameStateStore';
 import { overlayDataStore } from '@/store/overlayDataStore';
 const router = useRouter();
