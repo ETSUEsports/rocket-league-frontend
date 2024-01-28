@@ -1,7 +1,6 @@
 <script setup>
 import { defineProps, computed } from 'vue';
 const props = defineProps(['team', 'reverse', 'best_of', 'players']);
-
 const bestOf = computed(() => {
   switch (props.best_of) {
     case 3:

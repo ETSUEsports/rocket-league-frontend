@@ -2,11 +2,14 @@ import { gameStateStore } from '@/store/gameStateStore';
 import { appSettingsStore } from '@/store/appSettingsStore';
 import DecodeWSCode from '@/utils/DecodeWSCode';
 import Router from '@/router';
+import { useRouter } from 'vue-router';
 import { overlayDataStore } from '@/store/overlayDataStore';
 // import { OBS } from '@/components/connectors/OBS.js';
 
 export function GameConnector() {
    const gameState = gameStateStore();
+   const router = useRouter();
+   const game = router.currentRoute.value.params.game;
    const appSettings = appSettingsStore();
    const overlayData = overlayDataStore();
    let savedStatsFlag = false;
@@ -42,7 +45,7 @@ export function GameConnector() {
                gameState.updateReplayStats(data.data);
                if (!gameState.hasWinner) {
                   setTimeout(() => {
-                     overlayData.updateReplay(true, data.data.scorer.teamnum);
+                     overlayData.updateReplay(game, true, data.data.scorer.teamnum);
                   }, 2500);
                }
                break;

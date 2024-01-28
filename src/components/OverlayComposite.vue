@@ -23,7 +23,7 @@ const team = (side) => {
   return {
     name: overlayData.getTeam(game, side).name,
     image: overlayData.getTeam(game, side).image,
-    score: gameState.getTeam(game, side).score,
+    score: gameState.getTeam(side).score,
     series_score: overlayData.getTeam(game, side).score,
   }
 };
