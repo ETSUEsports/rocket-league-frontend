@@ -3,11 +3,17 @@ import OverlayView from '../views/OverlayView.vue';
 import PostGameStats from '../views/PostGameStats.vue';
 import DashboardView from '../views/DashboardView.vue';
 import AuthLogin from '../views/AuthLogin.vue';
+import NoIDView from '../views/NoIDView.vue';
 const routes = [
     {
         path: '/',
         name: 'home',
         component: HomeView
+    },
+    {
+        path: '/overlay',
+        name: 'noIDoverlay',
+        component: NoIDView
     },
     {
         path: '/overlay/:game',
@@ -19,6 +25,11 @@ const routes = [
         name: 'post-game-stats',
         meta: { transition: 'fade' },
         component: PostGameStats
+    },
+    {
+        path: '/dashboard',
+        name: 'noIDdashboard',
+        component: NoIDView
     },
     {
         path: '/dashboard/:game',

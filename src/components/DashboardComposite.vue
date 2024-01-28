@@ -106,7 +106,7 @@ const logout = () => {
       <dashboard-section>
         <template v-slot:toprow>
           <div class="left">
-            <h1>{{ $t('dashboard.title', { game: game}) }}</h1>
+            <h1>{{ $t('dashboard.title', { game: Number(game) + 1}) }}</h1>
             <button class="button default settings" @click="openSettings()">{{ $t('dashboard.settings') }}</button>
           </div>
           <div class="right">

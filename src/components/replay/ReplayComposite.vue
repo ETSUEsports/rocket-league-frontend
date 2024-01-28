@@ -1,8 +1,11 @@
 <script setup>
 import { gameStateStore } from '@/store/gameStateStore';
 import { overlayDataStore } from '@/store/overlayDataStore';
+const router = useRouter();
+const game = router.currentRoute.value.params.game;
 const gameState = gameStateStore();
 const overlayData = overlayDataStore();
+overlayData.game = Number(game);
 </script>
 
 <template>
@@ -14,10 +17,10 @@ const overlayData = overlayDataStore();
         <div class="replay_col replay_left">
           <div class="replay_item ri_left">
             <div class="replay_label"><img class="replay_icon"
-                :src="overlayData.getTeam(gameState.getReplayStats.scorer.teamnum).image" /></div>
+                :src="overlayData.getTeam(game, gameState.getReplayStats.scorer.teamnum).image" /></div>
             <div class="replay_value">{{ $t('overlay.replay_goal', {
               team:
-                overlayData.getTeam(gameState.getReplayStats.scorer.teamnum).name
+                overlayData.getTeam(game, gameState.getReplayStats.scorer.teamnum).name
             }) }}</div>
           </div>
         </div>

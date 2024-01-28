@@ -7,15 +7,17 @@ import TeamInfo from '@/components/overlay/TeamInfo.vue';
 import PostGameMiddle from './postgame/PostGameMiddle.vue';
 import PostGameTable from './postgame/PostGameTable.vue';
 const router = useRouter();
+const game = router.currentRoute.value.params.game;
 const gameState = gameStateStore();
+overlayData.game = Number(game);
 const overlayData = overlayDataStore();
 const getPlayers = gameState.getPostPlayers;
 const team = (side) => {
   return {
-    name: overlayData.getTeam(side).name,
-    image: overlayData.getTeam(side).image,
-    score: gameState.getTeam(side).score,
-    series_score: overlayData.getTeam(side).score,
+    name: overlayData.getTeam(game, side).name,
+    image: overlayData.getTeam(game, side).image,
+    score: gameState.getTeam(game, side).score,
+    series_score: overlayData.getTeam(game, side).score,
   }
 };
 
@@ -39,9 +41,9 @@ function onKeyPress(e) {
   <div class="postgame">
     <div class="header">
       <div class="scoreboard">
-        <TeamInfo :team="team('left')" :reverse=true :best_of=overlayData.getSeries.bestOf :players="getPlayers('left')" />
-        <PostGameMiddle :time=gameState.scoreboardClock :game_num=overlayData.getSeries.gameNumber :best_of=overlayData.getSeries.bestOf />
-        <TeamInfo :team="team('right')" :reverse=false :best_of=overlayData.getSeries.bestOf :players="getPlayers('right')" />
+        <TeamInfo :team="team('left')" :reverse=true :best_of=overlayData.getSeries(game).bestOf :players="getPlayers('left')" />
+        <PostGameMiddle :time=gameState.scoreboardClock :game_num=overlayData.getSeries(game).gameNumber :best_of=overlayData.getSeries(game).bestOf />
+        <TeamInfo :team="team('right')" :reverse=false :best_of=overlayData.getSeries(game).bestOf :players="getPlayers('right')" />
       </div>
     </div>
     <PostGameTable />

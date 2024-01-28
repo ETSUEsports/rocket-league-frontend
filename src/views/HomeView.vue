@@ -5,15 +5,15 @@ import { onMounted, ref } from 'vue';
 const router = useRouter();
 const toast = useToast();
 let timer = ref(10);
-const getOverlayUrl = () => {
+const getOverlayUrl = (game) => {
   const url = new URL(window.location.href);
-  url.pathname = router.resolve({ name: 'overlay' }).href
+  url.pathname = router.resolve({ name: 'overlay', params: {game: game}  }).href
   return url.href
 }
 
-const getDashboardUrl = () => {
+const getDashboardUrl = (game) => {
   const url = new URL(window.location.href);
-  url.pathname = router.resolve({ name: 'dashboard' }).href
+  url.pathname = router.resolve({ name: 'dashboard', params: {game: game} }).href
   return url.href
 }
 
@@ -29,7 +29,7 @@ const clickToCopy = (event) => {
 onMounted(() => {
   setInterval(() => {
     timer.value -= 1;
-    if (timer.value == 0) router.push({ name: 'dashboard' });
+    if (timer.value == 0) router.push({ name: 'dashboard', params: {game: 0}});
   }, 1000);
 })
 
@@ -43,14 +43,18 @@ onMounted(() => {
     <h3>{{  $t('home.click_to_copy', { object: "code blocks"}) }}</h3>
     <div class="container">
       <div class="left">
-        <h2>Overlay</h2>
-        <code @click="clickToCopy($event)" :value="getOverlayUrl()">{{ getOverlayUrl() }}</code>
+        <h2>Game 1 Overlay</h2>
+        <code @click="clickToCopy($event)" :value="getOverlayUrl(0)">{{ getOverlayUrl(0) }}</code>
+        <h2>Game 2 Overlay</h2>
+        <code @click="clickToCopy($event)" :value="getOverlayUrl(1)">{{ getOverlayUrl(1) }}</code>
         <h4>OBS Custom CSS</h4>
         <code lang="css" @click="clickToCopy($event)" :value="obsCSSOverrides()"> {{ obsCSSOverrides() }}</code>
       </div>
       <div class="right">
-        <h2>Dashboard</h2>
-        <code @click="clickToCopy($event)" :value="getDashboardUrl()">{{ getDashboardUrl() }}</code>
+        <h2>Game 1 Dashboard</h2>
+        <code @click="clickToCopy($event)" :value="getDashboardUrl(0)">{{ getDashboardUrl(0) }}</code>
+        <h2>Game 2 Dashboard</h2>
+        <code @click="clickToCopy($event)" :value="getDashboardUrl(1)">{{ getDashboardUrl(1) }}</code>
         <h4>Requires Discord authentication. Discord user must be in private ETSU Esports Discord server.</h4>
       </div>
     </div>
