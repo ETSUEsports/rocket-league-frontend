@@ -7,7 +7,7 @@ export const appSettingsStore = defineStore({
         gameWSIP: "localhost",
         gameWSPort: "49122",
         gameWSStatus: "disconnected",
-        controlWSIP: "esports.ryois.me",
+        controlWSIP: "etsuesports.ryois.me",
         controlWSPort: "3000",
         controlHTTPSecure: false,
         controlWSStatus: "disconnected",
